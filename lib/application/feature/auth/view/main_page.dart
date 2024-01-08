@@ -93,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.black,
                             border: Border.all(color: Colors.grey)),
                         child: CircleAvatar(
-                            radius: 17,
+                            radius: 16,
                             child: Image.asset('asset/images/google.jpg')),
                       ),
                     ),
