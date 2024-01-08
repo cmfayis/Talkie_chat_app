@@ -58,17 +58,18 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         hintText: widget.hintText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: const Color.fromARGB(255, 220, 111, 111))
+            borderSide: BorderSide(color:  Colors.grey)
         ),
+       
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white)
+          borderSide: BorderSide(color: Colors.green)
         ),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.obscureText ? IconButton(
           icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility,
 
-          color: Colors.white,),
+          color: Colors.grey,),
           onPressed: () {
             setState(() {
               _obscureText = !_obscureText;

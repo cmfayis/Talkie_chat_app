@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
         '/':(context)=>SplashPageWrapper(),
         '/home':(context)=>HomePage(),
         '/register':(context)=>RegisterPageWrapper(),
-        '/Login':(context)=>LoginPage(),
-        '/SignUp':(context)=>SignUpPage(),
+        '/Login':(context)=>LoginPageWrapper(),
+        '/SignUp':(context)=>SignUpWrapper(),
       },
     );
       

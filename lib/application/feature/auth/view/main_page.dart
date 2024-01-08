@@ -161,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: const Center(
-                        child: Text("Sign up withn mail"),
+                        child: Text("Sign up withn mail",style: TextStyle(fontSize: 17.0),),
                       ),
                     ),
                   ),
