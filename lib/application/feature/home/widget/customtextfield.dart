@@ -56,10 +56,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         errorStyle: TextStyle(color: Colors.red),
         hintStyle: Theme.of(context).textTheme.bodySmall,
         hintText: widget.hintText,
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(12),
-        //     borderSide: BorderSide(color: const Color.fromARGB(255, 220, 111, 111))
-        // ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: const Color.fromARGB(255, 220, 111, 111))
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.white)

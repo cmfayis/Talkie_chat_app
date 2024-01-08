@@ -17,3 +17,5 @@ class SignupEvent extends AuthEvent {
     required this.user,
   });
 }
+class LoginButtonClickedEvent extends AuthEvent{}
+class SignUpButtonClickedEvent extends AuthEvent{}

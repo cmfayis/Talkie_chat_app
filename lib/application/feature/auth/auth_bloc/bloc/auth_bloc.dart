@@ -7,23 +7,28 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final auth=FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
   AuthBloc() : super(AuthInitial()) {
-   on<CheckLoginStatusEvent>((event, emit) async{
+    on<SignUpButtonClickedEvent>((event, emit) {
+      emit(SignUpButtonClickedState());
+    });
+    on<LoginButtonClickedEvent>((event, emit) {
+      emit(LoginButtonClickedState());
+    });
+    on<CheckLoginStatusEvent>((event, emit) async {
       User? user;
-      try{
-        await Future.delayed(Duration(seconds: 2),(){
-          user=auth.currentUser;
+      try {
+        await Future.delayed(Duration(seconds: 2), () {
+          user = auth.currentUser;
         });
-        if(user!=null){
+        if (user != null) {
           emit(AuthenticatedState(user: user));
-        }else{
+        } else {
           emit(UnAuthenticatedState());
         }
-      } 
-      catch (e){
+      } catch (e) {
         emit(ErrorAuthenctionState(error: e.toString()));
       }
-   });
+    });
   }
 }

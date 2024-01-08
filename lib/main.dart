@@ -1,4 +1,6 @@
+import 'package:chat_app/application/feature/auth/view/loginpage.dart';
 import 'package:chat_app/application/feature/auth/view/main_page.dart';
+import 'package:chat_app/application/feature/auth/view/signup_page.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/splash/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,14 +17,12 @@ void main()async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: TextTheme(
+        textTheme:const TextTheme(
           displayLarge: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 26),
         )
       ),
@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/':(context)=>SplashPageWrapper(),
         '/home':(context)=>HomePage(),
-        '/register':(context)=>RegisterPage(),
+        '/register':(context)=>RegisterPageWrapper(),
+        '/Login':(context)=>LoginPage(),
+        '/SignUp':(context)=>SignUpPage(),
       },
     );
       
