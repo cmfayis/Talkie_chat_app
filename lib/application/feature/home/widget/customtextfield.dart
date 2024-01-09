@@ -45,7 +45,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       readOnly: widget.readOnly,
       style:Theme.of(context).textTheme.bodySmall ,
       maxLines: widget.maxlines,
@@ -53,8 +53,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       controller: widget.controller,
       decoration: InputDecoration(
         labelText:widget.label,
-        errorStyle: TextStyle(color: Colors.red),
-        hintStyle: Theme.of(context).textTheme.bodySmall,
+        // errorStyle: TextStyle(color: Colors.red),
+        focusedErrorBorder:OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color:  Colors.red)
+        ) ,
+       errorMaxLines: 5,
+        hintStyle: Theme.of(context).textTheme.labelMedium,
         hintText: widget.hintText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
