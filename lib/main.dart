@@ -5,6 +5,7 @@ import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/splash/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'firebase_options.dart';
 
 void main()async {
@@ -12,6 +13,7 @@ void main()async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
+ await GoogleSignIn().signInSilently(); 
   runApp(const MyApp());
 }
 

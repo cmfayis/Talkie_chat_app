@@ -27,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "phone": event.user.phone,
               'CreatAt': DateTime.now(),
             });
-            emit(AuthenticatedState(user: user));
+            emit(AuthenticatedState());
           } else {
             emit(UnAuthenticatedState());
           }
@@ -45,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               password: event.user.password.toString());
           final user = UserCredential.user;
           if (user != null) {
-            emit(AuthenticatedState(user: user));
+            emit(AuthenticatedState());
           } else {
             emit(UnAuthenticatedState());
           }
@@ -71,6 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         // Sign up with Google credentials
         await auth.signInWithCredential(credential);
+        emit(GoogleButtonState());
         
       }
     } catch (error) {
@@ -92,7 +93,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           user = auth.currentUser;
         });
         if (user != null) {
-          emit(AuthenticatedState(user: user));
+          emit(AuthenticatedState());
         } else {
           emit(UnAuthenticatedState());
         }
