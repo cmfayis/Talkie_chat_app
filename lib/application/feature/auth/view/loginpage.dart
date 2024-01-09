@@ -1,12 +1,11 @@
 import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:chat_app/application/feature/auth/widget/custombutton.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
-import 'package:chat_app/application/feature/home/widget/customtextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../auth_bloc/bloc/auth_bloc.dart';
+import '../widget/customtextfield.dart';
 import '../widget/validate.dart';
 
 class LoginPageWrapper extends StatelessWidget {
@@ -31,19 +30,29 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
-  final formkey =GlobalKey<FormState>();
+  final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-       if (state is AuthenticatedState) {
-         if (formkey.currentState!.validate()) {
-               WidgetsBinding.instance?.addPostFrameCallback((_) {
-            Navigator.pushReplacementNamed(context, "/home");
-          });               
-                            }
-         
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthenticatedState) {
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/home", (route) => false);
+          });
         }
+        if (state is ErrorAuthenctionState) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.error)));
+        }
+        if(state is GoogleButtonState){
+ Navigator.pushNamedAndRemoveUntil(
+                context, "/home", (route) => false);
+        }
+      },
+
+      builder: (context, state) {
+       
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -96,7 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                         width: 15,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          BlocProvider.of<AuthBloc>(context).add(GoogleButtonEvent());
+                        },
                         child: Container(
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -170,11 +181,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   CustomButton(
                       ontap: () {
-                        final user =UserModel(
+                        final user = UserModel(
                           email: emailcontroller.text,
                           password: passwordcontroller.text,
                         );
-                        BlocProvider.of<AuthBloc>(context).add(LoginEvent(user: user));
+                        if (formkey.currentState!.validate()) {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(LoginEvent(user: user));
+                        }
                       },
                       width: double.infinity,
                       hieght: 45,

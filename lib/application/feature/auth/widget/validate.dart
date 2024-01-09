@@ -11,10 +11,32 @@ String? PasswordValidate(String? value) {
   if (value == null || value.isEmpty) {
     return 'This field is required';
   }
-  if (!RegExp(r'(?=.*[A-Za-z\d]{6,})[A-Za-z\d]*$'
+  if (!RegExp(r'(?=.*[A-Za-z\d])[A-Za-z\d]*$'
 
 ).hasMatch(value)) {
-    return 'Password must be at least 6 characters longPassword must be at least 6 characters longPassword must be at least 6 characters long';
+    return 'Invalid Password Format';
+  }
+  if(value.length<6){
+    return  "Password must be at least 6 characters long.";
+  }
+  return null;
+}
+String? nameValidate(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'This field is required';
+  }
+  if (!RegExp(r'^[a-zA-Z_]+$').hasMatch(value)) {
+    return 'Invalid Name format';
+  }
+  return null;
+}
+String? phoneValidate(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'This field is required';
+  }
+  if (!RegExp(r'\d{10,}$'
+).hasMatch(value)) {
+    return 'Invalid Phone Format';
   }
   return null;
 }

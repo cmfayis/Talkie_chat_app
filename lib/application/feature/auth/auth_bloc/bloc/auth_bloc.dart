@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_event.dart';
@@ -53,6 +54,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+    on<GoogleButtonEvent>((event, emit)async{
+       final GoogleSignIn _googleSignIn = GoogleSignIn();
+      try {
+      // Trigger Google sign-in
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        // Obtain GoogleSignInAuthentication and GoogleSignInCredential
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        // Sign up with Google credentials
+        await auth.signInWithCredential(credential);
+        
+      }
+    } catch (error) {
+      print("Google Sign-Up Error: $error");
+      return null;
+    }
+
+    });
     on<SignUpButtonClickedEvent>((event, emit) {
       emit(SignUpButtonClickedState());
     });

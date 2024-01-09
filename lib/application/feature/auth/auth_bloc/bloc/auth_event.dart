@@ -18,5 +18,6 @@ class SignupEvent extends AuthEvent {
     required this.user,
   });
 }
+class GoogleButtonEvent extends AuthEvent{}
 class LoginButtonClickedEvent extends AuthEvent{}
 class SignUpButtonClickedEvent extends AuthEvent{}
