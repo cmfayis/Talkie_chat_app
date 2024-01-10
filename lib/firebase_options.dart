@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCTbGYrZluLbFEFVj8OSSA9To8YEt8qEKY',
-    appId: '1:19596451195:web:2c451b0d8fb812bb23b1de',
-    messagingSenderId: '19596451195',
-    projectId: 'appchat-6a1eb',
-    authDomain: 'appchat-6a1eb.firebaseapp.com',
-    storageBucket: 'appchat-6a1eb.appspot.com',
-    measurementId: 'G-H8EZSPKHKJ',
+    apiKey: 'AIzaSyAYQtBy_lFUoJ5OX_7lJhT90l9oC6hUsDM',
+    appId: '1:440133166353:web:ad4835841507abf2ea58b0',
+    messagingSenderId: '440133166353',
+    projectId: 'mychat-d1267',
+    authDomain: 'mychat-d1267.firebaseapp.com',
+    storageBucket: 'mychat-d1267.appspot.com',
+    measurementId: 'G-8NW558D7VD',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDySR4lOp3UJCd-pwFTyvEOseGrE3e4yYo',
-    appId: '1:19596451195:android:c1334ece07049a7023b1de',
-    messagingSenderId: '19596451195',
-    projectId: 'appchat-6a1eb',
-    storageBucket: 'appchat-6a1eb.appspot.com',
+    apiKey: 'AIzaSyDzDWu3nLxayc3nbYepUJBXu3s2_wu3jn0',
+    appId: '1:440133166353:android:a15766b5fce8dce2ea58b0',
+    messagingSenderId: '440133166353',
+    projectId: 'mychat-d1267',
+    storageBucket: 'mychat-d1267.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAuOToyvSpR32J3AE5de2CUZq6XYAYVFnM',
-    appId: '1:19596451195:ios:98450d1b996c2d3123b1de',
-    messagingSenderId: '19596451195',
-    projectId: 'appchat-6a1eb',
-    storageBucket: 'appchat-6a1eb.appspot.com',
+    apiKey: 'AIzaSyD1EEvRlEuS_eAzGKqj4glyx6tw3zR2qJ4',
+    appId: '1:440133166353:ios:6efe6aae143d223dea58b0',
+    messagingSenderId: '440133166353',
+    projectId: 'mychat-d1267',
+    storageBucket: 'mychat-d1267.appspot.com',
     iosBundleId: 'com.example.chatApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAuOToyvSpR32J3AE5de2CUZq6XYAYVFnM',
-    appId: '1:19596451195:ios:d402d3e3a1692af023b1de',
-    messagingSenderId: '19596451195',
-    projectId: 'appchat-6a1eb',
-    storageBucket: 'appchat-6a1eb.appspot.com',
+    apiKey: 'AIzaSyD1EEvRlEuS_eAzGKqj4glyx6tw3zR2qJ4',
+    appId: '1:440133166353:ios:62e5624958868f9cea58b0',
+    messagingSenderId: '440133166353',
+    projectId: 'mychat-d1267',
+    storageBucket: 'mychat-d1267.appspot.com',
     iosBundleId: 'com.example.chatApp.RunnerTests',
   );
 }

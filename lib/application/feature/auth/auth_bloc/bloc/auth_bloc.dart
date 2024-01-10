@@ -56,27 +56,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
     on<GoogleButtonEvent>((event, emit)async{
        final GoogleSignIn _googleSignIn = GoogleSignIn();
-      try {
-      // Trigger Google sign-in
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+       try{
+      // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+  if(googleUser != null){
 
-      if (googleSignInAccount != null) {
-        // Obtain GoogleSignInAuthentication and GoogleSignInCredential
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-        // Sign up with Google credentials
-        await auth.signInWithCredential(credential);
-        emit(GoogleButtonState());
-        
-      }
-    } catch (error) {
-      print("Google Sign-Up Error: $error");
-      return null;
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+    
+  );
+   await auth.signInWithCredential(credential);
+    }
+  // Once signed in, return the UserCredential
+  
+    } on FirebaseAuthException {
+      rethrow;
     }
 
     });

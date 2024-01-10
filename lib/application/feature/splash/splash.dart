@@ -1,4 +1,7 @@
 import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
+import 'package:chat_app/application/feature/auth/view/main_page.dart';
+import 'package:chat_app/application/feature/home/view/homepage.dart';
+import 'package:chat_app/application/feature/splash/widget/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +26,9 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthenticatedState) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacement(context, FadeRoute2(const HomePage()));
         } else if (state is UnAuthenticatedState) {
-          Navigator.pushReplacementNamed(context, '/register');
+         Navigator.pushReplacement(context, FadeRoute2( RegisterPageWrapper()));
         }
       },
       child: Scaffold(

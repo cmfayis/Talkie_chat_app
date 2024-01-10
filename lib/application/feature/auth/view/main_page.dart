@@ -33,7 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
         } else if (state is SignUpButtonClickedState) {
           Navigator.pushNamed(context, '/SignUp');
         }
+        if (state is GoogleButtonState) {
+          Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+        }
       },
+      
       child: Scaffold(
         body: Container(
           child: Stack(
@@ -54,7 +58,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       gradient: RadialGradient(
                         center: Alignment.center,
                         radius: .7,
-                        colors: [Color.fromARGB(255, 76, 34, 129), Colors.black],
+                        colors: [
+                          Color.fromARGB(255, 76, 34, 129),
+                          Colors.black
+                        ],
                       ),
                     ),
                   ),
@@ -105,7 +112,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 15,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(GoogleButtonEvent());
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -119,7 +129,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-               const   CustomSizedBox(hieght: 25,),
+                  const CustomSizedBox(
+                    hieght: 25,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -160,9 +172,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 55,
                         decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                         child: const Center(
-                          child: Text("Sign up withn mail",style: TextStyle(fontSize: 17.0),),
+                          child: Text(
+                            "Sign up withn mail",
+                            style: TextStyle(fontSize: 17.0),
+                          ),
                         ),
                       ),
                     ),
