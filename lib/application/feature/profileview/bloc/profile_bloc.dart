@@ -12,17 +12,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       
     });
     on<ImageButtonEvent>((event, emit) async{
-      try{
+  
       
     // Future<void> getImageFromLibrary() async {
-    final imagePicker = ImagePicker();
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-   File(pickedFile!.path);
-  // }
+    
   emit(ImageState());
-      }catch(e){
-
-      }
     });
   }
 }

@@ -6,8 +6,8 @@ class FadeRoute2 extends PageRouteBuilder {
   FadeRoute2(this.page)
       : super(
     pageBuilder: (context, animation, anotherAnimation) => page,
-    transitionDuration: const Duration(milliseconds: 5000),
-    reverseTransitionDuration: const Duration(milliseconds: 800),
+    transitionDuration: const Duration(milliseconds: 2000),
+    reverseTransitionDuration: const Duration(milliseconds: 500),
     transitionsBuilder: (context, animation, anotherAnimation, child) {
       animation = CurvedAnimation(
           curve: Curves.fastLinearToSlowEaseIn,
