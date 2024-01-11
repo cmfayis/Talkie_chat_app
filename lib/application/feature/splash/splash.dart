@@ -1,6 +1,6 @@
 import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
 import 'package:chat_app/application/feature/auth/view/main_page.dart';
-import 'package:chat_app/application/feature/home/view/homepage.dart';
+import 'package:chat_app/application/feature/profileview/profileview.dart';
 import 'package:chat_app/application/feature/splash/widget/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,7 +26,7 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthenticatedState) {
-          Navigator.pushReplacement(context, FadeRoute2(const HomePage()));
+          Navigator.pushReplacement(context, FadeRoute2( ProfileViewWrapper()));
         } else if (state is UnAuthenticatedState) {
          Navigator.pushReplacement(context, FadeRoute2( RegisterPageWrapper()));
         }
@@ -42,6 +42,7 @@ class SplashPage extends StatelessWidget {
                 child: Image.asset("asset/images/splash.png", width: 230),
               ),
               Text("Chat App", ),
+              
             ],
           ),
         ),
