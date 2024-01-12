@@ -42,6 +42,9 @@ dependencies:
   google_sign_in:
   dotted_border: ^2.1.0
   image_picker: ^1.0.7
+  curved_navigation_bar:
+  enefty_icons: ^1.0.7 
+  dot_navigation_bar: ^1.0.2
 
 dev_dependencies:
   flutter_test:

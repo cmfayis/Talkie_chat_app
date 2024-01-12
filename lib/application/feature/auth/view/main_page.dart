@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.pushNamed(context, '/SignUp');
         }
         if (state is GoogleButtonState) {
-          Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+          Navigator.pushNamedAndRemoveUntil(context, "/Profile", (route) => false);
         }
       },
       

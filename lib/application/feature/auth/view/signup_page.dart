@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
+      builder: (context, state) {    
         if (state is AuthenticatedState) {
           WidgetsBinding.instance?.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
@@ -137,12 +137,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       hieght: 45,
                       color: Color.fromARGB(31, 49, 48, 48),
                       text: 'SignUp'),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Already I have an account',
-                        style: TextStyle(color: Colors.blue),
-                      )),
+                  // TextButton(
+                  //     onPressed: () {
+                  //       BlocProvider.of<AuthBloc>(context).add(LoginButtonClickedEvent());
+                  //     },
+                  //     child: const Text(
+                  //       'Already I have an account',
+                  //       style: TextStyle(color: Colors.blue),
+                  //     )),
                 ],
               ),
             ),

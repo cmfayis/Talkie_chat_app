@@ -19,4 +19,4 @@ class ErrorAuthenctionState extends AuthState {
 }
 class LoginButtonClickedState extends ActionState{}
 class SignUpButtonClickedState extends ActionState{}
-class GoogleButtonState extends AuthState{}
+class GoogleButtonState extends ActionState{}

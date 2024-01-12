@@ -49,6 +49,9 @@ class _LoginPageState extends State<LoginPage> {
  Navigator.pushNamedAndRemoveUntil(
                 context, "/home", (route) => false);
         }
+        if(state is SignUpButtonClickedState){
+           Navigator.pushNamed(context, '/SignUp');
+        }
       },
 
       builder: (context, state) {
@@ -195,7 +198,9 @@ class _LoginPageState extends State<LoginPage> {
                       color: Color.fromARGB(31, 49, 48, 48),
                       text: 'Login'),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        BlocProvider.of<AuthBloc>(context).add(SignUpButtonClickedEvent());
+                      },
                       child: const Text(
                         "I Don't have any account ",
                         style: TextStyle(color: Colors.blue),

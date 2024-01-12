@@ -54,6 +54,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+    on<SignOutButtonEvent>((event, emit)async {
+final GoogleSignIn _googleSignIn = GoogleSignIn();
+ await auth.signOut();
+ await _googleSignIn.signOut();
+  emit(UnAuthenticatedState());
+    });
     on<GoogleButtonEvent>((event, emit) async {
       final GoogleSignIn _googleSignIn = GoogleSignIn();
       try {

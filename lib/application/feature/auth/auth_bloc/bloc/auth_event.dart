@@ -21,3 +21,4 @@ class SignupEvent extends AuthEvent {
 class GoogleButtonEvent extends AuthEvent{}
 class LoginButtonClickedEvent extends AuthEvent{}
 class SignUpButtonClickedEvent extends AuthEvent{}
+class SignOutButtonEvent extends AuthEvent{}
