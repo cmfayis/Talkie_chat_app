@@ -46,21 +46,22 @@ class HomePage extends StatelessWidget {
       return BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      BlocProvider.of<AuthBloc>(context)
-                          .add(SignOutButtonEvent());
-                    },
-                    icon: Icon(Icons.logout)),
-              ],
-            ),
+            // appBar: AppBar(
+            //   actions: [
+            //     IconButton(
+            //         onPressed: () {
+            //           BlocProvider.of<AuthBloc>(context)
+            //               .add(SignOutButtonEvent());
+            //         },
+            //         icon: Icon(Icons.logout)),
+            //   ],
+            // ),
             body: screens.elementAt(state.tabIndex),
        bottomNavigationBar: BottomNavigationBar(
   items: const [
     BottomNavigationBarItem(
-      icon: Icon(Icons.chat),
+      
+      icon: Icon(Icons.message_rounded),
       label: 'Chat',
     ),
     BottomNavigationBarItem(
@@ -76,12 +77,15 @@ class HomePage extends StatelessWidget {
       label: 'Settings',
     ),
   ],
-  unselectedLabelStyle:const TextStyle(color: Colors.black),
+  // unselectedLabelStyle:const TextStyle(color: Colors.green),
   key: curvednavigationkey,
   currentIndex: state.tabIndex, 
-  selectedItemColor: Colors.black,
+  selectedItemColor: Colors.green,
   unselectedItemColor: Colors.grey,
-  backgroundColor: const Color.fromARGB(83, 204, 203, 202),
+  backgroundColor: Color.fromARGB(82, 71, 71, 71),
+  elevation: 20,
+
+  showUnselectedLabels: true,
   onTap: (value) {
     BlocProvider.of<HomeBloc>(context)
         .add(TabChangeEvent(tabIndex: value));
