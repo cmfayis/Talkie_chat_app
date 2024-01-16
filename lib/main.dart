@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       title: 'Flutter Demo',
-      initialRoute: '/',
+      initialRoute: '/Profile',
       routes: {
         '/':(context)=>SplashPageWrapper(),
         '/home':(context)=>HomeWrapper(),

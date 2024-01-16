@@ -1,57 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:chat_app/application/feature/chat/widget/chatusercard.dart';
 
-class Chats extends StatefulWidget {
-  const Chats({Key? key}) : super(key: key);
+class chats extends StatefulWidget {
+  const chats({super.key});
 
   @override
-  State<Chats> createState() => _ChatsState();
+  State<chats> createState() => _ChatState();
 }
 
-class _ChatsState extends State<Chats> {
+class _ChatState extends State<chats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100.0,
-        backgroundColor: Colors.black,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: Container(
-            width: 40, // Adjust the width as needed
-            height: 40, // Adjust the height as needed
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white),
-            ),
-            child: const Icon(
-              Icons.search_sharp,
-              size: 20,
-              color: Colors.white,
-            ),
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 50, bottom: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "ChatUp ",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 1.24,
+                decoration:const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                ),
+              ),
+            ],
           ),
         ),
-        actions: const [
-          CircleAvatar(),
-          SizedBox(
-            width: 15,
-          ),
-        ],
-        centerTitle: true,
-        title: const Text(
-          "Home",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return ChatUserCard();
-        },
       ),
     );
   }

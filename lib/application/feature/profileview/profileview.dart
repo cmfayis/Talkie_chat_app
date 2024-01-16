@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/profileview/bloc/profile_bloc.dart';
 import 'package:chat_app/application/feature/profileview/widget/textfield.dart';
@@ -25,16 +27,22 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  
+  File? image;
   final namecontroller = TextEditingController();
   final descriptioncontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
-       
+        if (state is ImageSuccessState) {
+          image = state.image;
+        } else if (state is ImageErrorState) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.error)));
+        }
       },
       builder: (context, state) {
-       
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -54,20 +62,27 @@ class _ProfileViewState extends State<ProfileView> {
                     hieght: 30,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      BlocProvider.of<ProfileBloc>(context)
+                          .add(ImageButtonEvent());
+                    },
                     child: DottedBorder(
+                      // padding: EdgeInsets.all(10),
                       dashPattern: const [15, 5],
                       borderType: BorderType.Circle,
-                      child: Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: SizedBox(
-                          width: 130,
-                          height: 150,
-                          child: Center(
-                            child: Image.asset('asset/images/profile.png'),
-                          ),
-                        ),
-                      ),
+                      child: image != null
+                          ? CircleAvatar(
+                              radius: 100,
+                              backgroundImage: FileImage(File(image!.path)),
+                            )
+                          : CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              radius: 100,
+                              child: Padding(
+                                padding: EdgeInsets.all(18),
+                                child: Image.asset('asset/images/profile.png'),
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(

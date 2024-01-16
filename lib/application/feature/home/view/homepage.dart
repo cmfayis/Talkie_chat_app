@@ -30,7 +30,7 @@ class HomeWrapper extends StatelessWidget {
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   List<Widget> screens = <Widget>[
-    const Chats(),
+    const chats(),
     const Call(),
     const Contacts(),
     const Setting(),

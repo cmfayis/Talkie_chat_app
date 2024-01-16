@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 
@@ -54,11 +55,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
-    on<SignOutButtonEvent>((event, emit)async {
-final GoogleSignIn _googleSignIn = GoogleSignIn();
- await auth.signOut();
- await _googleSignIn.signOut();
-  emit(UnAuthenticatedState());
+    on<SignOutButtonEvent>((event, emit) async {
+      final GoogleSignIn _googleSignIn = GoogleSignIn();
+      await auth.signOut();
+      await _googleSignIn.signOut();
+      emit(UnAuthenticatedState());
     });
     on<GoogleButtonEvent>((event, emit) async {
       final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -87,7 +88,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn();
     on<CheckLoginStatusEvent>((event, emit) async {
       User? user;
       try {
-        await Future.delayed(Duration(seconds: 2), () {
+        await Future.delayed(Duration(seconds: 211111111), () {
           user = auth.currentUser;
         });
         if (user != null) {
