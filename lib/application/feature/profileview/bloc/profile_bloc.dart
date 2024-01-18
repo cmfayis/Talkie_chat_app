@@ -9,21 +9,16 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
-on<ImageStoregeEvent>((event, emit)async {
-final storageRef = FirebaseStorage.instance.ref();
-   try {
-     TaskSnapshot result =
-        await storageRef.child('profile_images').child(event.uid).putFile(event.image);
-   } catch (e) {
-     
-   }
-});
-
-
-    
-
-
-
+    on<SumbitEvent>((event, emit) async {
+      final storageRef = FirebaseStorage.instance.ref();
+      try {
+         await storageRef
+            .child('profile_images')
+            .child(event.uid)
+            .putFile(event.image);
+            emit(SubmitState());
+      } catch (e) {}
+    });
 
     on<ImageButtonEvent>((event, emit) async {
       final imagePicker = ImagePicker();

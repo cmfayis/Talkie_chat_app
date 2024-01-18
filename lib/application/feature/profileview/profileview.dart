@@ -7,20 +7,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileViewWrapper extends StatelessWidget {
-  const ProfileViewWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc(),
-      child: ProfileView(),
-    );
-  }
-}
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  final String? uid;
+  const ProfileView({Key? key, this.uid}) : super(key: key);
 
   @override
   _ProfileViewState createState() => _ProfileViewState();
@@ -35,7 +25,10 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
-        if (state is ImageSuccessState) {
+if(state is SubmitState){
+  Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+}
+      else if (state is ImageSuccessState) {
           image = state.image;
         } else if (state is ImageErrorState) {
           ScaffoldMessenger.of(context)
@@ -109,7 +102,9 @@ class _ProfileViewState extends State<ProfileView> {
                   Padding(
                     padding: const EdgeInsets.all(23.0),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        BlocProvider.of<ProfileBloc>(context).add(SumbitEvent(uid: widget.uid, image: image));
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.green,

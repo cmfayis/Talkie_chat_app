@@ -2,6 +2,7 @@ import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:chat_app/application/feature/auth/widget/custombutton.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/auth/widget/validate.dart';
+import 'package:chat_app/application/feature/profileview/profileview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,9 +40,9 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {    
         if (state is AuthenticatedState) {
+          final uid=state.uid;
           WidgetsBinding.instance?.addPostFrameCallback((_) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/home", (route) => false);
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProfileView(uid: uid,)), (route) => false);
           });
         }
         return Scaffold(

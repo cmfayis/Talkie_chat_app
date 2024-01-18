@@ -18,4 +18,4 @@ class ImageErrorState extends ProfileState {
     required this.error,
   });
  }
- class ImageStorageState extends ProfileState{}
+ class SubmitState extends ProfileState{}

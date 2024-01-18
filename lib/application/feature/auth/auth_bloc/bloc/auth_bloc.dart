@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "phone": event.user.phone,
               'CreatAt': DateTime.now(),
             });
-            emit(AuthenticatedState());
+            emit(AuthenticatedState(uid: user.uid));
           } else {
             emit(UnAuthenticatedState());
           }
@@ -88,11 +88,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckLoginStatusEvent>((event, emit) async {
       User? user;
       try {
-        await Future.delayed(Duration(seconds: 211111111), () {
+        await Future.delayed(Duration(seconds: 2), () {
           user = auth.currentUser;
         });
         if (user != null) {
-          emit(AuthenticatedState());
+          emit(AuthenticatedState(uid: user!.uid));
         } else {
           emit(UnAuthenticatedState());
         }

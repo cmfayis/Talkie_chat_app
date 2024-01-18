@@ -4,10 +4,10 @@ part of 'profile_bloc.dart';
 sealed class ProfileEvent {}
 
 class ImageButtonEvent extends ProfileEvent{}
-class SumbitEvent extends ProfileEvent{}
-class ImageStoregeEvent extends ProfileEvent{
+class SumbitEvent extends ProfileEvent{
   final uid;
   final image;
-  ImageStoregeEvent({required this.image,required this.uid});
+  SumbitEvent({required this.uid,required this.image});
 }
+
 
