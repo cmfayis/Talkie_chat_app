@@ -1,4 +1,3 @@
-import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:chat_app/application/feature/auth/widget/custombutton.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/auth/widget/validate.dart';
@@ -17,7 +16,7 @@ class SignUpWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(),
-      child: SignUpPage(),
+      child: const SignUpPage(),
     );
   }
 }
@@ -38,11 +37,17 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {    
+      builder: (context, state) {
         if (state is AuthenticatedState) {
-          final uid=state.uid;
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProfileView(uid: uid,)), (route) => false);
+          final uid = state.uid;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfileView(
+                          uid: uid,
+                        )),
+                (route) => false);
           });
         }
         return Scaffold(
@@ -123,20 +128,21 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   CustomButton(
                       ontap: () {
-                        final user = UserModel(
-                          name: namecontroller.text,
-                          password: passwordcontroller.text,
-                          email: emailcontroller.text,
-                          phone: phonecontoller.text,
-                        );
+                        final name = namecontroller.text;
+                        final password = passwordcontroller.text;
+                        final email = emailcontroller.text;
+                        final phone = phonecontoller.text;
                         if (formkey.currentState!.validate()) {
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(SignupEvent(user: user));
+                          BlocProvider.of<AuthBloc>(context).add(SignupEvent(
+                              email: email,
+                              password: password,
+                              phone: phone,
+                              name: name));
                         }
                       },
                       width: double.infinity,
                       hieght: 45,
-                      color: Color.fromARGB(31, 49, 48, 48),
+                      color: const Color.fromARGB(31, 49, 48, 48),
                       text: 'SignUp'),
                   // TextButton(
                   //     onPressed: () {

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +16,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoadingState());
         try {
           final userCredential = await auth.createUserWithEmailAndPassword(
-            email: event.user.email.toString(),
-            password: event.user.password.toString(),
+            email: event.email,
+            password: event.password,
           );
           final user = userCredential.user;
           if (user != null) {
             FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-              'Name': event.user.name,
-              'Email': event.user.email,
-              "phone": event.user.phone,
+              'Name': event.name,
+              'Email': event.email,
+              "phone": event.phone,
+              "uid": user.uid,
               'CreatAt': DateTime.now(),
             });
             emit(AuthenticatedState(uid: user.uid));
@@ -42,8 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoadingState());
         try {
           final UserCredential = await auth.signInWithEmailAndPassword(
-              email: event.user.email.toString(),
-              password: event.user.password.toString());
+              email: event.email, password: event.password);
           final user = UserCredential.user;
           if (user != null) {
             emit(AuthenticatedState());
@@ -56,15 +55,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
     );
     on<SignOutButtonEvent>((event, emit) async {
-      final GoogleSignIn _googleSignIn = GoogleSignIn();
+      final GoogleSignIn googleSignIn = GoogleSignIn();
       await auth.signOut();
-      await _googleSignIn.signOut();
+      await googleSignIn.signOut();
       emit(UnAuthenticatedState());
     });
     on<GoogleButtonEvent>((event, emit) async {
-      final GoogleSignIn _googleSignIn = GoogleSignIn();
+      final GoogleSignIn googleSignIn = GoogleSignIn();
       try {
-        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
         if (googleUser != null) {
           final GoogleSignInAuthentication googleAuth =
               await googleUser.authentication;
@@ -88,7 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckLoginStatusEvent>((event, emit) async {
       User? user;
       try {
-        await Future.delayed(Duration(seconds: 2), () {
+        await Future.delayed(const Duration(seconds: 2), () {
           user = auth.currentUser;
         });
         if (user != null) {

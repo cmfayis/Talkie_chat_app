@@ -1,4 +1,3 @@
-import 'package:chat_app/application/feature/auth/model/model.dart';
 import 'package:chat_app/application/feature/auth/widget/custombutton.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class LoginPageWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(),
-      child: LoginPage(),
+      child: const LoginPage(),
     );
   }
 }
@@ -36,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthenticatedState) {
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
                 context, "/home", (route) => false);
           });
@@ -45,17 +44,14 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));
         }
-        if(state is GoogleButtonState){
- Navigator.pushNamedAndRemoveUntil(
-                context, "/home", (route) => false);
+        if (state is GoogleButtonState) {
+          Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
         }
-        if(state is SignUpButtonClickedState){
-           Navigator.pushNamed(context, '/SignUp');
+        if (state is SignUpButtonClickedState) {
+          Navigator.pushNamed(context, '/SignUp');
         }
       },
-
       builder: (context, state) {
-       
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -66,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
               key: formkey,
               child: Column(
                 children: [
-                  CustomSizedBox(
+                  const CustomSizedBox(
                     hieght: 25,
                   ),
                   const Text(
@@ -94,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                           print('clicked facebook');
                         },
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
@@ -109,10 +105,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          BlocProvider.of<AuthBloc>(context).add(GoogleButtonEvent());
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(GoogleButtonEvent());
                         },
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
@@ -152,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                       )
                     ],
                   ),
-                  CustomSizedBox(
+                  const CustomSizedBox(
                     hieght: 45,
                   ),
                   Padding(
@@ -184,22 +181,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   CustomButton(
                       ontap: () {
-                        final user = UserModel(
-                          email: emailcontroller.text,
-                          password: passwordcontroller.text,
-                        );
+                        final password = passwordcontroller.text;
+                        final email = emailcontroller.text;
                         if (formkey.currentState!.validate()) {
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(LoginEvent(user: user));
+                          BlocProvider.of<AuthBloc>(context).add(
+                              LoginEvent(password: password, email: email));
                         }
                       },
                       width: double.infinity,
                       hieght: 45,
-                      color: Color.fromARGB(31, 49, 48, 48),
+                      color: const Color.fromARGB(31, 49, 48, 48),
                       text: 'Login'),
                   TextButton(
                       onPressed: () {
-                        BlocProvider.of<AuthBloc>(context).add(SignUpButtonClickedEvent());
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(SignUpButtonClickedEvent());
                       },
                       child: const Text(
                         "I Don't have any account ",

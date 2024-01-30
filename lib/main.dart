@@ -1,3 +1,4 @@
+import 'package:chat_app/application/feature/SearchFolder/bloc/search_bloc.dart';
 import 'package:chat_app/application/feature/auth/view/loginpage.dart';
 import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/view/signup_page.dart';
@@ -24,8 +25,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProfileBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -36,12 +44,12 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         initialRoute: '/',
         routes: {
-          '/': (context) => SplashPageWrapper(),
-          '/home': (context) => HomeWrapper(),
-          '/register': (context) => RegisterPageWrapper(),
-          '/Login': (context) => LoginPageWrapper(),
-          '/SignUp': (context) => SignUpWrapper(),
-          '/Profile': (context) => ProfileView(),
+          '/': (context) => const SplashPageWrapper(),
+          '/home': (context) => const HomeWrapper(),
+          '/register': (context) => const RegisterPageWrapper(),
+          '/Login': (context) => const LoginPageWrapper(),
+          '/SignUp': (context) => const SignUpWrapper(),
+          '/Profile': (context) => const ProfileView(),
         },
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:chat_app/application/feature/SearchFolder/search.dart';
 import 'package:flutter/material.dart';
 
 class chats extends StatefulWidget {
@@ -11,6 +12,10 @@ class _ChatState extends State<chats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Search()));
+      }),
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Container(
@@ -45,7 +50,7 @@ class _ChatState extends State<chats> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 1.24,
-                decoration:const BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),

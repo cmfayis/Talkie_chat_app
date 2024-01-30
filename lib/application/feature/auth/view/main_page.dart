@@ -11,7 +11,7 @@ class RegisterPageWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(),
-      child: RegisterPage(),
+      child: const RegisterPage(),
     );
   }
 }
@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.pushNamed(context, '/SignUp');
         }
         if (state is GoogleButtonState) {
-          Navigator.pushNamedAndRemoveUntil(context, "/Profile", (route) => false);
+          Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
         }
       },
       
