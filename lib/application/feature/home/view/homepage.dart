@@ -46,16 +46,6 @@ class HomePage extends StatelessWidget {
       return BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return Scaffold(
-            // appBar: AppBar(
-            //   actions: [
-            //     IconButton(
-            //         onPressed: () {
-            //           BlocProvider.of<AuthBloc>(context)
-            //               .add(SignOutButtonEvent());
-            //         },
-            //         icon: Icon(Icons.logout)),
-            //   ],
-            // ),
             body: screens.elementAt(state.tabIndex),
        bottomNavigationBar: BottomNavigationBar(
   items: const [
@@ -82,7 +72,7 @@ class HomePage extends StatelessWidget {
   currentIndex: state.tabIndex, 
   selectedItemColor: Colors.green,
   unselectedItemColor: Colors.grey,
-  backgroundColor: Color.fromARGB(82, 71, 71, 71),
+  backgroundColor: const Color.fromARGB(82, 71, 71, 71),
   elevation: 20,
 
   showUnselectedLabels: true,

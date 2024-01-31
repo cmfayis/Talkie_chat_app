@@ -80,7 +80,7 @@ class _SearchState extends State<Search> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ChatPage(
-                                friendId: searchResult[index]['uid'],
+                                // friendId: searchResult[index]['uid'],
                                 friendName: searchResult[index]['Name'],
                                 // friendImage: searchResult[index]['image'],
                               ),
@@ -88,11 +88,11 @@ class _SearchState extends State<Search> {
                           );
                         },
                         child: ListTile(
-                          leading: CircleAvatar(
-                            child: Image.network(searchResult[index]['image']),
-                          ),
-                          title: Text(searchResult[index]['name']),
-                          subtitle: Text(searchResult[index]['email']),
+                          // leading: CircleAvatar(
+                          //   child: Image.network(searchResult[index]['image']),
+                          // ),
+                          title: Text(searchResult[index]['Name']),
+                          subtitle: Text(searchResult[index]['Email']),
                           trailing: const Icon(Icons.message),
                         ),
                       );
