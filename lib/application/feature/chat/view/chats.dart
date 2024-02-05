@@ -1,8 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/application/feature/SearchFolder/search.dart';
+import 'package:chat_app/application/feature/model/usermodel.dart';
 import 'package:flutter/material.dart';
 
+
+
+
 class chats extends StatefulWidget {
-  const chats({super.key});
+  UserModel? user;
+   chats({
+    Key? key,
+    this.user,
+  }) : super(key: key);
 
   @override
   State<chats> createState() => _ChatState();

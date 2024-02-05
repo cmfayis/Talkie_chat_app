@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:chat_app/application/feature/model/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
-
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -28,7 +28,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "uid": user.uid,
               'CreatAt': DateTime.now(),
             });
-            emit(AuthenticatedState(uid: user.uid));
+       DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      UserModel userModel = UserModel.fromJson(userData);
+            emit(AuthenticatedState(user: userModel));
           } else {
             emit(UnAuthenticatedState());
           }
@@ -45,7 +47,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               email: event.email, password: event.password);
           final user = UserCredential.user;
           if (user != null) {
-            emit(AuthenticatedState());
+            DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      UserModel userModel = UserModel.fromJson(userData);
+            emit(AuthenticatedState(user:userModel ));
           } else {
             emit(UnAuthenticatedState());
           }
@@ -71,7 +75,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             accessToken: googleAuth.accessToken,
             idToken: googleAuth.idToken,
           );
-          await auth.signInWithCredential(credential);
+          UserCredential userCredential =
+              await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .set({
+            'email': userCredential.user!.email,
+            'name': userCredential.user!.displayName,
+            'image': userCredential.user!.photoURL,
+            'uid': userCredential.user!.uid,
+            'date': DateTime.now(),
+          });
           emit(GoogleButtonState());
         }
       } on FirebaseAuthException {
@@ -85,13 +100,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(LoginButtonClickedState());
     });
     on<CheckLoginStatusEvent>((event, emit) async {
-      User? user;
+      User? users;
       try {
         await Future.delayed(const Duration(seconds: 2), () {
-          user = auth.currentUser;
+          users = auth.currentUser;
         });
-        if (user != null) {
-          emit(AuthenticatedState(uid: user!.uid));
+        if (users != null) {
+     
+          emit(AuthenticatedState());
         } else {
           emit(UnAuthenticatedState());
         }

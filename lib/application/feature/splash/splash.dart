@@ -26,9 +26,13 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthenticatedState) {
-          Navigator.pushReplacement(context, FadeRoute2( HomeWrapper()));
+          Navigator.pushReplacement(
+              context,
+              FadeRoute2(HomePage(
+                user: state.user,
+              )));
         } else if (state is UnAuthenticatedState) {
-         Navigator.pushReplacement(context, FadeRoute2( RegisterPageWrapper()));
+          Navigator.pushReplacement(context, FadeRoute2(RegisterPageWrapper()));
         }
       },
       child: Scaffold(
@@ -41,8 +45,9 @@ class SplashPage extends StatelessWidget {
               Container(
                 child: Image.asset("asset/images/splash.png", width: 230),
               ),
-              Text("Chat App", ),
-              
+              Text(
+                "Chat App",
+              ),
             ],
           ),
         ),

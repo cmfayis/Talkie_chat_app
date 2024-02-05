@@ -5,9 +5,8 @@ sealed class ProfileEvent {}
 
 class ImageButtonEvent extends ProfileEvent{}
 class SumbitEvent extends ProfileEvent{
-  final uid;
   final image;
-  SumbitEvent({required this.uid,required this.image});
+  SumbitEvent({required this.image});
 }
 
 

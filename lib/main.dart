@@ -1,7 +1,10 @@
+
 import 'package:chat_app/application/feature/SearchFolder/bloc/search_bloc.dart';
+import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
 import 'package:chat_app/application/feature/auth/view/loginpage.dart';
 import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/view/signup_page.dart';
+import 'package:chat_app/application/feature/home/Homebloc/home_bloc.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/profileview/bloc/profile_bloc.dart';
 import 'package:chat_app/application/feature/profileview/profileview.dart';
@@ -25,8 +28,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+  
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AuthBloc(),
+        ),
         BlocProvider(
           create: (context) => ProfileBloc(),
         ),
@@ -45,7 +55,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashPageWrapper(),
-          '/home': (context) => const HomeWrapper(),
+          '/home': (context) =>  HomePage(),
           '/register': (context) => const RegisterPageWrapper(),
           '/Login': (context) => const LoginPageWrapper(),
           '/SignUp': (context) => const SignUpWrapper(),

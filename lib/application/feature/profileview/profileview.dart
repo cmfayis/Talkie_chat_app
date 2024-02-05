@@ -7,17 +7,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class ProfileView extends StatefulWidget {
-  final String? uid;
-  const ProfileView({Key? key, this.uid}) : super(key: key);
+  const ProfileView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProfileViewState createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  
   File? image;
   final namecontroller = TextEditingController();
   final descriptioncontroller = TextEditingController();
@@ -25,10 +24,9 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
-if(state is SubmitState){
-  Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-}
-      else if (state is ImageSuccessState) {
+        if (state is SubmitState) {
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        } else if (state is ImageSuccessState) {
           image = state.image;
         } else if (state is ImageErrorState) {
           ScaffoldMessenger.of(context)
@@ -103,7 +101,8 @@ if(state is SubmitState){
                     padding: const EdgeInsets.all(23.0),
                     child: InkWell(
                       onTap: () {
-                        BlocProvider.of<ProfileBloc>(context).add(SumbitEvent(uid: widget.uid, image: image));
+                        BlocProvider.of<ProfileBloc>(context)
+                            .add(SumbitEvent(image: image));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -115,10 +114,6 @@ if(state is SubmitState){
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 300, top: 20),
-                    child: TextButton(onPressed: () {}, child: Text('Skip >>')),
-                  )
                 ],
               ),
             ),

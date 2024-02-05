@@ -39,14 +39,10 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is AuthenticatedState) {
-          final uid = state.uid;
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => ProfileView(
-                          uid: uid,
-                        )),
+                MaterialPageRoute(builder: (context) => const ProfileView()),
                 (route) => false);
           });
         }
