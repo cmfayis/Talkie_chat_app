@@ -1,22 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:chat_app/application/feature/contacts/view/contact.dart';
-import 'package:chat_app/application/feature/model/usermodel.dart';
 import 'package:chat_app/application/feature/setting/view/setting.dart';
-
 import '../../auth/auth_bloc/bloc/auth_bloc.dart';
 import '../../call/view/call.dart';
 import '../../chat/view/chats.dart';
 import '../Homebloc/home_bloc.dart';
 
 class HomePage extends StatelessWidget {
-
-
   const HomePage({
     Key? key,
-     
   }) : super(key: key);
 
   @override
@@ -25,7 +19,7 @@ class HomePage extends StatelessWidget {
       chats(),
       const Call(),
       const Contacts(),
-      const Setting(),
+      Setting(),
     ];
     GlobalKey<CurvedNavigationBarState> curvednavigationkey = GlobalKey();
 

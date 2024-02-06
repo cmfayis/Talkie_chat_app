@@ -22,7 +22,7 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        backgroundColor: const Color.fromARGB(255, 243, 220, 220),
+        backgroundColor:  Color.fromARGB(255, 1, 110, 88),
         title: Row(
           children: [
             ClipRRect(

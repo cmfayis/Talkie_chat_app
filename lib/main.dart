@@ -6,6 +6,7 @@ import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/view/signup_page.dart';
 import 'package:chat_app/application/feature/home/Homebloc/home_bloc.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
+import 'package:chat_app/application/feature/personalData/bloc/bloc/chat_bloc.dart';
 import 'package:chat_app/application/feature/profileview/bloc/profile_bloc.dart';
 import 'package:chat_app/application/feature/profileview/profileview.dart';
 import 'package:chat_app/application/feature/splash/splash.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
   
     return MultiBlocProvider(
       providers: [
+         BlocProvider(
+          create: (context) => ChatBloc(),
+        ),
         BlocProvider(
           create: (context) => HomeBloc(),
         ),
