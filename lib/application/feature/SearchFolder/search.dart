@@ -1,9 +1,9 @@
 import 'package:chat_app/application/feature/personalData/personalchat.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'bloc/search_bloc.dart';
-// import 'personalchat.dart';
+
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -14,6 +14,7 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   TextEditingController textEditingController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -80,17 +81,22 @@ class _SearchState extends State<Search> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ChatPage(
-                                // friendId: searchResult[index]['uid'],
+                             
+                                friendId: searchResult[index]['uid'],
                                 friendName: searchResult[index]['Name'],
-                                // friendImage: searchResult[index]['image'],
+                                friendImage: searchResult[index]['image'],
                               ),
                             ),
                           );
                         },
                         child: ListTile(
-                          // leading: CircleAvatar(
-                          //   child: Image.network(searchResult[index]['image']),
-                          // ),
+                          leading:  ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.network(
+                searchResult[index]['image'],
+                height: 55,
+              ),
+            ),
                           title: Text(searchResult[index]['Name']),
                           subtitle: Text(searchResult[index]['Email']),
                           trailing: const Icon(Icons.message),

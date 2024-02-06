@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:chat_app/application/feature/SearchFolder/bloc/modeldata/model.dart';
+import 'package:chat_app/application/feature/model/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
@@ -46,7 +46,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             .collection("users")
             .doc(user.uid)
             .get();
-        final userModel = UserModel.fromJSON(userData);
+        final userModel = UserModel.fromJson(userData);
         emit(CurrentUserLoaded(userModel: userModel));
       } else {
         emit(CurrentUserNotFound());

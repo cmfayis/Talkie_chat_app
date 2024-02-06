@@ -12,17 +12,17 @@ import '../../chat/view/chats.dart';
 import '../Homebloc/home_bloc.dart';
 
 class HomePage extends StatelessWidget {
-  final UserModel? user;
+
 
   const HomePage({
     Key? key,
-     this.user,
+     
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      chats(user: user),
+      chats(),
       const Call(),
       const Contacts(),
       const Setting(),

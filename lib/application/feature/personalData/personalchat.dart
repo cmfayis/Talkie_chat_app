@@ -1,20 +1,22 @@
+import 'package:chat_app/application/feature/personalData/widget/messagetextfield.dart';
+import 'package:chat_app/application/feature/personalData/widget/singlemessage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
-  // final UserModel currentUser;
-  // final String friendId;
+  final String friendId;
   final String friendName;
-  // final String friendImage;
+  final String friendImage;
   ChatPage({
     Key? key,
-    // required this.currentUser,
-    // required this.friendId,
+    required this.friendId,
     required this.friendName,
-    // required this.friendImage,
+    required this.friendImage,
   }) : super(key: key);
 
   final TextEditingController textEditingController = TextEditingController();
-
+  User? currentUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,15 +25,15 @@ class ChatPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 243, 220, 220),
         title: Row(
           children: [
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(80),
-            //   child: Image.network(
-            //     friendImage,
-            //     height: 35,
-            //   ),
-            // ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: Image.network(
+                friendImage,
+                height: 55,
+              ),
+            ),
             const SizedBox(
-              width: 5,
+              width: 15,
             ),
             Text(
               friendName,
@@ -41,30 +43,47 @@ class ChatPage extends StatelessWidget {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Row(
-              children: <Widget>[
-                const SizedBox(
-                    width: 10), // Add some space between text and TextField
-                const Flexible(
-                  // Use Flexible to allow TextField to occupy remaining space
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Message',
-                        border: OutlineInputBorder()),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  child:
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.send)),
-                )
-              ],
-            ),
-          ),
+          Expanded(
+              child: Container(
+            padding:const EdgeInsets.all(10),
+            decoration:const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25))),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(currentUser!.uid)
+                    .collection('messages')
+                    .doc(friendId)
+                    .collection('chats')
+                    .orderBy("date", descending: true)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data.docs.length < 1) {
+                      return const Center(
+                        child: Text("Say Hi"),
+                      );
+                    }
+                    return ListView.builder(
+                        itemCount: snapshot.data.docs.length,
+                        reverse: true,
+                        physics:const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          bool isMe = snapshot.data.docs[index]['senderId'] ==
+                              currentUser!.uid;
+                          return SingleMessage(
+                              message: snapshot.data.docs[index]['message'],
+                              isMe: isMe);
+                        });
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                }),
+          )),
+          MessageTextField(currentUser!.uid, friendId),
         ],
       ),
     );

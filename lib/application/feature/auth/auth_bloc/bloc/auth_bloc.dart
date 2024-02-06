@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_app/application/feature/model/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "uid": user.uid,
               'CreatAt': DateTime.now(),
             });
-       DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-      UserModel userModel = UserModel.fromJson(userData);
-            emit(AuthenticatedState(user: userModel));
+            emit(AuthenticatedState());
           } else {
             emit(UnAuthenticatedState());
           }
@@ -47,9 +44,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               email: event.email, password: event.password);
           final user = UserCredential.user;
           if (user != null) {
-            DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-      UserModel userModel = UserModel.fromJson(userData);
-            emit(AuthenticatedState(user:userModel ));
+      //       DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      // UserModel userModel = UserModel.fromJson(userData);
+            emit(AuthenticatedState());
           } else {
             emit(UnAuthenticatedState());
           }
@@ -81,8 +78,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               .collection('users')
               .doc(userCredential.user!.uid)
               .set({
-            'email': userCredential.user!.email,
-            'name': userCredential.user!.displayName,
+            'Email': userCredential.user!.email,
+            'Name': userCredential.user!.displayName,
             'image': userCredential.user!.photoURL,
             'uid': userCredential.user!.uid,
             'date': DateTime.now(),

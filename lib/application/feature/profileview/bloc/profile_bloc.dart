@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,14 +12,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
     User? user = FirebaseAuth.instance.currentUser;
     on<SumbitEvent>((event, emit) async {
-
       final storageRef = FirebaseStorage.instance.ref();
       try {
-         await storageRef
+        TaskSnapshot uploadTask = await storageRef
             .child('profile_images')
             .child(user!.uid)
             .putFile(event.image);
-            emit(SubmitState());
+        String imageUrl = await uploadTask.ref.getDownloadURL();
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({
+          'image': imageUrl,
+        });
+        emit(SubmitState());
       } catch (e) {}
     });
 

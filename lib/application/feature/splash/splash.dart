@@ -29,7 +29,6 @@ class SplashPage extends StatelessWidget {
           Navigator.pushReplacement(
               context,
               FadeRoute2(HomePage(
-                user: state.user,
               )));
         } else if (state is UnAuthenticatedState) {
           Navigator.pushReplacement(context, FadeRoute2(RegisterPageWrapper()));
