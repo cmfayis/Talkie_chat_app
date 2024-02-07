@@ -18,40 +18,42 @@ class _MessageTextFieldState extends State<MessageTextField> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding:const EdgeInsetsDirectional.all(8),
+      padding: const EdgeInsetsDirectional.all(8),
       child: Row(
         children: [
           Expanded(
               child: TextField(
             controller: _controller,
-            decoration: InputDecoration(
-                labelText: "Type your Message",
-                fillColor: Colors.grey[100],
+            decoration: InputDecoration(        
+                hintText: "Type your Message",
+                fillColor: Colors.grey[200],
                 filled: true,
                 border: OutlineInputBorder(
-                    borderSide:const BorderSide(width: 0),
-                    gapPadding: 10,
-                    borderRadius: BorderRadius.circular(25))),
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20))
+                    ),
           )),
-        const  SizedBox(
+          const SizedBox(
             width: 20,
           ),
           GestureDetector(
             onTap: () async {
               String message = _controller.text;
               _controller.clear();
-              BlocProvider.of<ChatBloc>(context).add(SendEvent(
-                  message: message,
-                  currentId: widget.currentId,
-                  friendId: widget.friendId));
+              if (message.isNotEmpty) {
+                BlocProvider.of<ChatBloc>(context).add(SendEvent(
+                    message: message,
+                    currentId: widget.currentId,
+                    friendId: widget.friendId));
+              }
             },
             child: Container(
-              padding:const EdgeInsets.all(8),
-              decoration:const BoxDecoration(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.blue,
               ),
-              child:const Icon(
+              child: const Icon(
                 Icons.send,
                 color: Colors.white,
               ),
