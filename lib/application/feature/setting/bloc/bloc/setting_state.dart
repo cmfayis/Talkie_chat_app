@@ -12,4 +12,7 @@ class FetchState extends SettingState {
     required this.name,
     required this.iamgeUrl,
   });
+ 
 }
+ class LogoutState extends SettingState{}
+ class HomePageState extends SettingState{}

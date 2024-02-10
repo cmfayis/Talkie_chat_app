@@ -22,5 +22,12 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
         emit(FetchState(name: name, iamgeUrl: imageUrl));
       }
     });
+    on<LogoutEvent>((event, emit) {
+    FirebaseAuth.instance.signOut();
+    emit(LogoutState());
+    });
+    on<HomePageEvent>((event, emit) {
+      emit(HomePageState());
+    });
   }
 }

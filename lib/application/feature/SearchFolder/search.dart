@@ -19,6 +19,8 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: Color.fromARGB(255, 31, 117, 101),
         title: const Text("Search"),
       ),
       body: BlocConsumer<SearchBloc, SearchState>(
@@ -89,13 +91,10 @@ class _SearchState extends State<Search> {
                           );
                         },
                         child: ListTile(
-                          leading:  ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.network(
-                searchResult[index]['image'],
-                height: 55,
-              ),
-            ),
+                          leading: CircleAvatar(                           
+                            backgroundImage: NetworkImage(searchResult[index]['image']),
+                          ),
+           
                           title: Text(searchResult[index]['Name']),
                           subtitle: Text(searchResult[index]['Email']),
                           trailing: const Icon(Icons.message),

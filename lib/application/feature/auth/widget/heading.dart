@@ -14,13 +14,13 @@ class HeadingText extends StatelessWidget {
           children: [
             TextSpan(
               text: 'Connect\nfriends',
-              style: TextStyle(color: Colors.white, fontSize: 75),
+              style: TextStyle(color: Colors.white, fontSize: 55),
             ),
             TextSpan(
               text: '\neasily &\nquickly\n',
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 70.0,
+                  fontSize: 50.0,
                   fontWeight: FontWeight.w800),
             ),
             TextSpan(

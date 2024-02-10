@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 class UserModel{
   String email;
   String name;
@@ -24,4 +25,6 @@ class UserModel{
           uid: snapshot['uid'],
     );
   }
+
+  
 }

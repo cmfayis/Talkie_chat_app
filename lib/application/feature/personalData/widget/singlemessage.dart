@@ -1,32 +1,53 @@
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 class SingleMessage extends StatelessWidget {
+  final  currentTime;
   final String message;
   final bool isMe;
-  SingleMessage({
-    required this.message,
-    required this.isMe
-  });
+  SingleMessage(
+      {required this.message, required this.isMe, required this.currentTime});
   @override
   Widget build(BuildContext context) {
+     DateTime dateTime = currentTime.toDate();
+     String formattedTime = DateFormat.Hm().format(dateTime);
     return Column(
       children: [
         Row(
-          mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisAlignment:
+              isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(10),
-              constraints: BoxConstraints(maxWidth: 200),
-              decoration: BoxDecoration(
-                color: isMe ? Color.fromARGB(255, 46, 150, 141) : Colors.grey[300],
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(12),bottomLeft:Radius.circular(12),bottomRight: Radius.circular(12) )
-              ),
-              child: Text(message,style: TextStyle( color:isMe? Colors.white:Colors.black),)
-            ),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
+                constraints: const BoxConstraints(maxWidth: 200),
+                decoration: BoxDecoration(
+                    color: isMe
+                        ? const Color.fromARGB(255, 220, 248, 198)
+                        : Colors.white,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomLeft: Radius.circular(12),
+                      topRight: Radius.circular(15),
+                    )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      message,
+                      style:const TextStyle(color: Colors.black),
+                    ),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(formattedTime),
+                      ],
+                    ),
+                  ],
+                )),
           ],
-          
         ),
       ],
     );

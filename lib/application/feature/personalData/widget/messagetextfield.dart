@@ -17,27 +17,27 @@ class _MessageTextFieldState extends State<MessageTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Color(0xFFECE5DD),
       padding: const EdgeInsetsDirectional.all(8),
       child: Row(
         children: [
           Expanded(
               child: TextField(
             controller: _controller,
-            decoration: InputDecoration(        
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(top: 10, left: 14),
                 hintText: "Type your Message",
-                fillColor: Colors.grey[200],
+                fillColor: Colors.white,
                 filled: true,
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20))
-                    ),
+                    borderRadius: BorderRadius.circular(20))),
           )),
           const SizedBox(
             width: 20,
           ),
           GestureDetector(
-            onTap: () async {
+            onTap: () async {  
               String message = _controller.text;
               _controller.clear();
               if (message.isNotEmpty) {

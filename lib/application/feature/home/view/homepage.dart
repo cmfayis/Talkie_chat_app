@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app/application/feature/contacts/view/contact.dart';
@@ -8,20 +7,24 @@ import '../../call/view/call.dart';
 import '../../chat/view/chats.dart';
 import '../Homebloc/home_bloc.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
       chats(),
       const Call(),
       const Contacts(),
-      Setting(),
+      const Setting(),
     ];
-    GlobalKey<CurvedNavigationBarState> curvednavigationkey = GlobalKey();
 
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
@@ -49,11 +52,10 @@ class HomePage extends StatelessWidget {
                     label: 'Person',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(Icons.person),
                     label: 'Settings',
                   ),
                 ],
-                key: curvednavigationkey,
                 currentIndex: state.tabIndex,
                 selectedItemColor: Colors.green,
                 unselectedItemColor: Colors.grey,
