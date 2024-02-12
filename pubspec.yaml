@@ -46,7 +46,9 @@ dependencies:
   dot_navigation_bar: ^1.0.2
   firebase_storage:
   cached_network_image:
-  intl: 
+  intl:
+  ionicons: ^0.2.2
+  
 
 dev_dependencies:
   flutter_test:

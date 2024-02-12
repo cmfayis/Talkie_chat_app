@@ -1,18 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class SingleMessage extends StatelessWidget {
-  final  currentTime;
+  final currentTime;
   final String message;
   final bool isMe;
   SingleMessage(
       {required this.message, required this.isMe, required this.currentTime});
   @override
   Widget build(BuildContext context) {
-     DateTime dateTime = currentTime.toDate();
-     String formattedTime = DateFormat.Hm().format(dateTime);
+    DateTime dateTime = currentTime.toDate();
+    String formattedTime = DateFormat.Hm().format(dateTime);
     return Column(
       children: [
         Row(
@@ -32,20 +30,9 @@ class SingleMessage extends StatelessWidget {
                       bottomLeft: Radius.circular(12),
                       topRight: Radius.circular(15),
                     )),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      message,
-                      style:const TextStyle(color: Colors.black),
-                    ),
-                    Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(formattedTime),
-                      ],
-                    ),
-                  ],
+                child: Text(
+                  "${message}\n ${formattedTime}",
+                  style: const TextStyle(color: Colors.black),
                 )),
           ],
         ),

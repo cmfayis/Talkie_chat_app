@@ -1,3 +1,4 @@
+import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/personalData/widget/messagetextfield.dart';
 import 'package:chat_app/application/feature/personalData/widget/singlemessage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,9 +22,10 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFECE5DD),
+      backgroundColor:const Color(0xFFECE5DD),
       appBar: AppBar(
-        actions: [Icon(Icons.more_vert)],
+        backgroundColor: const Color.fromARGB(255, 31, 117, 101),
+        actions: const [Icon(Icons.more_vert)],
         toolbarHeight: 80,
         automaticallyImplyLeading: true,
         title: Row(
@@ -87,7 +89,7 @@ class ChatPage extends StatelessWidget {
                                   .collection('chats')
                                   .doc(data.id)
                                   .delete();
-                                    await FirebaseFirestore.instance
+                              await FirebaseFirestore.instance
                                   .collection('users')
                                   .doc(friendId)
                                   .collection('messages')
@@ -97,7 +99,7 @@ class ChatPage extends StatelessWidget {
                                   .delete();
                             },
                             child: SingleMessage(
-                              currentTime: data['date'],
+                                currentTime: data['date'],
                                 message: snapshot.data.docs[index]['message'],
                                 isMe: isMe),
                           );
@@ -107,6 +109,9 @@ class ChatPage extends StatelessWidget {
                 }),
           )),
           MessageTextField(currentUser!.uid, friendId),
+          const CustomSizedBox(
+            hieght:6,
+          ),
         ],
       ),
     );

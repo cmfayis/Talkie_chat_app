@@ -52,5 +52,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .set({"last_msg": event.message});
       });
     });
+    on<FileSendEvent>((event, emit) {
+      emit(FileSendState());
+    });
   }
 }

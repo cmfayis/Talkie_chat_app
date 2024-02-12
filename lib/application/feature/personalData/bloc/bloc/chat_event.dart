@@ -11,3 +11,4 @@ class SendEvent extends ChatEvent {
     required this.message,
     required this.currentId, required this.friendId});
 }
+class FileSendEvent extends ChatEvent{}
