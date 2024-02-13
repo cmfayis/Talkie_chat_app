@@ -16,13 +16,33 @@ class chats extends StatefulWidget {
   State<chats> createState() => _ChatState();
 }
 
-class _ChatState extends State<chats> {
+class _ChatState extends State<chats>with WidgetsBindingObserver {
   User? user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    setStatus("Online");
+  }
+  void setStatus(String status)async{
+    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+      'status':status
+    });
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state ==AppLifecycleState.resumed){
+      setStatus('Online');
+    }else{
+      setStatus("Ofline");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 31, 117, 101),
+        backgroundColor:Colors.black ,
         toolbarHeight: 90,
         title: const Text(
           'Chat App',
@@ -30,7 +50,7 @@ class _ChatState extends State<chats> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromARGB(255, 31, 117, 101),
+          backgroundColor: Colors.black,
           child: const Icon(
             Icons.chat,
             color: Colors.white,
@@ -83,13 +103,14 @@ class _ChatState extends State<chats> {
                                   title: Text(
                                     friend['Name'],
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w600
                                     ),
                                   ),
                                   subtitle: Container(
                                     child: Text(
                                       "$lastMsg",
-                                      style:const TextStyle(color: Colors.grey),
+                                      style:const TextStyle(color: Color.fromARGB(255, 133, 133, 133)),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),

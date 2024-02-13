@@ -1,4 +1,7 @@
+import 'package:chat_app/application/feature/personalData/bloc/bloc/chat_bloc.dart';
+import 'package:chat_app/application/feature/profileview/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 bottomSheet(BuildContext context) {
@@ -11,7 +14,9 @@ bottomSheet(BuildContext context) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          chatIcon(Ionicons.location_outline, "Location", () {}),
+          chatIcon(Ionicons.location_outline, "Location", () {
+            BlocProvider.of<ProfileBloc>(context).add(ImageButtonEvent());
+          }),
           chatIcon(Ionicons.camera_outline, "Camera", () {}),
           chatIcon(Ionicons.images_outline, "Photo", () {}),
         ],
@@ -22,7 +27,7 @@ bottomSheet(BuildContext context) {
 
 chatIcon(IconData icon, String title, VoidCallback onTap) {
   return InkWell(
-    onTap: () {},
+    onTap: onTap,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

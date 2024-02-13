@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 part 'chat_event.dart';
@@ -54,6 +55,21 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
     on<FileSendEvent>((event, emit) {
       emit(FileSendState());
+    });
+    on<GalleryImagesEvent>((event, emit)async {
+       final imagePicker = ImagePicker();
+      try {
+        final pickedFile =
+            await imagePicker.pickImage(source: ImageSource.gallery);
+
+        if (pickedFile != null) {
+          emit(GalleryImagesState());
+        } else {
+          // emit(ImageErrorState(error: 'Please select an image.'));
+        }
+      } catch (e) {
+        // emit(ImageErrorState(error: 'Error picking image: $e'));
+        print(e.toString());}
     });
   }
 }

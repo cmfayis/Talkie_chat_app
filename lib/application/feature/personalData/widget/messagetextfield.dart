@@ -28,7 +28,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
        }
       },
       child: Container(
-        color: Color(0xFFECE5DD),
+        color: Colors.white,
         padding: const EdgeInsetsDirectional.all(8),
         child: Row(
           children: [
@@ -43,7 +43,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                       icon: const Icon(Icons.attach_file)),
                   contentPadding: const EdgeInsets.only(top: 10, left: 14),
                   hintText: "Type your Message",
-                  fillColor: Colors.white,
+                  fillColor:const Color.fromARGB(255, 226, 229, 229),
                   filled: true,
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,

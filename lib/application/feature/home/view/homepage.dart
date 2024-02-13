@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app/application/feature/contacts/view/contact.dart';
@@ -16,7 +17,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>{
+
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
@@ -57,9 +59,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
                 currentIndex: state.tabIndex,
-                selectedItemColor: Colors.green,
+                selectedItemColor: Colors.black,
                 unselectedItemColor: Colors.grey,
-                backgroundColor: const Color.fromARGB(82, 71, 71, 71),
                 elevation: 20,
                 showUnselectedLabels: true,
                 onTap: (value) {

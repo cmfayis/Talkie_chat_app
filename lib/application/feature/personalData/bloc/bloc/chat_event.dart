@@ -12,3 +12,4 @@ class SendEvent extends ChatEvent {
     required this.currentId, required this.friendId});
 }
 class FileSendEvent extends ChatEvent{}
+class GalleryImagesEvent extends ChatEvent{}

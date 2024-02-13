@@ -22,12 +22,21 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:const Color(0xFFECE5DD),
+      backgroundColor:  Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 31, 117, 101),
-        actions: const [Icon(Icons.more_vert)],
+        elevation: 1,
+        backgroundColor: Colors.white,
+        actions: const [Row(
+          children: [
+            Icon(Icons.more_vert),
+              SizedBox(
+              width: 15,
+            ),
+          ],
+        )],
         toolbarHeight: 80,
         automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Row(
           children: [
             CircleAvatar(
@@ -39,7 +48,10 @@ class ChatPage extends StatelessWidget {
             ),
             Text(
               friendName,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
             ),
           ],
         ),
@@ -50,7 +62,7 @@ class ChatPage extends StatelessWidget {
               child: Container(
             padding: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-                color: Color(0xFFECE5DD),
+                color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25))),
@@ -110,7 +122,7 @@ class ChatPage extends StatelessWidget {
           )),
           MessageTextField(currentUser!.uid, friendId),
           const CustomSizedBox(
-            hieght:6,
+            hieght: 6,
           ),
         ],
       ),

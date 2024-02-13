@@ -2,9 +2,8 @@ import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
+import 'package:chat_app/application/feature/setting/view/profile.dart';
 import 'package:chat_app/application/feature/setting/widget/listtitle.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,23 +28,21 @@ class _SettingState extends State<Setting> {
         if (state is LogoutState) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) =>const RegisterPage()),
+              MaterialPageRoute(builder: (context) => const RegisterPage()),
               (route) => false);
         }
         if (state is HomePageState) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) =>const HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
               (route) => false);
         }
       },
       child: Scaffold(
-        
-        backgroundColor:const Color.fromARGB(255, 31, 117, 101),
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          
           centerTitle: true,
-          backgroundColor:const Color.fromARGB(255, 31, 117, 101),
+          backgroundColor: Colors.black,
           toolbarHeight: 120,
           title: const Text(
             'Settings',
@@ -71,25 +68,31 @@ class _SettingState extends State<Setting> {
                     const CustomSizedBox(
                       hieght: 25,
                     ),
-                    Row(
-                      children: [
-                        const CustomSizedBox(
-                          width: 25,
-                        ),
-                        CircleAvatar(
-                            radius: 40, backgroundImage: NetworkImage(image)),
-                        const CustomSizedBox(
-                          width: 15,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              name,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        )
-                      ],
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Profile()));
+                      },
+                      child: Row(
+                        children: [
+                          const CustomSizedBox(
+                            width: 25,
+                          ),
+                          CircleAvatar(
+                              radius: 40, backgroundImage: NetworkImage(image)),
+                          const CustomSizedBox(
+                            width: 15,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                name,
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     const CustomSizedBox(hieght: 15),
                     const Divider(),
@@ -123,24 +126,23 @@ class _SettingState extends State<Setting> {
                         leading: const CircleAvatar(
                           radius: 35,
                           backgroundColor: Colors.transparent,
-                          child:  Icon(Icons.logout),
+                          child: Icon(Icons.logout),
                         ),
                         title: const Text("Logout",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w800)),
-                        subtitle:const Text("Logout")),
-                         Listtile(
-                        ontap: () {
-                        },
+                        subtitle: const Text("Logout")),
+                    Listtile(
+                        ontap: () {},
                         leading: const CircleAvatar(
                           radius: 35,
                           backgroundColor: Colors.transparent,
-                          child:  Icon(Icons.delete),
+                          child: Icon(Icons.delete),
                         ),
                         title: const Text("Delete Account",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w800)),
-                        subtitle:const Text("Delete Account")),
+                        subtitle: const Text("Delete Account")),
                   ],
                 ),
               );
