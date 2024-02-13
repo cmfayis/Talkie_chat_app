@@ -23,7 +23,7 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    setStatus("Online");
+    setStatus("Online",);
   }
   void setStatus(String status)async{
     await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
@@ -35,7 +35,7 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
     if(state ==AppLifecycleState.resumed){
       setStatus('Online');
     }else{
-      setStatus("Ofline");
+      setStatus("Ofline",);
     }
   }
   @override
@@ -87,11 +87,11 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
                         itemBuilder: (context, index) {
                           var friendId = snapshot.data.docs[index].id;
                           var lastMsg = snapshot.data.docs[index]['last_msg'];
-                          return FutureBuilder(
-                            future: FirebaseFirestore.instance
+                          return StreamBuilder(
+                            stream: FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(friendId)
-                                .get(),
+                                .snapshots(),
                             builder: (context, AsyncSnapshot asyncSnapshot) {
                               if (asyncSnapshot.hasData) {
                                 var friend = asyncSnapshot.data;
@@ -109,7 +109,7 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
                                   ),
                                   subtitle: Container(
                                     child: Text(
-                                      "$lastMsg",
+                                      friend['status'],
                                       style:const TextStyle(color: Color.fromARGB(255, 133, 133, 133)),
                                       overflow: TextOverflow.ellipsis,
                                     ),

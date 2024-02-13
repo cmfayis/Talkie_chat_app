@@ -48,6 +48,7 @@ dependencies:
   cached_network_image:
   intl:
   ionicons: ^0.2.2
+  uuid: ^4.3.3
   
 
 dev_dependencies:

@@ -23,7 +23,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
         showModalBottomSheet(
             backgroundColor: Colors.transparent,
             context: context,
-            builder: (context) => bottomSheet(context),
+            builder: (context) => bottomSheet(context,widget.currentId,widget.friendId),
           );
        }
       },

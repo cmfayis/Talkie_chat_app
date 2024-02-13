@@ -111,6 +111,7 @@ class ChatPage extends StatelessWidget {
                                   .delete();
                             },
                             child: SingleMessage(
+                              type: snapshot.data.docs[index]['type'],
                                 currentTime: data['date'],
                                 message: snapshot.data.docs[index]['message'],
                                 isMe: isMe),
