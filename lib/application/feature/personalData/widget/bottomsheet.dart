@@ -22,10 +22,16 @@ bottomSheet(BuildContext context, String currentId, String friendId) {
           children: [
             chatIcon(Ionicons.location_outline, "Location", () {
               BlocProvider.of<ChatBloc>(context).add(
+                  LocationEvent(currentId: currentId, friendId: friendId));
+            }),
+            chatIcon(Ionicons.camera_outline, "Camera", () {
+              BlocProvider.of<ChatBloc>(context).add(
+                  CameraImagesEvent(currentId: currentId, friendId: friendId));
+            }),
+            chatIcon(Ionicons.images_outline, "Photo", () {
+              BlocProvider.of<ChatBloc>(context).add(
                   GalleryImagesEvent(currentId: currentId, friendId: friendId));
             }),
-            chatIcon(Ionicons.camera_outline, "Camera", () {}),
-            chatIcon(Ionicons.images_outline, "Photo", () {}),
           ],
         ),
       ),

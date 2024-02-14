@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SingleMessage extends StatelessWidget {
   final type;
@@ -45,7 +46,30 @@ class SingleMessage extends StatelessWidget {
                           color: isMe ? Colors.white : Colors.black),
                     )):Container(
                 margin: const EdgeInsets.only(right: 20, top: 10),
-                child: Column(
+                child:type == "link"
+                ? Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(16),
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    decoration: BoxDecoration(
+                        color: isMe ? Colors.black : Colors.grey,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12))),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await launchUrl(Uri.parse('$message'));
+                      },
+                      child: Text(
+                        message,
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ):
+                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Row(

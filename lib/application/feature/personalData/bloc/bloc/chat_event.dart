@@ -18,3 +18,14 @@ class GalleryImagesEvent extends ChatEvent {
   final friendId;
   GalleryImagesEvent({required this.currentId, required this.friendId});
 }
+
+class CameraImagesEvent extends ChatEvent {
+  final currentId;
+  final friendId;
+  CameraImagesEvent({required this.currentId, required this.friendId});
+}
+class LocationEvent extends ChatEvent {
+  final currentId;
+  final friendId;
+LocationEvent({required this.currentId, required this.friendId});
+}
