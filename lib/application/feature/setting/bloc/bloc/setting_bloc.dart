@@ -9,6 +9,9 @@ part 'setting_state.dart';
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
   List<Map> searchResult = [];
   SettingBloc() : super(SettingInitial()) {
+    on<ProfileEditEvent>((event, emit) {
+      emit(ProfileEditState());
+    });
     on<intialEvent>((event, emit)async{
       User? user = FirebaseAuth.instance.currentUser;
        QuerySnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance
@@ -16,10 +19,11 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
           .where("uid", isEqualTo: user!.uid)
           .get();
            if (userData.docs.isNotEmpty) {
-        
+      final email=userData.docs.last.get('Email');
         final name=userData.docs.last.get('Name');
         final  imageUrl = userData.docs.last.get('image');
-        emit(FetchState(name: name, iamgeUrl: imageUrl));
+        
+        emit(FetchState(name: name, imageUrl: imageUrl,email: email,));
       }
     });
     on<LogoutEvent>((event, emit) {

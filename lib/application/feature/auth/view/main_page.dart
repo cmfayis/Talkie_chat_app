@@ -169,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       child: Container(
                         width: 385,
-                        height: 55,
+                        height: 45,
                         decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius:
@@ -184,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const CustomSizedBox(
-                    hieght: 25,
+                    hieght: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

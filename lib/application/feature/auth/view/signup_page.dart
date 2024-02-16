@@ -120,7 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   const CustomSizedBox(
-                    hieght: 100,
+                    hieght: 40,
                   ),
                   CustomButton(
                       ontap: () {

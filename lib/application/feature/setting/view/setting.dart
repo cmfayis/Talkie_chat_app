@@ -43,7 +43,7 @@ class _SettingState extends State<Setting> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.black,
-          toolbarHeight: 120,
+          toolbarHeight: 90,
           title: const Text(
             'Settings',
             style: TextStyle(color: Colors.white),
@@ -52,16 +52,14 @@ class _SettingState extends State<Setting> {
         body: BlocBuilder<SettingBloc, SettingState>(
           builder: (context, state) {
             if (state is FetchState) {
+              final email =state.email;
               final name = state.name;
-              final image = state.iamgeUrl;
+              final image = state.imageUrl;
               return Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(55),
-                    topRight: Radius.circular(55),
-                  ),
+                
                 ),
                 child: Column(
                   children: [
@@ -71,7 +69,7 @@ class _SettingState extends State<Setting> {
                     InkWell(
                       onTap: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Profile()));
+                            MaterialPageRoute(builder: (context) => Profile(image: image,name: name,email:email ,)));
                       },
                       child: Row(
                         children: [
@@ -79,7 +77,7 @@ class _SettingState extends State<Setting> {
                             width: 25,
                           ),
                           CircleAvatar(
-                              radius: 40, backgroundImage: NetworkImage(image)),
+                              radius: 30, backgroundImage: NetworkImage(image)),
                           const CustomSizedBox(
                             width: 15,
                           ),

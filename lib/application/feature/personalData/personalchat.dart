@@ -22,18 +22,20 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
         backgroundColor: Colors.white,
-        actions: const [Row(
-          children: [
-            Icon(Icons.more_vert),
+        actions: const [
+          Row(
+            children: [
+              Icon(Icons.more_vert),
               SizedBox(
-              width: 15,
-            ),
-          ],
-        )],
+                width: 15,
+              ),
+            ],
+          )
+        ],
         toolbarHeight: 80,
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: Colors.black),
@@ -95,7 +97,7 @@ class ChatPage extends StatelessWidget {
                             onDismissed: (direction) async {
                               await FirebaseFirestore.instance
                                   .collection('users')
-                                  .doc(currentUser!.uid)
+                                  .doc(currentUser?.uid)
                                   .collection('messages')
                                   .doc(friendId)
                                   .collection('chats')
@@ -104,14 +106,14 @@ class ChatPage extends StatelessWidget {
                               await FirebaseFirestore.instance
                                   .collection('users')
                                   .doc(friendId)
-                                  .collection('messages')
-                                  .doc(currentUser!.uid)
+                                  .collection('messages')  
+                                  .doc(currentUser?.uid)
                                   .collection('chats')
                                   .doc(data.id)
                                   .delete();
                             },
                             child: SingleMessage(
-                              type: snapshot.data.docs[index]['type'],
+                                type: snapshot.data.docs[index]['type'],
                                 currentTime: data['date'],
                                 message: snapshot.data.docs[index]['message'],
                                 isMe: isMe),

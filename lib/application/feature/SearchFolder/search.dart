@@ -13,15 +13,15 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   TextEditingController textEditingController = TextEditingController();
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: Color.fromARGB(255, 31, 117, 101),
-        title: const Text("Search"),
+        iconTheme: IconThemeData(color: Colors.white ),
+        backgroundColor: Colors.black,
+        title: const Text("Search",style: TextStyle(color: Colors.white),),
       ),
       body: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {

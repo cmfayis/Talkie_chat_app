@@ -5,14 +5,20 @@ part of 'setting_bloc.dart';
 sealed class SettingState {}
 
 final class SettingInitial extends SettingState {}
+
 class FetchState extends SettingState {
   final String name;
-  final String iamgeUrl;
+  final String imageUrl;
+  final String email;
+
   FetchState({
+    required this.email,
     required this.name,
-    required this.iamgeUrl,
+    required this.imageUrl,
   });
- 
 }
- class LogoutState extends SettingState{}
- class HomePageState extends SettingState{}
+
+class LogoutState extends SettingState {}
+
+class HomePageState extends SettingState {}
+class ProfileEditState extends SettingState{}

@@ -42,8 +42,7 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:Colors.black ,
-        toolbarHeight: 90,
+        backgroundColor:Colors.black ,   
         title: const Text(
           'Chat App',
           style: TextStyle(color: Colors.white),
