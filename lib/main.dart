@@ -56,15 +56,18 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            textTheme: const TextTheme(
-          displayLarge: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
-        )),
+
+        //     textTheme: const TextTheme(
+        //   displayLarge: TextStyle(
+        //       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+        // )
+        
+        ),
         title: 'Flutter Demo',
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashPageWrapper(),
-          '/home': (context) =>  HomePage(),
+          '/home': (context) =>  Home(),
           '/register': (context) => const RegisterPageWrapper(),
           '/Login': (context) => const LoginPageWrapper(),
           '/SignUp': (context) => const SignUpWrapper(),

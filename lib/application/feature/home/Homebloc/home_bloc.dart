@@ -5,9 +5,9 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial(tabIndex: 0)) {
+  HomeBloc() : super( HomeInitial(tabIndex: 0)) {
     on<HomeEvent>((event, emit) {
-        if (event is TabChangeEvent) {
+      if (event is TabChangeEvent) {
         emit(HomeInitial(tabIndex: event.tabIndex));
       }
     });

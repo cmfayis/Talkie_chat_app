@@ -1,75 +1,54 @@
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:chat_app/application/feature/call/view/call.dart';
+import 'package:chat_app/application/feature/chat/view/chats.dart';
 import 'package:chat_app/application/feature/contacts/view/contact.dart';
 import 'package:chat_app/application/feature/setting/view/setting.dart';
-import '../../auth/auth_bloc/bloc/auth_bloc.dart';
-import '../../call/view/call.dart';
-import '../../chat/view/chats.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
+
 import '../Homebloc/home_bloc.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
-    Key? key,
-  }) : super(key: key);
+class Home extends StatelessWidget {
+  Home({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+  List<Widget> screens = <Widget>[
+     chats(),
+    const Call(),
+    const Contacts(),
+    const Setting(),
+  ];
 
-class _HomePageState extends State<HomePage>{
-
+  HomeBloc homeBloc = HomeBloc();
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [
-      chats(),
-      const Call(),
-      const Contacts(),
-      const Setting(),
-    ];
-
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is UnAuthenticatedState) {
-          Navigator.pushReplacementNamed(context, '/Login');
-        }
-      },
+    return BlocBuilder<HomeBloc, HomeState>(
+      bloc: homeBloc,
       builder: (context, state) {
-        return BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            return Scaffold(
-              body: screens.elementAt(state.tabIndex),
-              bottomNavigationBar: BottomNavigationBar(
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.message_rounded),
-                    label: 'Chat',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.call),
-                    label: 'Call',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: 'Person',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: 'Settings',
-                  ),
-                ],
-                currentIndex: state.tabIndex,
-                selectedItemColor: Colors.black,
-                unselectedItemColor: Colors.grey,
-                elevation: 20,
-                showUnselectedLabels: true,
-                onTap: (value) {
-                  BlocProvider.of<HomeBloc>(context)
-                      .add(TabChangeEvent(tabIndex: value));
-                },
-              ),
-            );
-          },
+        return Scaffold(
+          body: screens.elementAt(state.tabIndex),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(Ionicons.chatbox_ellipses_outline),
+                  label: 'chats'),
+              BottomNavigationBarItem(
+                  icon: Icon(Ionicons.call_outline), label: 'calls'),
+              BottomNavigationBarItem(
+                  icon: Icon(Ionicons.people_circle_outline),
+                  label: 'contacts'),
+              BottomNavigationBarItem(
+                  icon: Icon(Ionicons.person_outline), label: 'profile')
+            ],
+            currentIndex: state.tabIndex,
+            fixedColor: Colors.black,
+            unselectedItemColor: const Color.fromARGB(255, 207, 205, 205),
+            onTap: (value) {
+              homeBloc.add(
+                TabChangeEvent(tabIndex: value),
+              );
+            },
+          ),
         );
       },
     );

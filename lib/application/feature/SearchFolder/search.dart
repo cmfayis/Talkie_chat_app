@@ -20,7 +20,7 @@ class _SearchState extends State<Search> {
       appBar: AppBar(
         toolbarHeight: 80,
         iconTheme: IconThemeData(color: Colors.white ),
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xffADD8E6),
         title: const Text("Search",style: TextStyle(color: Colors.white),),
       ),
       body: BlocConsumer<SearchBloc, SearchState>(

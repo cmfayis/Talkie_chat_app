@@ -42,14 +42,14 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:Colors.black ,   
+        backgroundColor:Color(0xffADD8E6) ,   
         title: const Text(
           'Chat App',
           style: TextStyle(color: Colors.white),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xffADD8E6),
           child: const Icon(
             Icons.chat,
             color: Colors.white,
@@ -103,7 +103,6 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
                                     friend['Name'],
                                     style: const TextStyle(
                                       fontSize: 19,
-                                      fontWeight: FontWeight.w600
                                     ),
                                   ),
                                   subtitle: Container(

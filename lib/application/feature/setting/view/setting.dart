@@ -4,6 +4,7 @@ import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
 import 'package:chat_app/application/feature/setting/view/profile.dart';
 import 'package:chat_app/application/feature/setting/widget/listtitle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,16 +35,14 @@ class _SettingState extends State<Setting> {
         if (state is HomePageState) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) =>  Home()),
               (route) => false);
         }
       },
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.black,
-          toolbarHeight: 90,
+          backgroundColor: Color(0xffADD8E6),
           title: const Text(
             'Settings',
             style: TextStyle(color: Colors.white),
@@ -52,14 +51,13 @@ class _SettingState extends State<Setting> {
         body: BlocBuilder<SettingBloc, SettingState>(
           builder: (context, state) {
             if (state is FetchState) {
-              final email =state.email;
+              final email = state.email;
               final name = state.name;
               final image = state.imageUrl;
               return Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                
                 ),
                 child: Column(
                   children: [
@@ -68,8 +66,14 @@ class _SettingState extends State<Setting> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Profile(image: image,name: name,email:email ,)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Profile(
+                                      image: image,
+                                      name: name,
+                                      email: email,
+                                    )));
                       },
                       child: Row(
                         children: [
@@ -85,34 +89,30 @@ class _SettingState extends State<Setting> {
                             children: [
                               Text(
                                 name,
-                                style: const TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 19),
                               ),
                             ],
                           )
                         ],
                       ),
                     ),
-                    const CustomSizedBox(hieght: 15),
-                    const Divider(),
                     const CustomSizedBox(
-                      hieght: 25,
+                      hieght: 15,
                     ),
                     Listtile(
-                        ontap: () {
-                          BlocProvider.of<SettingBloc>(context)
-                              .add(HomePageEvent());
-                        },
-                        leading: CircleAvatar(
+                        ontap: () {},
+                        leading:const CircleAvatar(
                           radius: 35,
-                          backgroundColor: Colors.grey[100],
+                          backgroundColor: Colors.transparent,
                           child: const Icon(Icons.home),
                         ),
                         title: const Text(
-                          "Home",
+                          "About us",
                           style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w800),
+                            fontSize: 16,
+                          ),
                         ),
-                        subtitle: const Text('Home')),
+                        subtitle: const Text('About us')),
                     const CustomSizedBox(
                       hieght: 15,
                     ),
@@ -128,10 +128,17 @@ class _SettingState extends State<Setting> {
                         ),
                         title: const Text("Logout",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w800)),
+                              fontSize: 16,
+                            )),
                         subtitle: const Text("Logout")),
                     Listtile(
-                        ontap: () {},
+                        ontap: () {
+                          FirebaseAuth.instance.currentUser!.delete();                       
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>const RegisterPage()));
+                        },
                         leading: const CircleAvatar(
                           radius: 35,
                           backgroundColor: Colors.transparent,
@@ -139,7 +146,8 @@ class _SettingState extends State<Setting> {
                         ),
                         title: const Text("Delete Account",
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w800)),
+                              fontSize: 16,
+                            )),
                         subtitle: const Text("Delete Account")),
                   ],
                 ),

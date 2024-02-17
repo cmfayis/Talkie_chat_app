@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       width: double.infinity,
                       hieght: 45,
-                      color: const Color.fromARGB(31, 49, 48, 48),
+                      color: const Color(0xffADD8E6),
                       text: 'Login'),
                   TextButton(
                       onPressed: () {

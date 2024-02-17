@@ -36,6 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             await imagePicker.pickImage(source: ImageSource.gallery);
 
         if (pickedFile != null) {
+          
           emit(ImageSuccessState(image: File(pickedFile.path)));
         } else {
           emit(ImageErrorState(error: 'Please select an image.'));

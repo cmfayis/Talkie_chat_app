@@ -138,16 +138,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       width: double.infinity,
                       hieght: 45,
-                      color: const Color.fromARGB(31, 49, 48, 48),
-                      text: 'SignUp'),
-                  // TextButton(
-                  //     onPressed: () {
-                  //       BlocProvider.of<AuthBloc>(context).add(LoginButtonClickedEvent());
-                  //     },
-                  //     child: const Text(
-                  //       'Already I have an account',
-                  //       style: TextStyle(color: Colors.blue),
-                  //     )),
+                      color: const Color(0xffADD8E6),
+                      text: 'SignUp'),            
                 ],
               ),
             ),

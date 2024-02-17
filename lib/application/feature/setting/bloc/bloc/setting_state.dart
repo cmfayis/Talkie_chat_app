@@ -22,3 +22,8 @@ class LogoutState extends SettingState {}
 
 class HomePageState extends SettingState {}
 class ProfileEditState extends SettingState{}
+class BackState extends SettingState{}
+class UpdateState extends SettingState{
+  String name;
+  UpdateState({required this.name});
+}

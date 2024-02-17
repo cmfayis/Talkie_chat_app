@@ -24,6 +24,7 @@ class _ProfileState extends State<Profile> {
   final emailcontroller = TextEditingController();
   final phonecontroller = TextEditingController();
   File? image;
+  String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +36,17 @@ class _ProfileState extends State<Profile> {
         }
         return BlocListener<SettingBloc, SettingState>(
           listener: (context, state) {
+            if (state is UpdateState) {
+              name = state.name;
+              Navigator.pop(context);
+            }
+            if (state is BackState) {
+              BlocProvider.of<SettingBloc>(context).add(intialEvent());
+              Navigator.pop(context);
+            }
             if (state is ProfileEditState) {
               showModalBottomSheet(
+                backgroundColor: Color(0xffADD8E6),
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
@@ -45,11 +55,12 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           const SizedBox(height: 16.0),
                           const Text(
-                            'This is a sample text.',
-                            style: TextStyle(fontSize: 18.0),
+                            'Enter Your Name',
+                            style: TextStyle(fontSize: 18.0,),
                           ),
                           TextField(
                             controller: namecontroller,
@@ -66,12 +77,20 @@ class _ProfileState extends State<Profile> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 TextButton(
-                                    onPressed: () {}, child: Text('Cancel')),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Cancel',style: TextStyle(color: Colors.white),)),
                                 const CustomSizedBox(
                                   width: 25,
                                 ),
                                 TextButton(
-                                    onPressed: () {}, child: Text('Save')),
+                                    onPressed: () {
+                                      BlocProvider.of<SettingBloc>(context).add(
+                                          UpdateDataEvent(
+                                              Data: namecontroller.text));
+                                    },
+                                    child: Text('Save')),
                               ],
                             ),
                           ),
@@ -84,13 +103,22 @@ class _ProfileState extends State<Profile> {
             }
           },
           child: Scaffold(
-            backgroundColor: Colors.black,
+            backgroundColor: Color(0xffADD8E6),
             appBar: AppBar(
-              actions: const [
-                Text(
-                  'Save',
-                  style: TextStyle(color: Colors.white),
-                ),
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                  onPressed: () {
+                    BlocProvider.of<SettingBloc>(context)
+                        .add(BackButtonEvent());
+                  },
+                  icon: Icon(Icons.arrow_back)),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      BlocProvider.of<ProfileBloc>(context)
+                          .add(SumbitEvent(image: image));
+                    },
+                    child: Text('Save',style: TextStyle(color: Colors.white),)),
                 SizedBox(
                   width: 15,
                 )
@@ -101,7 +129,7 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(color: Colors.white),
               ),
               centerTitle: true,
-              backgroundColor: Colors.black,
+              backgroundColor: Color(0xffADD8E6),
             ),
             body: SingleChildScrollView(
               child: Center(
@@ -146,14 +174,23 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                     const CustomSizedBox(hieght: 20),
-                    Text(
-                      widget.name,
-                      style: const TextStyle(
-                        fontSize: 28,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    name != null
+                        ? Text(
+                            name!,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : Text(
+                            widget.name,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                     const CustomSizedBox(hieght: 10),
                     Text(
                       'Software Developer',
@@ -181,22 +218,29 @@ class _ProfileState extends State<Profile> {
                                 hieght: 40,
                                 width: double.infinity,
                               ),
-                              Text(
-                                'Display Name',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
+                       const       Text(
+                                'Display Name',                             
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    widget.name,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                                  name != null
+                                      ? Text(
+                                          name!,
+                                          style: const TextStyle(
+                                            fontSize: 19,
+                                            color: Colors.black,                                    
+                                          ),
+                                        )
+                                      : Text(
+                                          widget.name,
+                                          style: const TextStyle(
+                                            fontSize: 19,
+                                            color: Colors.black,
+                                            
+                                          ),
+                                        ),
                                   IconButton(
                                       onPressed: () {
                                         BlocProvider.of<SettingBloc>(context)

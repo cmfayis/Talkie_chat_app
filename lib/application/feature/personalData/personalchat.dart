@@ -25,7 +25,7 @@ class ChatPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
-        backgroundColor: Colors.white,
+        backgroundColor:Color(0xffADD8E6),
         actions: const [
           Row(
             children: [
@@ -36,9 +36,9 @@ class ChatPage extends StatelessWidget {
             ],
           )
         ],
-        toolbarHeight: 80,
+        // toolbarHeight: 80,
         automaticallyImplyLeading: true,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Row(
           children: [
             CircleAvatar(
@@ -51,9 +51,9 @@ class ChatPage extends StatelessWidget {
             Text(
               friendName,
               style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
+                  fontSize: 19,
+                  
+                  color: Colors.white),
             ),
           ],
         ),
