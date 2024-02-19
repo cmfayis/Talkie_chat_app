@@ -18,7 +18,7 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   @override
   void initState() {
-    BlocProvider.of<SettingBloc>(context).add(intialEvent());
+   
     super.initState();
   }
 
@@ -49,7 +49,9 @@ class _SettingState extends State<Setting> {
           ),
         ),
         body: BlocBuilder<SettingBloc, SettingState>(
+          
           builder: (context, state) {
+             BlocProvider.of<SettingBloc>(context).add(intialEvent());
             if (state is FetchState) {
               final email = state.email;
               final name = state.name;

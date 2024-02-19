@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/profileview/bloc/profile_bloc.dart';
 import 'package:chat_app/application/feature/profileview/widget/textfield.dart';
@@ -106,7 +105,7 @@ class _ProfileViewState extends State<ProfileView> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: const Color(0xffADD8E6),
                             borderRadius: BorderRadius.circular(8)),
                         width: double.infinity,
                         height: 55,

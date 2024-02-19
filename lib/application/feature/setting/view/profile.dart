@@ -80,7 +80,7 @@ class _ProfileState extends State<Profile> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text('Cancel',style: TextStyle(color: Colors.white),)),
+                                    child:const Text('Cancel',style: TextStyle(color: Colors.white),)),
                                 const CustomSizedBox(
                                   width: 25,
                                 ),

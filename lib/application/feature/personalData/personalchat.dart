@@ -25,7 +25,7 @@ class ChatPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
-        backgroundColor:Color(0xffADD8E6),
+        backgroundColor: Color(0xffADD8E6),
         actions: const [
           Row(
             children: [
@@ -50,10 +50,7 @@ class ChatPage extends StatelessWidget {
             ),
             Text(
               friendName,
-              style: const TextStyle(
-                  fontSize: 19,
-                  
-                  color: Colors.white),
+              style: const TextStyle(fontSize: 19, color: Colors.white),
             ),
           ],
         ),
@@ -106,7 +103,7 @@ class ChatPage extends StatelessWidget {
                               await FirebaseFirestore.instance
                                   .collection('users')
                                   .doc(friendId)
-                                  .collection('messages')  
+                                  .collection('messages')
                                   .doc(currentUser?.uid)
                                   .collection('chats')
                                   .doc(data.id)
