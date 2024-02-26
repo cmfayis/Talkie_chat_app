@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          print('clicked facebook');
+                        
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),

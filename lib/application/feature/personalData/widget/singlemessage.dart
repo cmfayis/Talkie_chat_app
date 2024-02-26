@@ -92,14 +92,18 @@ class SingleMessage extends StatelessWidget {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.42,
+                                              0.54,
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              0.30,
+                                              0.40,
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.black),
+                                                  width: 4,
+                                                  color: isMe
+                                                      ?  const Color(
+                                                          0xffADD8E6):Colors.grey
+                                                      ),
                                               borderRadius:
                                                   const BorderRadius.only(
                                                 topRight: Radius.circular(18),

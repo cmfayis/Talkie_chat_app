@@ -19,25 +19,7 @@ class chats extends StatefulWidget {
 class _ChatState extends State<chats>with WidgetsBindingObserver {
   User? user = FirebaseAuth.instance.currentUser;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    setStatus("Online",);
-  }
-  void setStatus(String status)async{
-    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
-      'status':status
-    });
-  }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if(state ==AppLifecycleState.resumed){
-      setStatus('Online');
-    }else{
-      setStatus("Ofline",);
-    }
-  }
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +31,7 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xffADD8E6),
+          backgroundColor:const Color(0xffADD8E6),
           child: const Icon(
             Icons.chat,
             color: Colors.white,
@@ -107,7 +89,7 @@ class _ChatState extends State<chats>with WidgetsBindingObserver {
                                   ),
                                   subtitle: Container(
                                     child: Text(
-                                      friend['status'],
+                                      lastMsg,
                                       style:const TextStyle(color: Color.fromARGB(255, 133, 133, 133)),
                                       overflow: TextOverflow.ellipsis,
                                     ),
