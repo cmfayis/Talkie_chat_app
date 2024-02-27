@@ -1,4 +1,5 @@
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
+import 'package:chat_app/application/feature/personalData/friendprofile.dart';
 import 'package:chat_app/application/feature/personalData/widget/messagetextfield.dart';
 import 'package:chat_app/application/feature/personalData/widget/singlemessage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,20 +40,31 @@ class ChatPage extends StatelessWidget {
         // toolbarHeight: 80,
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 21,
-              backgroundImage: NetworkImage(friendImage),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(
-              friendName,
-              style: const TextStyle(fontSize: 19, color: Colors.white),
-            ),
-          ],
+        title: InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FriendProfile(
+                        image: friendImage,
+                        name: friendName,
+                        email: friendName)));
+          },
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 21,
+                backgroundImage: NetworkImage(friendImage),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Text(
+                friendName,
+                style: const TextStyle(fontSize: 19, color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
