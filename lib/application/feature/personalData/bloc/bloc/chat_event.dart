@@ -29,3 +29,6 @@ class LocationEvent extends ChatEvent {
   final friendId;
 LocationEvent({required this.currentId, required this.friendId});
 }
+
+class ShowImageEvent extends ChatEvent{
+}

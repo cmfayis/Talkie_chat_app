@@ -10,6 +10,10 @@ class ShowImage extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        iconTheme:const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.black,
+      ),
       body: Container(
         height: size.height,
         width: size.width,

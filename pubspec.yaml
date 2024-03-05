@@ -55,6 +55,8 @@ dependencies:
   permission_handler: ^11.3.0
   status_view: ^0.0.2
   story_view: ^0.16.5
+  google_fonts: ^6.1.0
+  
   
   
   
@@ -62,6 +64,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "asset/images/icons.png"  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

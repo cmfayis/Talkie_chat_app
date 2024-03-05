@@ -73,19 +73,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   const CustomSizedBox(
                     hieght: 50,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "asset/images/splash.png",
-                        width: 55,
-                      ),
-                      const Text(
-                        'Chat App',
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Image.asset(
+                  //       "asset/images/splash.png",
+                  //       width: 55,
+                  //     ),
+                  //     const Text(
+                  //       'Chat App',
+                  //       style: TextStyle(color: Colors.white),
+                  //     )
+                  //   ],
+                  // ),
+                  CustomSizedBox(hieght: 45,),
                   const HeadingText(),
                   const CustomSizedBox(
                     hieght: 35,

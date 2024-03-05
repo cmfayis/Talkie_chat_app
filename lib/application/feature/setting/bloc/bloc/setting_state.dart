@@ -27,3 +27,4 @@ class UpdateState extends SettingState{
   String name;
   UpdateState({required this.name});
 }
+class NavigateToProfileState extends SettingState{}

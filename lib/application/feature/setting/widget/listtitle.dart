@@ -5,12 +5,12 @@ class Listtile extends StatelessWidget {
   final ontap;
   final Widget leading;
   final Widget title;
-  final Widget subtitle;
+
   const Listtile({
     Key? key,
     required this.leading,
     required this.title,
-    required this.subtitle,
+    
      this.ontap,
   }) : super(key: key);
 
@@ -21,7 +21,6 @@ class Listtile extends StatelessWidget {
       child: ListTile(   
         leading:leading ,
         title: title,
-        subtitle:subtitle ,
       ),
     );
   }

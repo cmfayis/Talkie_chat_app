@@ -11,3 +11,4 @@ class UpdateDataEvent extends SettingEvent{
   String Data ;
   UpdateDataEvent({required this.Data});
 }
+class NavigateToProfileEvent extends SettingEvent{}

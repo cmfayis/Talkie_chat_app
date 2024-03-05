@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,15 +12,17 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
   List<Map> searchResult = [];
   SettingBloc() : super(SettingInitial()) {
     User? user = FirebaseAuth.instance.currentUser;
+    on<NavigateToProfileEvent>((event, emit) {
+      emit(NavigateToProfileState());
+    });
     on<UpdateDataEvent>((event, emit) async {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
           .update({
         'Name': event.Data,
-       
       });
-       emit(UpdateState(name: event.Data));
+      emit(UpdateState(name: event.Data));
     });
     on<BackButtonEvent>((event, emit) {
       emit(BackState());

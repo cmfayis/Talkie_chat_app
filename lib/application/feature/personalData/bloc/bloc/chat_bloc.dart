@@ -14,6 +14,9 @@ part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
+    on<ShowImageEvent>((event, emit) {
+      emit(ShowImagesState());
+    });
     on<SendEvent>((event, emit) async {
       await FirebaseFirestore.instance
           .collection('users')
@@ -190,6 +193,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               .doc(event.currentId)
               .set({'last_msg': imageUrl});
         }
+        
       } catch (e) {
         print("Error uploading image: $e");
       }
@@ -216,8 +220,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           desiredAccuracy: LocationAccuracy.high,
           forceAndroidLocationManager: true,
         );
- emit(GalleryImageSentSuccessState());
-        print(currentPosition!.latitude);
+        emit(GalleryImageSentSuccessState());
         List<Placemark> placemarks = await placemarkFromCoordinates(
             currentPosition.latitude, currentPosition.longitude);
 
@@ -230,7 +233,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         message =
             'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-       
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(event.currentId)

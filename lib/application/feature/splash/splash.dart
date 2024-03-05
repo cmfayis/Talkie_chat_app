@@ -5,6 +5,7 @@ import 'package:chat_app/application/feature/splash/widget/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashPageWrapper extends StatelessWidget {
   const SplashPageWrapper({Key? key}) : super(key: key);
@@ -42,10 +43,10 @@ class SplashPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: Image.asset("asset/images/splash.png", width: 230),
+                child: Image.asset("asset/images/icons.png", width: 230),
               ),
               Text(
-                "Chat App",
+                "Talkie",style: GoogleFonts.montserrat(fontSize: 30,fontWeight: FontWeight.w800),
               ),
             ],
           ),

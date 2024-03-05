@@ -7,3 +7,4 @@ final class ChatInitial extends ChatState {}
  class FileSendState extends ChatState{}
  class GalleryImagesState extends ChatState{}
  class GalleryImageSentSuccessState extends ChatState{}
+ class ShowImagesState extends ChatState{}

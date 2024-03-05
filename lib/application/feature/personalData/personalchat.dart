@@ -1,16 +1,18 @@
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
+import 'package:chat_app/application/feature/personalData/bloc/bloc/chat_bloc.dart';
 import 'package:chat_app/application/feature/personalData/friendprofile.dart';
 import 'package:chat_app/application/feature/personalData/widget/messagetextfield.dart';
 import 'package:chat_app/application/feature/personalData/widget/singlemessage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore: must_be_immutable
 class ChatPage extends StatelessWidget {
   final String friendId;
   final String friendName;
   final String friendImage;
+
   ChatPage({
     Key? key,
     required this.friendId,
@@ -20,83 +22,106 @@ class ChatPage extends StatelessWidget {
 
   final TextEditingController textEditingController = TextEditingController();
   User? currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 1,
-        backgroundColor: Color(0xffADD8E6),
-        actions: const [
-          Row(
-            children: [
-              Icon(Icons.more_vert),
-              SizedBox(
-                width: 15,
+    return BlocListener<ChatBloc, ChatState>(
+      listener: (context, state) {
+        if (state is ShowImagesState) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FriendProfile(
+                image: friendImage,
+                name: friendName,
+                email: friendName,
               ),
-            ],
-          )
-        ],
-        // toolbarHeight: 80,
-        automaticallyImplyLeading: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FriendProfile(
-                        image: friendImage,
-                        name: friendName,
-                        email: friendName)));
-          },
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 21,
-                backgroundImage: NetworkImage(friendImage),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Text(
-                friendName,
-                style: const TextStyle(fontSize: 19, color: Colors.white),
-              ),
-            ],
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 1,
+          backgroundColor: Color(0xffADD8E6),
+          actions: [
+            Row(
+              children: [
+                DropdownButton<String>(
+                  icon: const Icon(Icons.more_vert),
+                  style:
+                      const TextStyle(color: Color.fromARGB(255, 13, 13, 13)),
+                  onChanged: (value) {},
+                  items: [
+                    DropdownMenuItem<String>(
+                      child: Text('Clear Data'),
+                      value: 'Clear Data',
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+              ],
+            )
+          ],
+          automaticallyImplyLeading: true,
+          iconTheme: const IconThemeData(color: Colors.white),
+          title: InkWell(
+            onTap: () {
+              BlocProvider.of<ChatBloc>(context).add(ShowImageEvent());
+            },
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 21,
+                  backgroundImage: NetworkImage(friendImage),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  friendName,
+                  style: const TextStyle(fontSize: 19, color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
+        body: Column(
+          children: [
+            Expanded(
               child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25))),
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("users")
-                    .doc(currentUser!.uid)
-                    .collection('messages')
-                    .doc(friendId)
-                    .collection('chats')
-                    .orderBy("date", descending: true)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data.docs.length < 1) {
-                      return const Center(
-                        child: Text("Say Hi"),
-                      );
-                    }
-                    return ListView.builder(
+                    topRight: Radius.circular(25),
+                  ),
+                ),
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(currentUser!.uid)
+                      .collection('messages')
+                      .doc(friendId)
+                      .collection('chats')
+                      .orderBy("date", descending: true)
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data.docs.length < 1) {
+                        return Center(
+                          child: Text("Say Hi"),
+                        );
+                      }
+                      return ListView.builder(
                         itemCount: snapshot.data.docs.length,
                         reverse: true,
-                        physics: const BouncingScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           bool isMe = snapshot.data.docs[index]['senderId'] ==
                               currentUser!.uid;
@@ -122,21 +147,24 @@ class ChatPage extends StatelessWidget {
                                   .delete();
                             },
                             child: SingleMessage(
-                                type: snapshot.data.docs[index]['type'],
-                                currentTime: data['date'],
-                                message: snapshot.data.docs[index]['message'],
-                                isMe: isMe),
+                              type: snapshot.data.docs[index]['type'],
+                              currentTime: data['date'],
+                              message: snapshot.data.docs[index]['message'],
+                              isMe: isMe,
+                            ),
                           );
-                        });
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                }),
-          )),
-          MessageTextField(currentUser!.uid, friendId),
-          const CustomSizedBox(
-            hieght: 6,
-          ),
-        ],
+                        },
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ),
+            ),
+            MessageTextField(currentUser!.uid, friendId),
+            CustomSizedBox(hieght: 6),
+          ],
+        ),
       ),
     );
   }

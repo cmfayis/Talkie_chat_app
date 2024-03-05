@@ -18,7 +18,6 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   @override
   void initState() {
-   
     super.initState();
   }
 
@@ -35,7 +34,7 @@ class _SettingState extends State<Setting> {
         if (state is HomePageState) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) =>  Home()),
+              MaterialPageRoute(builder: (context) => Home()),
               (route) => false);
         }
       },
@@ -49,9 +48,8 @@ class _SettingState extends State<Setting> {
           ),
         ),
         body: BlocBuilder<SettingBloc, SettingState>(
-          
           builder: (context, state) {
-             BlocProvider.of<SettingBloc>(context).add(intialEvent());
+            BlocProvider.of<SettingBloc>(context).add(intialEvent());
             if (state is FetchState) {
               final email = state.email;
               final name = state.name;
@@ -77,80 +75,58 @@ class _SettingState extends State<Setting> {
                                       email: email,
                                     )));
                       },
-                      child: Row(
-                        children: [
-                          const CustomSizedBox(
-                            width: 25,
-                          ),
-                          CircleAvatar(
-                              radius: 30, backgroundImage: NetworkImage(image)),
-                          const CustomSizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                name,
-                                style: const TextStyle(fontSize: 19),
-                              ),
-                            ],
-                          )
-                        ],
+                      child: Center(
+                        child: CircleAvatar(
+                            radius: 60, backgroundImage: NetworkImage(image)),
                       ),
                     ),
                     const CustomSizedBox(
                       hieght: 15,
                     ),
-                    Listtile(
-                        ontap: () {},
-                        leading:const CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.transparent,
-                          child: const Icon(Icons.home),
-                        ),
-                        title: const Text(
-                          "About us",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        subtitle: const Text('About us')),
-                    const CustomSizedBox(
-                      hieght: 15,
+                     Listtile(
+                      ontap: () {},
+                      leading: const Icon(Icons.support),
+                      title: const Text(
+                        "Terms and Conditions",
+                      ),
+                    ),
+                     Listtile(
+                      ontap: () {},
+                      leading: const Icon(Icons.help_outline),
+                      title: const Text(
+                        "FAQ",
+                      ),
                     ),
                     Listtile(
-                        ontap: () {
-                          BlocProvider.of<SettingBloc>(context)
-                              .add(LogoutEvent());
-                        },
-                        leading: const CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.transparent,
-                          child: Icon(Icons.logout),
-                        ),
-                        title: const Text("Logout",
-                            style: TextStyle(
-                              fontSize: 16,
-                            )),
-                        subtitle: const Text("Logout")),
+                      ontap: () {},
+                      leading: const Icon(Icons.support),
+                      title: const Text(
+                        "Supports us",
+                      ),
+                    ),
                     Listtile(
-                        ontap: () {
-                          FirebaseAuth.instance.currentUser!.delete();                       
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>const RegisterPage()));
-                        },
-                        leading: const CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.transparent,
-                          child: Icon(Icons.delete),
-                        ),
-                        title: const Text("Delete Account",
-                            style: TextStyle(
-                              fontSize: 16,
-                            )),
-                        subtitle: const Text("Delete Account")),
+                      ontap: () {
+                        BlocProvider.of<SettingBloc>(context)
+                            .add(LogoutEvent());
+                      },
+                      leading: Icon(Icons.logout),
+                      title: const Text(
+                        "Logout",
+                      ),
+                    ),
+                    Listtile(
+                      ontap: () {
+                        FirebaseAuth.instance.currentUser!.delete();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterPage()));
+                      },
+                      leading: Icon(Icons.delete),
+                      title: const Text(
+                        "Delete Account",
+                      ),
+                    ),
                   ],
                 ),
               );

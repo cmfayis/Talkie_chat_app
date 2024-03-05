@@ -25,7 +25,7 @@ class SingleMessage extends StatelessWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
+              children: [      
                 type == 'text'
                     ? Container(
                         padding: const EdgeInsets.all(10),
@@ -36,11 +36,10 @@ class SingleMessage extends StatelessWidget {
                             color: isMe
                                 ? const Color(0xffADD8E6)
                                 : Color.fromARGB(255, 234, 242, 248),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                              bottomRight: Radius.circular(15),
-                            )),
+                            borderRadius: const BorderRadius.all(Radius.circular(12))
+                              
+
+                            ),
                         child: Text(
                           message,
                           style: TextStyle(
@@ -50,7 +49,7 @@ class SingleMessage extends StatelessWidget {
                     : Container(
                         margin: const EdgeInsets.only(right: 20, top: 10),
                         child: type == "link"
-                            ? Container(
+                            ?   Container(
                                 padding: const EdgeInsets.all(16),
                                 margin: const EdgeInsets.all(16),
                                 constraints:
@@ -88,7 +87,7 @@ class SingleMessage extends StatelessWidget {
                                                       ShowImage(
                                                           imageUrl: message)));
                                         },
-                                        child: Container(
+                                        child:  Container(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
