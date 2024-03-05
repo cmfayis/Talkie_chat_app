@@ -34,7 +34,7 @@ class SingleMessage extends StatelessWidget {
                         constraints: const BoxConstraints(maxWidth: 200),
                         decoration: BoxDecoration(
                             color: isMe
-                                ? const Color(0xffADD8E6)
+                                ? const Color(0xff4FB6EC)
                                 : Color.fromARGB(255, 234, 242, 248),
                             borderRadius: const BorderRadius.all(Radius.circular(12))
                               

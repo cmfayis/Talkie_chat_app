@@ -43,8 +43,8 @@ class ChatPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          elevation: 1,
-          backgroundColor: Color(0xffADD8E6),
+          // elevation: 1,
+          backgroundColor: Colors.white,
           actions: [
             Row(
               children: [
@@ -68,7 +68,7 @@ class ChatPage extends StatelessWidget {
             )
           ],
           automaticallyImplyLeading: true,
-          iconTheme: const IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.black),
           title: InkWell(
             onTap: () {
               BlocProvider.of<ChatBloc>(context).add(ShowImageEvent());
@@ -84,7 +84,7 @@ class ChatPage extends StatelessWidget {
                 ),
                 Text(
                   friendName,
-                  style: const TextStyle(fontSize: 19, color: Colors.white),
+                  style: const TextStyle(fontSize: 19, color: Colors.black),
                 ),
               ],
             ),
@@ -92,6 +92,7 @@ class ChatPage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Divider(thickness: 00,),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(10),

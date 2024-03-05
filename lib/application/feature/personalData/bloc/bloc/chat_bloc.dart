@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
@@ -118,14 +119,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               .doc(event.currentId)
               .collection('messages')
               .doc(event.friendId)
-              .set({'last_msg': imageUrl});
+              .set({'last_msg': "Photo"});
 
           FirebaseFirestore.instance
               .collection('users')
               .doc(event.friendId)
               .collection('messages')
               .doc(event.currentId)
-              .set({'last_msg': imageUrl});
+              .set({'last_msg': 'Photo'});
         }
       } catch (e) {
         print("Error uploading image: $e");
@@ -184,14 +185,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               .doc(event.currentId)
               .collection('messages')
               .doc(event.friendId)
-              .set({'last_msg': imageUrl});
+              .set({'last_msg': 'Photo'});
 
           FirebaseFirestore.instance
               .collection('users')
               .doc(event.friendId)
               .collection('messages')
               .doc(event.currentId)
-              .set({'last_msg': imageUrl});
+              .set({'last_msg': 'Photo'});
         }
         
       } catch (e) {

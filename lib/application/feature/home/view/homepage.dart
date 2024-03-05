@@ -27,8 +27,8 @@ class Home extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: screens.elementAt(state.tabIndex),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const [
+          bottomNavigationBar: BottomNavigationBar(           
+            items:  [
               BottomNavigationBarItem(
                   icon: Icon(Ionicons.chatbox_ellipses_outline),
                   label: 'chats'),
@@ -41,7 +41,7 @@ class Home extends StatelessWidget {
                   icon: Icon(Ionicons.person_outline), label: 'profile')
             ],
             currentIndex: state.tabIndex,
-            fixedColor: Colors.black,
+            fixedColor: Color(0xff4FB6EC),
             unselectedItemColor: const Color.fromARGB(255, 207, 205, 205),
             onTap: (value) {
               homeBloc.add(

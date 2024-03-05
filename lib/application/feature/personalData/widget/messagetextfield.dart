@@ -67,7 +67,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xffADD8E6),
+                  color: Color(0xff4FB6EC),
                 ),
                 child: const Icon(
                   Icons.send,

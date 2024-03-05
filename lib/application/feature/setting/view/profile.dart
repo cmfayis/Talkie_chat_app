@@ -60,7 +60,9 @@ class _ProfileState extends State<Profile> {
                           const SizedBox(height: 16.0),
                           const Text(
                             'Enter Your Name',
-                            style: TextStyle(fontSize: 18.0,),
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
                           ),
                           TextField(
                             controller: namecontroller,
@@ -80,7 +82,10 @@ class _ProfileState extends State<Profile> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child:const Text('Cancel',style: TextStyle(color: Colors.white),)),
+                                    child: const Text(
+                                      'Cancel',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                                 const CustomSizedBox(
                                   width: 25,
                                 ),
@@ -90,7 +95,7 @@ class _ProfileState extends State<Profile> {
                                           UpdateDataEvent(
                                               Data: namecontroller.text));
                                     },
-                                    child: Text('Save')),
+                                    child: Text('Save',style: TextStyle(color: Colors.white))),
                               ],
                             ),
                           ),
@@ -118,7 +123,10 @@ class _ProfileState extends State<Profile> {
                       BlocProvider.of<ProfileBloc>(context)
                           .add(SumbitEvent(image: image));
                     },
-                    child: Text('Save',style: TextStyle(color: Colors.white),)),
+                    child: Text(
+                      'Save',
+                      style: TextStyle(color: Colors.white),
+                    )),
                 SizedBox(
                   width: 15,
                 )
@@ -218,8 +226,8 @@ class _ProfileState extends State<Profile> {
                                 hieght: 40,
                                 width: double.infinity,
                               ),
-                       const       Text(
-                                'Display Name',                             
+                              const Text(
+                                'Display Name',
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -230,7 +238,7 @@ class _ProfileState extends State<Profile> {
                                           name!,
                                           style: const TextStyle(
                                             fontSize: 19,
-                                            color: Colors.black,                                    
+                                            color: Colors.black,
                                           ),
                                         )
                                       : Text(
@@ -238,7 +246,6 @@ class _ProfileState extends State<Profile> {
                                           style: const TextStyle(
                                             fontSize: 19,
                                             color: Colors.black,
-                                            
                                           ),
                                         ),
                                   IconButton(
@@ -249,6 +256,16 @@ class _ProfileState extends State<Profile> {
                                       icon: Icon(Icons.edit))
                                 ],
                               ),
+                              CustomSizedBox(hieght: 15,),
+                              Text('Email'),
+                              CustomSizedBox(hieght: 10,),
+                              Text(
+                                widget.email,
+                                style: const TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.black,
+                                ),
+                              )
                             ],
                           ),
                         ),

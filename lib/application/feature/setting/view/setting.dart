@@ -73,14 +73,7 @@ class _SettingState extends State<Setting> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Profile(
-                                        image: image,
-                                        name: name,
-                                        email: email,
-                                      )));
+                         
                         },
                         child: Center(
                           child: CircleAvatar(
@@ -109,7 +102,14 @@ class _SettingState extends State<Setting> {
                       ),
                         Listtile(
                         ontap: () {
-                        
+                         Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile(
+                                        image: image,
+                                        name: name,
+                                        email: email,
+                                      )));
                         },
                         leading: Icon(Icons.edit_outlined ),
                         title: const Text(

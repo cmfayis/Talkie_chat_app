@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 class chats extends StatefulWidget {
   chats({
@@ -24,14 +25,10 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffADD8E6),
-        title: const Text(
-          'Chat App',
-          style: TextStyle(color: Colors.white),
-        ),
+        backgroundColor: Colors.white,
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xffADD8E6),
+          backgroundColor: Colors.black,
           child: const Icon(
             Icons.chat,
             color: Colors.white,
@@ -42,9 +39,17 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
           }),
       backgroundColor: Colors.white,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text(
+              'Chats',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            ),
+          ),
           const CustomSizedBox(
-            hieght: 10,
+            hieght: 15,
           ),
           Expanded(
             child: StreamBuilder(
@@ -62,8 +67,9 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                     }
                     return ListView.separated(
                         separatorBuilder: (context, index) {
-                          return const CustomSizedBox(
-                            hieght: 5,
+                          return const Divider(
+                            thickness: 00,
+                            indent: 85,
                           );
                         },
                         itemCount: snapshot.data.docs.length,
@@ -99,15 +105,25 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                       fontSize: 19,
                                     ),
                                   ),
-                                  subtitle: Container(
-                                    child: Text(
-                                      lastMsg,
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 133, 133, 133)),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
+                                  subtitle: lastMsg == 'Photo'
+                                      ? Row(
+                                          children: [
+                                            Icon(Ionicons.camera),
+                                            CustomSizedBox(
+                                              width: 3,
+                                            ),
+                                            Text('photo')
+                                          ],
+                                        )
+                                      : Container(
+                                          child: Text(
+                                            lastMsg,
+                                            style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 133, 133, 133)),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                   onTap: () {
                                     Navigator.push(
                                         context,
