@@ -2,7 +2,9 @@ import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
+import 'package:chat_app/application/feature/setting/view/faq.dart';
 import 'package:chat_app/application/feature/setting/view/profile.dart';
+import 'package:chat_app/application/feature/setting/view/terms.dart';
 import 'package:chat_app/application/feature/setting/widget/listtitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,7 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   @override
-  void initState() {
-    super.initState();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +40,13 @@ class _SettingState extends State<Setting> {
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Color(0xffADD8E6),
-          title: const Text(
-            'Settings',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Color(0xffADD8E6),
+        //   title: const Text(
+        //     'Settings',
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        // ),
         body: BlocBuilder<SettingBloc, SettingState>(
           builder: (context, state) {
             BlocProvider.of<SettingBloc>(context).add(intialEvent());
@@ -59,75 +59,114 @@ class _SettingState extends State<Setting> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: Column(
-                  children: [
-                    const CustomSizedBox(
-                      hieght: 25,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Profile(
-                                      image: image,
-                                      name: name,
-                                      email: email,
-                                    )));
-                      },
-                      child: Center(
-                        child: CircleAvatar(
-                            radius: 60, backgroundImage: NetworkImage(image)),
+             
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(               
+                    children: [
+                      const CustomSizedBox(
+                        hieght: 75,
                       ),
-                    ),
-                    const CustomSizedBox(
-                      hieght: 15,
-                    ),
-                     Listtile(
-                      ontap: () {},
-                      leading: const Icon(Icons.support),
-                      title: const Text(
-                        "Terms and Conditions",
+                      Text('Profile',style: TextStyle(fontSize: 25),),
+                      const CustomSizedBox(
+                        hieght: 25,
                       ),
-                    ),
-                     Listtile(
-                      ontap: () {},
-                      leading: const Icon(Icons.help_outline),
-                      title: const Text(
-                        "FAQ",
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile(
+                                        image: image,
+                                        name: name,
+                                        email: email,
+                                      )));
+                        },
+                        child: Center(
+                          child: CircleAvatar(
+                              radius: 50, backgroundImage: NetworkImage(image)),
+                        ),
                       ),
-                    ),
-                    Listtile(
-                      ontap: () {},
-                      leading: const Icon(Icons.support),
-                      title: const Text(
-                        "Supports us",
+                       const CustomSizedBox(
+                        hieght: 15,
                       ),
-                    ),
-                    Listtile(
-                      ontap: () {
-                        BlocProvider.of<SettingBloc>(context)
-                            .add(LogoutEvent());
-                      },
-                      leading: Icon(Icons.logout),
-                      title: const Text(
-                        "Logout",
+                      Text(name,style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
+                      const CustomSizedBox(
+                        hieght: 5,
                       ),
-                    ),
-                    Listtile(
-                      ontap: () {
-                        FirebaseAuth.instance.currentUser!.delete();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterPage()));
-                      },
-                      leading: Icon(Icons.delete),
-                      title: const Text(
-                        "Delete Account",
+                      Text(email,style: TextStyle(fontSize: 16),),
+                        const CustomSizedBox(
+                        hieght: 15,
                       ),
-                    ),
-                  ],
+                      Divider(
+                        color:Color(0xffADD8E6) ,
+                        thickness: 4,
+                        indent: 50,
+                        endIndent: 50,
+                      ),
+                        const CustomSizedBox(
+                        hieght: 15,
+                      ),
+                        Listtile(
+                        ontap: () {
+                        
+                        },
+                        leading: Icon(Icons.edit_outlined ),
+                        title: const Text(
+                          "Edit Profile",
+                        ),
+                      ),
+                       Listtile(
+                        ontap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms()));
+                        },
+                        leading: const Icon(Icons.policy),
+                        title: const Text(
+                          "Terms and Conditions",
+                        ),
+                      ),
+                       Listtile(
+                        ontap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Faq()));
+                        },
+                        leading: const Icon(Icons.help_outline),
+                        title: const Text(
+                          "FAQ",
+                        ),
+                      ),
+                      Listtile(
+                        ontap: () {},
+                        leading: const Icon(Icons.support),
+                        title: const Text(
+                          "Supports us",
+                        ),
+                      ),
+                     
+                      Listtile(
+                        ontap: () {
+                          BlocProvider.of<SettingBloc>(context)
+                              .add(LogoutEvent());
+                        },
+                        leading: Icon(Icons.logout),
+                        title: const Text(
+                          "Logout",
+                        ),
+                      ),
+                      Listtile(
+                        ontap: () {
+                          FirebaseAuth.instance.currentUser!.delete();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const RegisterPage()));
+                        },
+                        leading: Icon(Icons.delete,color: Colors.red,),
+                        title: const Text(
+                          "Delete Account",style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

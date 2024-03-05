@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-
-        //     textTheme: const TextTheme(
+    fontFamily:'Montserrat'
+            // textTheme: const TextTheme(
         //   displayLarge: TextStyle(
         //       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
         // )
