@@ -4,6 +4,7 @@ import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart'
 import 'package:chat_app/application/feature/auth/view/loginpage.dart';
 import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/view/signup_page.dart';
+import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
 import 'package:chat_app/application/feature/home/Homebloc/home_bloc.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/personalData/bloc/bloc/chat_bloc.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
          BlocProvider(
           create: (context) => ChatBloc(),
+        ),
+         BlocProvider(
+          create: (context) => StatusBloc(),
         ),
         BlocProvider(
           create: (context) => HomeBloc(),

@@ -16,7 +16,7 @@ class SingleMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DateTime dateTime = currentTime.toDate();
-    String formattedTime = DateFormat.Hm().format(dateTime);
+    String formattedTime = DateFormat("hh:mm a").format(dateTime);
     return Column(
       children: [
         Row(
@@ -31,7 +31,7 @@ class SingleMessage extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         margin: const EdgeInsets.only(
                             top: 10, bottom: 2, left: 10, right: 10),
-                        constraints: const BoxConstraints(maxWidth: 200),
+                        constraints: const BoxConstraints(maxWidth: 200,minWidth: 80),
                         decoration: BoxDecoration(
                             color: isMe
                                 ? const Color(0xff4FB6EC)
@@ -123,7 +123,7 @@ class SingleMessage extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 17),
                   child: Text(
                     formattedTime,
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Colors.grey,fontSize: 10),
                   ),
                 )
               ],

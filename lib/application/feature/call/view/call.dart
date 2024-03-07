@@ -1,61 +1,82 @@
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
+import 'package:chat_app/application/feature/call/view/status_textpage.dart';
+import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:story_view/controller/story_controller.dart';
-import 'package:story_view/utils.dart';
-import 'package:story_view/widgets/story_view.dart';
 
 class Call extends StatelessWidget {
   const Call({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = StoryController();
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xffADD8E6),
-        ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-                decoration: const BoxDecoration(
-                    color: Color(0xffADD8E6),
-                    borderRadius: BorderRadius.all(Radius.circular(13))),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.edit),
-                )),
-            const CustomSizedBox(
-              hieght: 15,
-            ),
-            Container(
-                decoration: const BoxDecoration(
-                    color: Color(0xffADD8E6),
-                    borderRadius: BorderRadius.all(Radius.circular(13))),
-                child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Ionicons.camera_outline,
-                    ))),
-          ],
-        ),
-        body: StoryView(
-          controller: controller,
-          inline: false, // pass controller here too
-          repeat: true, // should the stories be slid forever
-
-          onComplete: () {},
-          onVerticalSwipeComplete: (direction) {
-            if (direction == Direction.down) {
-              Navigator.pop(context);
+    String? image;
+    String name ='My Status';
+    return SafeArea(
+      child: Scaffold(
+      appBar: AppBar(
+        actions: [
+          CustomSizedBox(width: 15,),
+           GestureDetector(
+            onTap: () {
+              
+            },
+            child: Icon(Ionicons.camera_outline,color: Colors.blue,),
+          ),
+          CustomSizedBox(width: 15,),
+           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>StatusTextPage()));
+            },
+            child: Container(
+                margin: EdgeInsets.only(right: 15),
+                padding: EdgeInsets.all(2),
+                decoration:
+                    BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+                child: Icon(Icons.add,color: Colors.white,size: 22,)),
+          ),
+        ],
+      ),
+        body: BlocBuilder<SettingBloc, SettingState>(
+          builder: (context, state) {
+            BlocProvider.of<SettingBloc>(context).add(intialEvent());
+            if(state is FetchState){
+           image=state.imageUrl;
+           
             }
+            return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25,bottom: 23),
+                      child: Text(
+                                  "Updates",
+                                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                                ),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 35),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(image??'') ,
+                            radius: 25,
+                          ),
+                          
+                        ),
+                        CustomSizedBox(width: 15,),
+                        Text(name)
+                      ],
+                    ),
+
+                  ],
+                ),
+              );
           },
-          storyItems: [
-          StoryItem(Text('veiw'), duration: Duration(seconds: 10)),
-            StoryItem(Text('veiw'), duration: Duration(seconds: 10)),
-          ], // To disable vertical swipe gestures, ignore this parameter.
-          // Preferrably for inline story view.
-        ));
+        ),
+      ),
+    );
   }
 }

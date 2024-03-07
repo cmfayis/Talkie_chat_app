@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
 
 class chats extends StatefulWidget {
@@ -26,17 +27,21 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: const Icon(
-            Icons.chat,
-            color: Colors.white,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Search()));
+            },
+            child: Container(
+                margin: EdgeInsets.only(right: 15),
+                padding: EdgeInsets.all(2),
+                decoration:
+                    BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+                child: Icon(Icons.add,color: Colors.white,)),
           ),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Search()));
-          }),
+        ],
+      ),
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
