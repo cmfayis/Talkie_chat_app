@@ -1,212 +1,255 @@
-import 'package:chat_app/application/feature/auth/widget/custombutton.dart';
-import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../auth_bloc/bloc/auth_bloc.dart';
-import '../widget/customtextfield.dart';
-import '../widget/validate.dart';
+// import 'package:animate_do/animate_do.dart';
+// import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
+// import 'package:chat_app/application/feature/auth/widget/validate.dart';
+// import 'package:chat_app/application/feature/profileview/profileview.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPageWrapper extends StatelessWidget {
-  const LoginPageWrapper({super.key});
+// class SignUpWrapper extends StatelessWidget {
+//   const SignUpWrapper({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(),
-      child: const LoginPage(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) => AuthBloc(),
+//       child:  SignUpPage(),
+//     );
+//   }
+// }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+// class SignUpPage extends StatefulWidget {
+//   @override
+//   State<SignUpPage> createState() => _SignUpPageState();
+// }
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final emailcontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
-  final formkey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is AuthenticatedState) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/home", (route) => false);
-          });
-        }
-        if (state is ErrorAuthenctionState) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(state.error)));
-        }
-        if (state is GoogleButtonState) {
-          Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
-        }
-        if (state is SignUpButtonClickedState) {
-          Navigator.pushNamed(context, '/SignUp');
-        }
-      },
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0.0,
-          ),
-          body: SingleChildScrollView(
-            child: Form(
-              key: formkey,
-              child: Column(
-                children: [
-                  const CustomSizedBox(
-                    hieght: 25,
-                  ),
-                  const Text(
-                    'Log in to Chatbox',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const CustomSizedBox(
-                    hieght: 20,
-                  ),
-                  const Text(
-                    'Welcome back! Sign in using your social\n       account or email to continue us',
-                    style: TextStyle(color: Color.fromARGB(255, 53, 52, 52)),
-                  ),
-                  const CustomSizedBox(
-                    hieght: 40,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                        
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey)),
-                          child: CircleAvatar(
-                              radius: 17,
-                              child: Image.asset('asset/images/face.webp')),
-                        ),
-                      ),
-                      const CustomSizedBox(
-                        width: 15,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(GoogleButtonEvent());
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey)),
-                          child: CircleAvatar(
-                              radius: 16,
-                              child: Image.asset('asset/images/ggg.png')),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const CustomSizedBox(
-                    hieght: 45,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 2,
-                        width: 162,
-                        color: Colors.grey,
-                      ),
-                      const CustomSizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'or',
-                        style: TextStyle(color: Colors.black, fontSize: 20),
-                      ),
-                      const CustomSizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        height: 2,
-                        width: 162,
-                        color: Colors.grey,
-                      )
-                    ],
-                  ),
-                  const CustomSizedBox(
-                    hieght: 45,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomTextFormField(
-                          controller: emailcontroller,
-                          hintText: 'Email',
-                          label: 'Email',
-                          validator: emailValidate,
-                        ),
-                        const CustomSizedBox(
-                          hieght: 25,
-                        ),
-                        CustomTextFormField(
-                          controller: passwordcontroller,
-                          label: 'Password',
-                          hintText: 'Password',
-                          obscureText: true,
-                          validator: PasswordValidate,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const CustomSizedBox(
-                    hieght: 100,
-                  ),
-                  CustomButton(
-                      ontap: () {
-                        final password = passwordcontroller.text;
-                        final email = emailcontroller.text;
-                        if (formkey.currentState!.validate()) {
-                          BlocProvider.of<AuthBloc>(context).add(
-                              LoginEvent(password: password, email: email));
-                        }
-                      },
-                      width: double.infinity,
-                      hieght: 45,
-                      color: const Color(0xffADD8E6),
-                      text: 'Login'),
-                  TextButton(
-                      onPressed: () {
-                        BlocProvider.of<AuthBloc>(context)
-                            .add(SignUpButtonClickedEvent());
-                      },
-                      child: const Text(
-                        "I Don't have any account ",
-                        style: TextStyle(color: Colors.blue),
-                      )),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
+// class _SignUpPageState extends State<SignUpPage> {
+//   final formkey = GlobalKey<FormState>();
+//    final namecontroller = TextEditingController();
+//   final emailcontroller = TextEditingController();
+//   final passwordcontroller = TextEditingController();
+//   final phonecontoller = TextEditingController();
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocConsumer<AuthBloc, AuthState>(
+//       listener: (context, state) {
+//          if (state is AuthenticatedState) {
+//           WidgetsBinding.instance.addPostFrameCallback((_) {
+//             Navigator.pushAndRemoveUntil(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => const ProfileView()),
+//                 (route) => false);
+//           });
+//         }
+//       },
+//       builder: (context, state) {
+//         return Scaffold(
+//           body: Container(
+//             width: double.infinity,
+//             decoration: BoxDecoration(
+//                 gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+//               Color.fromARGB(255, 123, 198, 233),
+//               Color.fromARGB(255, 47, 245, 235),
+//               Color.fromARGB(255, 37, 125, 181)
+//             ])),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: <Widget>[
+//                 SizedBox(
+//                   height: 80,
+//                 ),
+//                 Padding(
+//                   padding: EdgeInsets.all(20),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: <Widget>[
+//                       FadeInUp(
+//                           duration: Duration(milliseconds: 1000),
+//                           child: Text(
+//                             "Login",
+//                             style: TextStyle(color: Colors.white, fontSize: 40),
+//                           )),
+//                       SizedBox(
+//                         height: 10,
+//                       ),
+//                       FadeInUp(
+//                           duration: Duration(milliseconds: 1300),
+//                           child: Text(
+//                             "Welcome Back",
+//                             style: TextStyle(color: Colors.white, fontSize: 18),
+//                           )),
+//                     ],
+//                   ),
+//                 ),
+//                 SizedBox(height: 10),
+//                 Expanded(
+//                   child: SingleChildScrollView(
+//                     child: Form(
+//                       key: formkey,
+//                       child: Container(
+//                         decoration: BoxDecoration(
+//                             color: Colors.white,
+//                             borderRadius: BorderRadius.only(
+//                                 topLeft: Radius.circular(60),
+//                                 topRight: Radius.circular(60))),
+//                         child: Padding(
+//                           padding: EdgeInsets.all(30),
+//                           child: Column(
+//                             children: <Widget>[
+//                               SizedBox(
+//                                 height: 60,
+//                               ),
+//                               FadeInUp(
+//                                   duration: Duration(milliseconds: 1400),
+//                                   child: Container(
+//                                     decoration: BoxDecoration(
+//                                         color: Colors.white,
+//                                         borderRadius: BorderRadius.circular(10),
+//                                         boxShadow: [
+//                                           BoxShadow(
+//                                               color: Color.fromRGBO(
+//                                                   225, 95, 27, .3),
+//                                               blurRadius: 20,
+//                                               offset: Offset(0, 10))
+//                                         ]),
+//                                     child: Column(
+//                                       children: <Widget>[
+//                                          Container(
+//                                           padding: EdgeInsets.all(10),
+//                                           decoration: BoxDecoration(
+//                                               border: Border(
+//                                                   bottom: BorderSide(
+//                                                       color: Colors
+//                                                           .grey.shade200))),
+//                                           child: TextFormField(
+//                                             controller: passwordcontroller,
+//                                             obscureText: true,
+//                                             decoration: InputDecoration(
+//                                                 hintText: "Name",
+//                                                 hintStyle: TextStyle(
+//                                                     color: Colors.grey),
+//                                                 border: InputBorder.none),
+//                                             validator: nameValidate,
+//                                           ),
+//                                         ),
+//                                         Container(
+//                                           padding: EdgeInsets.all(10),
+//                                           decoration: BoxDecoration(
+//                                               border: Border(
+//                                                   bottom: BorderSide(
+//                                                       color: Colors
+//                                                           .grey.shade200))),
+//                                           child: TextFormField(
+//                                             controller: emailcontroller,
+//                                             decoration: InputDecoration(
+//                                                 hintText:
+//                                                     "Email or Phone number",
+//                                                 hintStyle: TextStyle(
+//                                                     color: Colors.grey),
+//                                                 border: InputBorder.none),
+//                                             validator: emailValidate,
+//                                           ),
+//                                         ),
+//                                         Container(
+//                                           padding: EdgeInsets.all(10),
+//                                           decoration: BoxDecoration(
+//                                               border: Border(
+//                                                   bottom: BorderSide(
+//                                                       color: Colors
+//                                                           .grey.shade200))),
+//                                           child: TextFormField(
+//                                             controller: passwordcontroller,
+//                                             obscureText: true,
+//                                             decoration: InputDecoration(
+//                                                 hintText: "Password",
+//                                                 hintStyle: TextStyle(
+//                                                     color: Colors.grey),
+//                                                 border: InputBorder.none),
+//                                             validator: PasswordValidate,
+//                                           ),
+                                          
+//                                         ),
+//                                          Container(
+//                                           padding: EdgeInsets.all(10),
+//                                           decoration: BoxDecoration(
+//                                               border: Border(
+//                                                   bottom: BorderSide(
+//                                                       color: Colors
+//                                                           .grey.shade200))),
+//                                           child: TextFormField(
+//                                             controller: passwordcontroller,
+//                                             obscureText: true,
+//                                             decoration: InputDecoration(
+//                                                 hintText: "Phone",
+//                                                 hintStyle: TextStyle(
+//                                                     color: Colors.grey),
+//                                                 border: InputBorder.none),
+//                                             validator: phoneValidate,
+//                                           ),
+//                                         ),
+//                                       ],
+//                                     ),
+//                                   )),
+//                               SizedBox(
+//                                 height: 30,
+//                               ),
+//                               FadeInUp(
+//                                   duration: Duration(milliseconds: 1500),
+//                                   child: TextButton(
+//                                     onPressed: () {
+//                                       BlocProvider.of<AuthBloc>(context)
+//                                           .add(SignUpButtonClickedEvent());
+//                                     },
+//                                     child: Text('Already I have a account',
+//                                         style: TextStyle(color: Colors.grey)),
+//                                   )),
+//                               SizedBox(
+//                                 height: 23,
+//                               ),
+//                               FadeInUp(
+//                                   duration: Duration(milliseconds: 1600),
+//                                   child: MaterialButton(
+//                                     onPressed: () {
+//                                       final name = namecontroller.text;
+//                         final password = passwordcontroller.text;
+//                         final email = emailcontroller.text;
+//                         final phone = phonecontoller.text;
+//                         if (formkey.currentState!.validate()) {
+//                           BlocProvider.of<AuthBloc>(context).add(SignupEvent(
+//                               email: email,
+//                               password: password,
+//                               phone: phone,
+//                               name: name));
+//                         }
+//                                     },
+//                                     height: 50,
+//                                     // margin: EdgeInsets.symmetric(horizontal: 50),
+//                                     color: Color.fromARGB(255, 47, 245, 235),
+//                                     shape: RoundedRectangleBorder(
+//                                       borderRadius: BorderRadius.circular(50),
+//                                     ),
+//                                     // decoration: BoxDecoration(
+//                                     // ),
+//                                     child: Center(
+//                                       child: Text(
+//                                         "SignUp",
+//                                         style: TextStyle(
+//                                             color: Colors.white,
+//                                             fontWeight: FontWeight.bold),
+//                                       ),
+//                                     ),
+//                                   )),
+//                             ],
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 )
+//               ],
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

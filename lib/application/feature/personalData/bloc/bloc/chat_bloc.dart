@@ -39,6 +39,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .doc(event.friendId)
             .set({
           'last_msg': event.message,
+          'Time': DateTime.now(),
         });
       });
 
@@ -60,7 +61,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .doc(event.friendId)
             .collection('messages')
             .doc(event.currentId)
-            .set({"last_msg": event.message});
+            .set({
+          "last_msg": event.message,
+          'Time': DateTime.now(),
+        });
       });
     });
     on<FileSendEvent>((event, emit) {
@@ -119,14 +123,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               .doc(event.currentId)
               .collection('messages')
               .doc(event.friendId)
-              .set({'last_msg': "Photo"});
+              .set({
+            'last_msg': "Photo",
+            'Time': DateTime.now(),
+          });
 
           FirebaseFirestore.instance
               .collection('users')
               .doc(event.friendId)
               .collection('messages')
               .doc(event.currentId)
-              .set({'last_msg': 'Photo'});
+              .set({
+            'last_msg': 'Photo',
+            'Time': DateTime.now(),
+          });
         }
       } catch (e) {
         print("Error uploading image: $e");
@@ -185,16 +195,21 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
               .doc(event.currentId)
               .collection('messages')
               .doc(event.friendId)
-              .set({'last_msg': 'Photo'});
+              .set({
+            'last_msg': 'Photo',
+            'Time': DateTime.now(),
+          });
 
           FirebaseFirestore.instance
               .collection('users')
               .doc(event.friendId)
               .collection('messages')
               .doc(event.currentId)
-              .set({'last_msg': 'Photo'});
+              .set({
+            'last_msg': 'Photo',
+            'Time': DateTime.now(),
+          });
         }
-        
       } catch (e) {
         print("Error uploading image: $e");
       }
@@ -269,14 +284,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .doc(event.currentId)
             .collection('messages')
             .doc(event.friendId)
-            .set({'last_msg': message});
+            .set({
+          'last_msg': 'Location',
+          'Time': DateTime.now(),
+        });
 
         await FirebaseFirestore.instance
             .collection('users')
             .doc(event.friendId)
             .collection('messages')
             .doc(event.currentId)
-            .set({'last_msg': message});
+            .set({
+          'last_msg': 'Location',
+          'Time': DateTime.now(),
+        });
       } catch (e) {
         print(e.toString());
       }

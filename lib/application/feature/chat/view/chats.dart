@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 
 class chats extends StatefulWidget {
@@ -38,7 +39,10 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                 padding: EdgeInsets.all(2),
                 decoration:
                     BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
-                child: Icon(Icons.add,color: Colors.white,)),
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                )),
           ),
         ],
       ),
@@ -81,6 +85,10 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                         itemBuilder: (context, index) {
                           var friendId = snapshot.data.docs[index].id;
                           var lastMsg = snapshot.data.docs[index]['last_msg'];
+                          final time = snapshot.data.docs[index]['Time'];
+                         DateTime dateTime = time.toDate();
+                          String formattedTime = DateFormat("hh:mm a").format(dateTime);
+
                           return StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('users')
@@ -104,6 +112,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                           NetworkImage(friend['image']),
                                     ),
                                   ),
+                                  trailing: Text(formattedTime),
                                   title: Text(
                                     friend['Name'],
                                     style: const TextStyle(

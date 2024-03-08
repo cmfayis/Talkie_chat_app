@@ -57,6 +57,8 @@ dependencies:
   story_view: ^0.16.5
   google_fonts: ^6.1.0
   flutter_colorpicker: ^1.0.3
+  animate_do: ^3.3.4
+  custom_clippers: ^2.0.0
   
   
   

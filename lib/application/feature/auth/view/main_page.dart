@@ -45,47 +45,20 @@ class _RegisterPageState extends State<RegisterPage> {
               Container(
                 width: double.infinity,
                 height: double.infinity,
-                color: Colors.black,
+                  decoration: BoxDecoration(
+                gradient: LinearGradient(begin: Alignment.topCenter ,end: Alignment.bottomCenter, colors: [
+              Color.fromARGB(255, 8, 211, 247),
+              Color.fromARGB(255, 93, 201, 209),
+              Color.fromARGB(255, 161, 252, 252)
+            ])),
               ),
-              Opacity(
-                opacity: .6,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 50, bottom: 320),
-                  child: Container(
-                    width: double.infinity,
-                    height: 650.0,
-                    decoration: const BoxDecoration(
-                      gradient: RadialGradient(
-                        center: Alignment.center,
-                        radius: .7,
-                        colors: [
-                          Color.fromARGB(255, 76, 34, 129),
-                          Colors.black
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+           
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CustomSizedBox(
                     hieght: 50,
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Image.asset(
-                  //       "asset/images/splash.png",
-                  //       width: 55,
-                  //     ),
-                  //     const Text(
-                  //       'Chat App',
-                  //       style: TextStyle(color: Colors.white),
-                  //     )
-                  //   ],
-                  // ),
+                  ),            
                   CustomSizedBox(hieght: 45,),
                   const HeadingText(),
                   const CustomSizedBox(
@@ -102,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.black,
+                              color: Colors.white,
                               border: Border.all(color: Colors.grey)),
                           child: CircleAvatar(
                               radius: 17,
@@ -121,11 +94,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.black,
+                              color: Colors.white,
                               border: Border.all(color: Colors.grey)),
                           child: CircleAvatar(
                               radius: 16,
-                              child: Image.asset('asset/images/google.jpg')),
+                              child: Image.asset('asset/images/ggg.png')),
                         ),
                       ),
                     ],
@@ -177,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 BorderRadius.all(Radius.circular(15))),
                         child: const Center(
                           child: Text(
-                            "Sign up withn mail",
+                            "Sign up with Email",
                             style: TextStyle(fontSize: 17.0),
                           ),
                         ),
@@ -190,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Existing account? ',
+                      const Text('Existing account ? ',
                           style: TextStyle(
                             color: Colors.grey,
                           )),
@@ -201,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           child: const Text(
                             'Log in',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           )),
                     ],
                   )

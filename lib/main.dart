@@ -1,7 +1,7 @@
 
 import 'package:chat_app/application/feature/SearchFolder/bloc/search_bloc.dart';
 import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
-import 'package:chat_app/application/feature/auth/view/loginpage.dart';
+import 'package:chat_app/application/feature/auth/view/Login.dart';
 import 'package:chat_app/application/feature/auth/view/main_page.dart';
 import 'package:chat_app/application/feature/auth/view/signup_page.dart';
 import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';

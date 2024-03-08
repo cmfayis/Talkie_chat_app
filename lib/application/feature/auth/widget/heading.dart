@@ -27,7 +27,7 @@ class HeadingText extends StatelessWidget {
               text:
                   '\nOur chat app is the perfect way to stay \nconnected with friends and family.',
               style: TextStyle(
-                  color: Colors.grey, fontSize: 19, height: 1.4),
+                  color: Colors.black, fontSize: 19, height: 1.4),
             ),
           ],
         ),

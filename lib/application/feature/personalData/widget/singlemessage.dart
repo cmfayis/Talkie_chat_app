@@ -1,4 +1,5 @@
 import 'package:chat_app/application/feature/personalData/widget/showimage.dart';
+import 'package:custom_clippers/custom_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,35 +26,44 @@ class SingleMessage extends StatelessWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [      
+              children: [
                 type == 'text'
                     ? Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.only(
-                            top: 10, bottom: 2, left: 10, right: 10),
-                        constraints: const BoxConstraints(maxWidth: 200,minWidth: 80),
-                        decoration: BoxDecoration(
-                            color: isMe
-                                ? const Color(0xff4FB6EC)
-                                : Color.fromARGB(255, 234, 242, 248),
-                            borderRadius: const BorderRadius.all(Radius.circular(12))
-                              
-
-                            ),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                              fontSize: 17,
-                              color: isMe ? Colors.white : Colors.black),
-                        ))
+                        child: ClipPath(
+                          clipper: isMe
+                              ? UpperNipMessageClipperTwo(MessageType.send)
+                              : UpperNipMessageClipperTwo(MessageType.receive),
+                          child: Container(
+                              padding: isMe
+                                  ? EdgeInsets.only(
+                                      top: 5, left: 10, bottom: 5, right: 25)
+                                  : EdgeInsets.only(
+                                      top: 5, left: 25, bottom: 5, right: 10),
+                              constraints: const BoxConstraints(
+                                  maxWidth: 280, minWidth: 80),
+                              decoration: BoxDecoration(
+                                  color: isMe
+                                      ? Color.fromARGB(255, 112, 240, 238)
+                                      : Color.fromARGB(255, 234, 242, 248),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12))),
+                              child: Text(
+                                message,
+                                style: TextStyle(
+                                fontFamily: 'sans-serif' ,
+                                    fontSize: 15,
+                                    color: Colors.black),
+                              )),
+                        ),
+                      )
                     : Container(
                         margin: const EdgeInsets.only(right: 20, top: 10),
                         child: type == "link"
-                            ?   Container(
+                            ? Container(
                                 padding: const EdgeInsets.all(16),
                                 margin: const EdgeInsets.all(16),
                                 constraints:
-                                    const BoxConstraints(maxWidth: 200),
+                                    const BoxConstraints(maxWidth: 250),
                                 decoration: BoxDecoration(
                                     color: isMe ? Colors.black : Colors.grey,
                                     borderRadius: const BorderRadius.all(
@@ -87,7 +97,7 @@ class SingleMessage extends StatelessWidget {
                                                       ShowImage(
                                                           imageUrl: message)));
                                         },
-                                        child:  Container(
+                                        child: Container(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -100,9 +110,8 @@ class SingleMessage extends StatelessWidget {
                                               border: Border.all(
                                                   width: 4,
                                                   color: isMe
-                                                      ?  const Color(
-                                                          0xffADD8E6):Colors.grey
-                                                      ),
+                                                      ? const Color(0xffADD8E6)
+                                                      : Colors.grey),
                                               borderRadius:
                                                   const BorderRadius.only(
                                                 topRight: Radius.circular(18),
@@ -120,10 +129,10 @@ class SingleMessage extends StatelessWidget {
                               ),
                       ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 17),
+                  padding: isMe? EdgeInsets.only(right: 17,bottom: 5):EdgeInsets.only(right: 0,bottom: 5),
                   child: Text(
                     formattedTime,
-                    style: TextStyle(color: Colors.grey,fontSize: 10),
+                    style: TextStyle(color: Colors.grey, fontSize: 10),
                   ),
                 )
               ],

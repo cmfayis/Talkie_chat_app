@@ -32,3 +32,4 @@ class LoginButtonClickedEvent extends AuthEvent {}
 class SignUpButtonClickedEvent extends AuthEvent {}
 
 class SignOutButtonEvent extends AuthEvent {}
+class ExistingAccontEvent extends AuthEvent{}
