@@ -1,4 +1,3 @@
-
 import 'package:chat_app/application/feature/SearchFolder/bloc/search_bloc.dart';
 import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
 import 'package:chat_app/application/feature/auth/view/Login.dart';
@@ -13,6 +12,7 @@ import 'package:chat_app/application/feature/profileview/profileview.dart';
 import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
 import 'package:chat_app/application/feature/splash/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,9 +20,11 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await GoogleSignIn().signInSilently();
   runApp(const MyApp());
 }
@@ -31,17 +33,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-  
     return MultiBlocProvider(
-
       providers: [
-         BlocProvider(
+        BlocProvider(
           create: (context) => SettingBloc(),
         ),
-         BlocProvider(
+        BlocProvider(
           create: (context) => ChatBloc(),
         ),
-         BlocProvider(
+        BlocProvider(
           create: (context) => StatusBloc(),
         ),
         BlocProvider(
@@ -59,19 +59,18 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-    fontFamily:'Montserrat'
+        theme: ThemeData(fontFamily: 'Montserrat'
             // textTheme: const TextTheme(
-        //   displayLarge: TextStyle(
-        //       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
-        // )
-        
-        ),
+            //   displayLarge: TextStyle(
+            //       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+            // )
+
+            ),
         title: 'Flutter Demo',
         initialRoute: '/',
         routes: {
           '/': (context) => const SplashPageWrapper(),
-          '/home': (context) =>  Home(),
+          '/home': (context) => Home(),
           '/register': (context) => const RegisterPageWrapper(),
           '/Login': (context) => const LoginPageWrapper(),
           '/SignUp': (context) => const SignUpWrapper(),

@@ -1,23 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
+
 class StatusTextPage extends StatefulWidget {
-  const StatusTextPage({super.key});
+  final image;
+  final name;
+  StatusTextPage({required this.image, required this.name});
 
   @override
   State<StatusTextPage> createState() => _StatusTextPageState();
 }
 
 class _StatusTextPageState extends State<StatusTextPage> {
-  User? user= FirebaseAuth.instance.currentUser;
-  Color color = Colors.red;
-  final datacontroller=TextEditingController();
+  User? user = FirebaseAuth.instance.currentUser;
+  Color color = Colors.white;
+  final datacontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +43,25 @@ class _StatusTextPageState extends State<StatusTextPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         onPressed: () {
-          FirebaseFirestore.instance.collection('Status').doc(user!.uid).collection('Datas').doc().set({
-            "Data":datacontroller.text,
-            "color":color.toString(),
+          FirebaseFirestore.instance.collection('Status').doc().set({
+            "Data": datacontroller.text,
+            "uid": user!.uid,
+            'image': widget.image,
+            'name': widget.name,
+            'color': color.value,
+            'timestamp': DateTime.now().toUtc(),
+          });
+          Future.delayed(Duration(minutes: 30), () {
+            FirebaseFirestore.instance
+                .collection('Status')
+                .where('timestamp',
+                    isLessThan: DateTime.now().subtract(Duration(seconds: 30)))
+                .get()
+                .then((QuerySnapshot querySnapshot) {
+              querySnapshot.docs.forEach((doc) {
+                doc.reference.delete();
+              });
+            });
           });
           Navigator.pop(context);
         },
@@ -117,9 +134,8 @@ class _StatusTextPageState extends State<StatusTextPage> {
       onColorChanged: (Color colors) {
         setState(() {
           BlocProvider.of<StatusBloc>(context)
-            .add(ColorPickerEvent(color: colors));
+              .add(ColorPickerEvent(color: colors));
         });
-        
       },
     );
   }

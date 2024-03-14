@@ -86,8 +86,9 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                           var friendId = snapshot.data.docs[index].id;
                           var lastMsg = snapshot.data.docs[index]['last_msg'];
                           final time = snapshot.data.docs[index]['Time'];
-                         DateTime dateTime = time.toDate();
-                          String formattedTime = DateFormat("hh:mm a").format(dateTime);
+                          DateTime dateTime = time.toDate();
+                          String formattedTime =
+                              DateFormat("hh:mm a").format(dateTime);
 
                           return StreamBuilder(
                             stream: FirebaseFirestore.instance
@@ -112,11 +113,19 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                           NetworkImage(friend['image']),
                                     ),
                                   ),
-                                  trailing: Text(formattedTime),
+                                  trailing: Text(
+                                    formattedTime,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'sans-serif',
+                                    ),
+                                  ),
                                   title: Text(
                                     friend['Name'],
                                     style: const TextStyle(
+                                      fontFamily: 'sans-serif',
                                       fontSize: 19,
+                                      fontWeight: FontWeight.w400
                                     ),
                                   ),
                                   subtitle: lastMsg == 'Photo'
@@ -126,13 +135,19 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                             CustomSizedBox(
                                               width: 3,
                                             ),
-                                            Text('photo')
+                                            Text(
+                                              'photo',
+                                              style: TextStyle(
+                                                fontFamily: 'sans-serif',
+                                              ),
+                                            )
                                           ],
                                         )
                                       : Container(
                                           child: Text(
                                             lastMsg,
                                             style: const TextStyle(
+                                              fontFamily: 'sans-serif',
                                                 color: Color.fromARGB(
                                                     255, 133, 133, 133)),
                                             overflow: TextOverflow.ellipsis,

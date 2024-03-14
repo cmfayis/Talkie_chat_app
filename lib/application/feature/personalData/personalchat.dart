@@ -92,7 +92,9 @@ class ChatPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Divider(thickness: 00,),
+            Divider(
+              thickness: 00,
+            ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(10),
@@ -128,6 +130,11 @@ class ChatPage extends StatelessWidget {
                               currentUser!.uid;
                           final data = snapshot.data.docs[index];
                           return Dismissible(
+                            background: Container(
+                              height: 10,
+                              color: Colors.red,
+                              child: Icon(Icons.delete),
+                            ),
                             key: UniqueKey(),
                             onDismissed: (direction) async {
                               await FirebaseFirestore.instance

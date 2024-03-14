@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
                   icon: Icon(Ionicons.chatbox_ellipses_outline),
                   label: 'chats'),
               BottomNavigationBarItem(
-                  icon: Icon(Ionicons.call_outline), label: 'calls'),
+                  icon: Icon(Icons.filter_tilt_shift_sharp), label: 'Status'),
               BottomNavigationBarItem(
                   icon: Icon(Ionicons.people_circle_outline),
                   label: 'contacts'),

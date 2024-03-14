@@ -13,22 +13,22 @@ class SendEvent extends ChatEvent {
 
 class FileSendEvent extends ChatEvent {}
 
-class GalleryImagesEvent extends ChatEvent {
-  final currentId;
-  final friendId;
-  GalleryImagesEvent({required this.currentId, required this.friendId});
-}
+class GalleryImagesEvent extends ChatEvent {}
 
-class CameraImagesEvent extends ChatEvent {
-  final currentId;
-  final friendId;
-  CameraImagesEvent({required this.currentId, required this.friendId});
-}
+class CameraImagesEvent extends ChatEvent {}
+
 class LocationEvent extends ChatEvent {
   final currentId;
   final friendId;
-LocationEvent({required this.currentId, required this.friendId});
+  LocationEvent({required this.currentId, required this.friendId});
 }
 
-class ShowImageEvent extends ChatEvent{
+class ShowImageEvent extends ChatEvent {}
+
+class SendImageEvent extends ChatEvent {
+  File image;
+  final currentId;
+  final friendId;
+  SendImageEvent(
+      {required this.currentId, required this.friendId, required this.image});
 }

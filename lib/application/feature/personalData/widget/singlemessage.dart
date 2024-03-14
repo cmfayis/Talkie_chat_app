@@ -50,7 +50,7 @@ class SingleMessage extends StatelessWidget {
                               child: Text(
                                 message,
                                 style: TextStyle(
-                                fontFamily: 'sans-serif' ,
+                                fontFamily: 'sans-serif',
                                     fontSize: 15,
                                     color: Colors.black),
                               )),

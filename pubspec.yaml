@@ -59,6 +59,8 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   animate_do: ^3.3.4
   custom_clippers: ^2.0.0
+  firebase_app_check:
+  flutter_image_compress: ^2.1.0
   
   
   

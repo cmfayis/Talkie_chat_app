@@ -1,18 +1,28 @@
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/call/view/status_textpage.dart';
+import 'package:chat_app/application/feature/call/view/status_view.dart';
 import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:status_view/status_view.dart';
 
-class Call extends StatelessWidget {
-  const Call({super.key});
+class Call extends StatefulWidget {
+  const Call({Key? key});
 
+  @override
+  State<Call> createState() => _CallState();
+}
+
+class _CallState extends State<Call> {
+  late String img;
   @override
   Widget build(BuildContext context) {
     String? image;
-    String name = 'My Status';
+    User? user = FirebaseAuth.instance.currentUser;
+    String name = '';
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -32,19 +42,29 @@ class Call extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => StatusTextPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StatusTextPage(
+                      image: image,
+                      name: name,
+                    ),
+                  ),
+                );
               },
               child: Container(
-                  margin: EdgeInsets.only(right: 15),
-                  padding: EdgeInsets.all(2),
-                  decoration:
-                      BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 22,
-                  )),
+                margin: EdgeInsets.only(right: 15),
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 22,
+                ),
+              ),
             ),
           ],
         ),
@@ -53,6 +73,7 @@ class Call extends StatelessWidget {
             BlocProvider.of<SettingBloc>(context).add(intialEvent());
             if (state is FetchState) {
               image = state.imageUrl;
+              name = state.name;
             }
             return SingleChildScrollView(
               child: Column(
@@ -62,8 +83,10 @@ class Call extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 25, bottom: 23),
                     child: Text(
                       "Updates",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Row(
@@ -72,17 +95,88 @@ class Call extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 35),
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(image ?? ''),
-                          radius: 25,
+                          radius: 35,
                         ),
                       ),
                       CustomSizedBox(
                         width: 15,
                       ),
                       Text(
-                        name,
+                        "My Status",
                         style: TextStyle(fontSize: 18),
-                      )
+                      ),
                     ],
+                  ),
+                  CustomSizedBox(
+                    hieght: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text(
+                      'Other Status',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('Status')
+                          .snapshots(),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          final documents = snapshot.data!.docs;
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: documents.length,
+                            itemBuilder: (context, index) {
+                              final data = documents[index];
+                              img = data['image'];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => StatusViewPage(
+                                                data: data['Data'],
+                                                color: data['color'],
+                                                image: data['image'],
+                                              )));
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 18, top: 10),
+                                  child: Row(
+                                    children: [
+                                      StatusView(
+                                        seenColor: Colors.grey,
+                                        unSeenColor: Colors.blue,
+                                        radius: 32,
+                                        centerImageUrl: data['image'],
+                                        numberOfStatus: 1,
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(data['name']),
+                                          Text(data['name']),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        return SizedBox();
+                      },
+                    ),
                   ),
                 ],
               ),
