@@ -117,6 +117,7 @@ class _SearchState extends State<Search> {
                                   friendId: searchResult[index]['uid'],
                                   friendName: searchResult[index]['Name'],
                                   friendImage: searchResult[index]['image'],
+                                  token: searchResult[index]['token'],
                                 ),
                               ),
                             );

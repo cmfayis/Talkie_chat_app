@@ -5,6 +5,7 @@ import 'package:chat_app/application/feature/personalData/personalchat.dart';
 import 'package:chat_app/application/feature/personalData/widget/showimage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -22,6 +23,24 @@ class chats extends StatefulWidget {
 
 class _ChatState extends State<chats> with WidgetsBindingObserver {
   User? user = FirebaseAuth.instance.currentUser;
+  void updateFcmToken() async {
+    try {
+      String? token = await FirebaseMessaging.instance.getToken();
+      print(token);
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user!.uid)
+          .update({'token': token});
+    } catch (e) {
+      print('Error updating FCM token: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateFcmToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,10 +142,9 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                   title: Text(
                                     friend['Name'],
                                     style: const TextStyle(
-                                      fontFamily: 'sans-serif',
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        fontFamily: 'sans-serif',
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                   subtitle: lastMsg == 'Photo'
                                       ? Row(
@@ -147,7 +165,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                           child: Text(
                                             lastMsg,
                                             style: const TextStyle(
-                                              fontFamily: 'sans-serif',
+                                                fontFamily: 'sans-serif',
                                                 color: Color.fromARGB(
                                                     255, 133, 133, 133)),
                                             overflow: TextOverflow.ellipsis,
@@ -158,9 +176,11 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => ChatPage(
-                                                friendId: friend['uid'],
-                                                friendName: friend['Name'],
-                                                friendImage: friend['image'])));
+                                                  friendId: friend['uid'],
+                                                  friendName: friend['Name'],
+                                                  friendImage: friend['image'],
+                                                  token: friend['token'],
+                                                )));
                                   },
                                 );
                               }
