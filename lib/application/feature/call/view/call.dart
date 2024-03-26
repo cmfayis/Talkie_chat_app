@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:status_view/status_view.dart';
 
@@ -135,6 +136,9 @@ class _CallState extends State<Call> {
                             itemBuilder: (context, index) {
                               final data = documents[index];
                               img = data['image'];
+                              final date = data['timestamp'].toDate();
+                              String formattedTime =
+                                  DateFormat("hh:mm a").format(date);
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -144,6 +148,7 @@ class _CallState extends State<Call> {
                                                 data: data['Data'],
                                                 color: data['color'],
                                                 image: data['image'],
+                                                date: formattedTime,
                                               )));
                                 },
                                 child: Padding(
@@ -164,7 +169,10 @@ class _CallState extends State<Call> {
                                       Column(
                                         children: [
                                           Text(data['name']),
-                                          Text(data['name']),
+                                          Text(
+                                            formattedTime,
+                                            style: TextStyle(fontSize: 12),
+                                          ),
                                         ],
                                       )
                                     ],

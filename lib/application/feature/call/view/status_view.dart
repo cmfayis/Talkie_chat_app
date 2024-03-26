@@ -9,11 +9,13 @@ class StatusViewPage extends StatefulWidget {
     required this.data,
     required this.color,
     required this.image,
+    required this.date,
   }) : super(key: key);
 
   final String data;
   final int color;
   final dynamic image;
+  final date;
 
   @override
   State<StatusViewPage> createState() => _StatusViewPageState();
@@ -40,15 +42,15 @@ class _StatusViewPageState extends State<StatusViewPage> {
       backgroundColor:
           Color(0xFF000000 + widget.color), // Corrected color calculation
       body: StoryView(
-        indicatorForegroundColor:Colors.grey,
-        onComplete: (){
+        indicatorForegroundColor: Colors.grey,
+        onComplete: () {
           Navigator.pop(context);
         },
         storyItems: [
           StoryItem.text(
             shown: true,
             duration: Duration(seconds: 3),
-            title: widget.data,textStyle: TextStyle(fontSize: 18),
+            title: widget.data, textStyle: TextStyle(fontSize: 18),
             backgroundColor:
                 Color(0xFF000000 + widget.color), // Corrected color calculation
           ),
@@ -69,10 +71,12 @@ class _StatusViewPageState extends State<StatusViewPage> {
               ),
               title: Text(
                 'Fayis', // Example name, replace with actual name
-                style: TextStyle(fontSize: 25,),
+                style: TextStyle(
+                  fontSize: 25,
+                ),
               ),
               subtitle:
-                  Text('12:00pm'), // Example time, replace with actual time
+                  Text(widget.date), // Example time, replace with actual time
             ),
           ),
         ),
