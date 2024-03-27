@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:chat_app/application/feature/personalData/widget/notification.dart';
 import 'package:chat_app/application/feature/viedo_call/view/videocall.dart';
 import 'package:flutter/painting.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
@@ -136,6 +137,12 @@ class _ChatPageState extends State<ChatPage> {
           // elevation: 1,
           backgroundColor: Colors.white,
           actions: [
+            IconButton(
+                onPressed: () {
+                  sendPushNotification1(
+                      widget.token, widget.friendName, widget.friendImage);
+                },
+                icon: Icon(Icons.call)),
             IconButton(
                 onPressed: () {
                   sendPushNotification(widget.token, widget.friendName);

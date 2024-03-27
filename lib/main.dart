@@ -35,6 +35,7 @@ void main() async {
         defaultRingtoneType: DefaultRingtoneType.Ringtone)
   ]);
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(

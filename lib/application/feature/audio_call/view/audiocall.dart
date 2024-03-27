@@ -1,24 +1,27 @@
-// import 'package:agora_flutter_app/HomePage/homepage.dart';
+import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
+import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 
-class VideoCall extends StatefulWidget {
+class AudioCall extends StatefulWidget {
   final String channelName;
+  final String? name;
+  final String? image;
 
-  const VideoCall({Key? key, required this.channelName}) : super(key: key);
+  const AudioCall(
+      {Key? key,
+      required this.channelName,
+      this.name,
+       this.image})
+      : super(key: key);
 
   @override
-  State<VideoCall> createState() => _VideoCallState();
+  State<AudioCall> createState() => _AudioCallState();
 }
 
-class _VideoCallState extends State<VideoCall> {
+class _AudioCallState extends State<AudioCall> {
   late RtcEngine _engine;
-  late int streamId;
-  bool muted = false, loading = false;
-  int _remoteUid = 0;
+  bool muted = false;
 
   @override
   void initState() {
@@ -27,14 +30,10 @@ class _VideoCallState extends State<VideoCall> {
   }
 
   Future<void> initializeAgora() async {
-    setState(() {
-      loading = true;
-    });
     _engine = await RtcEngine.createWithContext(
         RtcEngineContext("0ee1091de022492e8446d9a7d3cb4828"));
-    await _engine.enableVideo();
+    await _engine.enableAudio();
     await _engine.setChannelProfile(ChannelProfile.Communication);
-    streamId = (await _engine.createDataStream(false, false))!;
     _engine.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
         if (kDebugMode) {
@@ -43,17 +42,11 @@ class _VideoCallState extends State<VideoCall> {
       },
       userJoined: (uid, elapsed) {
         print("UserJoined: $uid");
-        setState(() {
-          _remoteUid = uid;
-        });
       },
       userOffline: (uid, elapsed) {
         if (kDebugMode) {
           print("Useroffline: $uid");
         }
-        setState(() {
-          _remoteUid = 0;
-        });
       },
     ));
     await _engine.joinChannel(null, widget.channelName, null, 0);
@@ -66,37 +59,30 @@ class _VideoCallState extends State<VideoCall> {
         body: Stack(
           children: [
             Center(
-              child: _renderRemoteView(),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                width: 100,
-                height: 130,
-                margin: EdgeInsets.only(left: 15, top: 15),
-                child: _renderLocalView(),
-              ),
-            ),
+                child: Column(
+              children: [
+                CustomSizedBox(
+                  hieght: 65,
+                ),
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(widget.image??'ddd'),
+                ),
+                CustomSizedBox(
+                  hieght: 15,
+                ),
+                Text(
+                  widget.name??'Unknown',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                ),
+                Text(" ringing "),
+              ],
+            )),
             _toolbar(),
           ],
         ),
       ),
     );
-  }
-
-  Widget _renderLocalView() {
-    return const RtcLocalView.SurfaceView();
-  }
-
-  Widget _renderRemoteView() {
-    if (_remoteUid != 0) {
-      return RtcRemoteView.SurfaceView(
-        uid: _remoteUid,
-        channelId: widget.channelName,
-      );
-    } else {
-      return const Text("Waiting for other user to join");
-    }
   }
 
   Widget _toolbar() {
@@ -134,20 +120,6 @@ class _VideoCallState extends State<VideoCall> {
               size: 50,
             ),
           ),
-          RawMaterialButton(
-            onPressed: () {
-              _onSwitchCamera();
-            },
-            shape: const CircleBorder(),
-            padding: const EdgeInsets.all(5),
-            elevation: 2.0,
-            fillColor: Colors.white,
-            child: const Icon(
-              Icons.switch_camera,
-              color: Colors.blue,
-              size: 40,
-            ),
-          )
         ],
       ),
     );
@@ -162,12 +134,7 @@ class _VideoCallState extends State<VideoCall> {
 
   void _onVideoCallEnd() {
     _engine.leaveChannel().then((value) {
-      _engine.destroy();
       Navigator.pop(context);
     });
-  }
-
-  void _onSwitchCamera() {
-    _engine.switchCamera();
   }
 }
