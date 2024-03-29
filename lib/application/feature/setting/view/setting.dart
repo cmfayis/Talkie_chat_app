@@ -19,8 +19,6 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   @override
-  
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<SettingBloc, SettingState>(
@@ -28,7 +26,8 @@ class _SettingState extends State<Setting> {
         if (state is LogoutState) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const RegisterPage()),
+              MaterialPageRoute(
+                  builder: (context) => const RegisterPageWrapper()),
               (route) => false);
         }
         if (state is HomePageState) {
@@ -59,50 +58,57 @@ class _SettingState extends State<Setting> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-             
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(               
+                  child: Column(
                     children: [
                       const CustomSizedBox(
                         hieght: 75,
                       ),
-                      Text('Profile',style: TextStyle(fontSize: 25),),
+                      Text(
+                        'Profile',
+                        style: TextStyle(fontSize: 25),
+                      ),
                       const CustomSizedBox(
                         hieght: 25,
                       ),
                       InkWell(
-                        onTap: () {
-                         
-                        },
+                        onTap: () {},
                         child: Center(
                           child: CircleAvatar(
                               radius: 50, backgroundImage: NetworkImage(image)),
                         ),
                       ),
-                       const CustomSizedBox(
+                      const CustomSizedBox(
                         hieght: 15,
                       ),
-                      Text(name,style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
+                      Text(
+                        name,
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w600),
+                      ),
                       const CustomSizedBox(
                         hieght: 5,
                       ),
-                      Text(email,style: TextStyle(fontSize: 16),),
-                        const CustomSizedBox(
+                      Text(
+                        email,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      const CustomSizedBox(
                         hieght: 15,
                       ),
                       Divider(
-                        color:Color(0xffADD8E6) ,
+                        color: Color(0xffADD8E6),
                         thickness: 4,
                         indent: 50,
                         endIndent: 50,
                       ),
-                        const CustomSizedBox(
+                      const CustomSizedBox(
                         hieght: 15,
                       ),
-                        Listtile(
+                      Listtile(
                         ontap: () {
-                         Navigator.push(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Profile(
@@ -111,23 +117,25 @@ class _SettingState extends State<Setting> {
                                         email: email,
                                       )));
                         },
-                        leading: Icon(Icons.edit_outlined ),
+                        leading: Icon(Icons.edit_outlined),
                         title: const Text(
                           "Edit Profile",
                         ),
                       ),
-                       Listtile(
+                      Listtile(
                         ontap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Terms()));
                         },
                         leading: const Icon(Icons.policy),
                         title: const Text(
                           "Terms and Conditions",
                         ),
                       ),
-                       Listtile(
+                      Listtile(
                         ontap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Faq()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Faq()));
                         },
                         leading: const Icon(Icons.help_outline),
                         title: const Text(
@@ -141,7 +149,6 @@ class _SettingState extends State<Setting> {
                           "Supports us",
                         ),
                       ),
-                     
                       Listtile(
                         ontap: () {
                           BlocProvider.of<SettingBloc>(context)
@@ -158,11 +165,16 @@ class _SettingState extends State<Setting> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterPage()));
+                                  builder: (context) =>
+                                      const RegisterPageWrapper()));
                         },
-                        leading: Icon(Icons.delete,color: Colors.red,),
+                        leading: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
                         title: const Text(
-                          "Delete Account",style: TextStyle(color: Colors.red),
+                          "Delete Account",
+                          style: TextStyle(color: Colors.red),
                         ),
                       ),
                     ],
