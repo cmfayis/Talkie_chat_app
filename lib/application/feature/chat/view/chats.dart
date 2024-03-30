@@ -45,8 +45,21 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      drawer: Drawer(
         backgroundColor: Colors.white,
+      ),
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color.fromARGB(255, 9, 48, 79),
+        toolbarHeight: 90,
+        centerTitle: true,
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Chats',
+            style: TextStyle(fontSize: 27, color: Colors.white),
+          ),
+        ),
         actions: [
           GestureDetector(
             onTap: () {
@@ -57,10 +70,10 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                 margin: EdgeInsets.only(right: 15),
                 padding: EdgeInsets.all(2),
                 decoration:
-                    BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+                    BoxDecoration(color: Colors.white, shape: BoxShape.circle),
                 child: Icon(
                   Icons.add,
-                  color: Colors.white,
+                  color: Colors.blue,
                 )),
           ),
         ],
@@ -69,13 +82,13 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
-              'Chats',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 20),
+          //   child: Text(
+          //     'Chats',
+          //     style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          //   ),
+          // ),
           const CustomSizedBox(
             hieght: 15,
           ),
@@ -127,7 +140,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                                   imageUrl: friend['image'])));
                                     },
                                     child: CircleAvatar(
-                                      radius: 25,
+                                      radius: 29,
                                       backgroundImage:
                                           NetworkImage(friend['image']),
                                     ),

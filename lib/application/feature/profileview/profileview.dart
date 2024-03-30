@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
+import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:chat_app/application/feature/profileview/bloc/profile_bloc.dart';
 import 'package:chat_app/application/feature/profileview/widget/textfield.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -24,7 +25,10 @@ class _ProfileViewState extends State<ProfileView> {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state is SubmitState) {
-          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+              (route) => false);
         } else if (state is ImageSuccessState) {
           image = state.image;
         } else if (state is ImageErrorState) {
@@ -34,86 +38,85 @@ class _ProfileViewState extends State<ProfileView> {
       },
       builder: (context, state) {
         return Scaffold(
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const CustomSizedBox(
-                    hieght: 50,
-                  ),
-                  const Text(
-                    'Upload info',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  const CustomSizedBox(
-                    hieght: 30,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      BlocProvider.of<ProfileBloc>(context)
-                          .add(ImageButtonEvent());
-                    },
-                    child: DottedBorder(
-                      // padding: EdgeInsets.all(10),
-                      dashPattern: const [15, 5],
-                      borderType: BorderType.Circle,
-                      child: image != null
-                          ? CircleAvatar(
-                              radius: 100,
-                              backgroundImage: FileImage(File(image!.path)),
-                            )
-                          : CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              radius: 100,
-                              child: Padding(
-                                padding: EdgeInsets.all(18),
-                                child: Image.asset('asset/images/profile.png'),
+          body: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("asset/images/bg2.jpeg"),
+                    fit: BoxFit.cover),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(28.0),
+                child: Column(
+                  children: [
+                    CustomSizedBox(
+                      hieght: 100,
+                    ),
+                    const Text(
+                      'Upload info',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const CustomSizedBox(
+                      hieght: 50,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<ProfileBloc>(context)
+                            .add(ImageButtonEvent());
+                      },
+                      child: DottedBorder(
+                        color: Colors.white,
+                        dashPattern: const [15, 5],
+                        borderType: BorderType.Circle,
+                        child: image != null
+                            ? CircleAvatar(
+                                radius: 100,
+                                backgroundImage: FileImage(File(image!.path)),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                radius: 120,
+                                child: Padding(
+                                  padding: EdgeInsets.all(18),
+                                  child: Image.asset(
+                                    'asset/images/profile.png',
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(23.0),
-                    child: TextFieldWidget(
-                      controller: namecontroller,
-                      hintText: 'Name',
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 23, right: 23),
-                    child: TextFieldWidget(
-                      controller: descriptioncontroller,
-                      hintText: 'Description',
-                      lines: 4,
+                    TextField(
+                      decoration: InputDecoration(
+                          hintText: "Nick Name",
+                          hintStyle: TextStyle(color: Colors.white)),
                     ),
-                  ),
-                  const CustomSizedBox(
-                    hieght: 95,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(23.0),
-                    child: InkWell(
+                    const SizedBox(
+                      height: 130,
+                    ),
+                    InkWell(
                       onTap: () {
                         BlocProvider.of<ProfileBloc>(context)
                             .add(SumbitEvent(image: image));
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: const Color(0xffADD8E6),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(8)),
                         width: double.infinity,
                         height: 55,
                         child: Center(child: Text("Continue")),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

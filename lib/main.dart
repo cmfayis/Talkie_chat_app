@@ -35,7 +35,7 @@ void main() async {
         defaultRingtoneType: DefaultRingtoneType.Ringtone)
   ]);
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -84,55 +84,10 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           '/register': (context) => const RegisterPageWrapper(),
           '/Login': (context) => const LoginPageWrapper(),
-          '/SignUp': (context) =>  SignUpScreen(),
+          '/SignUp': (context) => SignUpScreen(),
           '/Profile': (context) => const ProfileView(),
         },
       ),
     );
   }
 }
-
-// class FirebaseMessagingHandler {
-//   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-//   void initialize() {
-//     _firebaseMessaging.requestPermission();
-//     _firebaseMessaging.getToken().then((token) {
-//       print('FCM Token: $token');
-//     });
-
-//     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-
-//     AwesomeNotifications().initialize(
-//       'resource://drawable/res_app_icon',
-//       [
-//         NotificationChannel(
-//           channelKey: 'call_channel',
-//           channelName: 'Call notifications',
-//           channelDescription: 'Notification channel for call notifications',
-//           defaultColor: Colors.blue,
-//           ledColor: Colors.white,
-//         ),
-//       ],
-//     );
-//   }
-
-//   static Future<void> backgroundHandler(RemoteMessage message) async {
-//     RemoteNotification? notification = message.notification;
-//     if (notification != null) {
-//       String? body = notification.body;
-//       String? title = notification.title?.split('1a2b3c4d5e').first;
-//       String? channelName = notification.title?.split('1a2b3c4d5e').last;
-
-//       // Handle notification data
-//       // You can perform any necessary background tasks here
-
-//       // Example: Log notification data
-//       print(
-//           'Received background message: title=$title, body=$body, channelName=$channelName');
-
-//       // Example: Create notification (not supported in background handler)
-//       // You should handle notification creation using platform channels
-//     }
-//   }
-// }

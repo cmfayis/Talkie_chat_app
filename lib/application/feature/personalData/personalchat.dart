@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:chat_app/application/feature/personalData/widget/notification.dart';
 import 'package:chat_app/application/feature/viedo_call/view/videocall.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/personalData/bloc/bloc/chat_bloc.dart';
@@ -135,19 +136,28 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           // elevation: 1,
-          backgroundColor: Colors.white,
+          toolbarHeight: 70,
+          backgroundColor: Color.fromARGB(255, 9, 48, 79),
           actions: [
             IconButton(
                 onPressed: () {
                   sendPushNotification1(
                       widget.token, widget.friendName, widget.friendImage);
                 },
-                icon: Icon(Icons.call)),
+                icon: Icon(
+                  CupertinoIcons.phone_circle_fill,
+                  color: Colors.white,
+                  size: 32,
+                )),
             IconButton(
                 onPressed: () {
                   sendPushNotification(widget.token, widget.friendName);
                 },
-                icon: Icon(Icons.video_call))
+                icon: Icon(
+                  size: 30,
+                  CupertinoIcons.videocam_circle_fill,
+                  color: Colors.white,
+                ))
           ],
           automaticallyImplyLeading: true,
           iconTheme: const IconThemeData(color: Colors.black),
@@ -166,7 +176,7 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 Text(
                   widget.friendName,
-                  style: const TextStyle(fontSize: 19, color: Colors.black),
+                  style: const TextStyle(fontSize: 19, color: Colors.white),
                 ),
               ],
             ),

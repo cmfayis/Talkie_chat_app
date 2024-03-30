@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
             }
             if (state is ProfileEditState) {
               showModalBottomSheet(
-                backgroundColor: Color(0xffADD8E6),
+                backgroundColor: Color.fromARGB(255, 9, 48, 79),
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
@@ -95,7 +95,8 @@ class _ProfileState extends State<Profile> {
                                           UpdateDataEvent(
                                               Data: namecontroller.text));
                                     },
-                                    child: Text('Save',style: TextStyle(color: Colors.white))),
+                                    child: Text('Save',
+                                        style: TextStyle(color: Colors.white))),
                               ],
                             ),
                           ),
@@ -108,7 +109,7 @@ class _ProfileState extends State<Profile> {
             }
           },
           child: Scaffold(
-            backgroundColor: Color(0xffADD8E6),
+            backgroundColor: Color.fromARGB(255, 9, 48, 79),
             appBar: AppBar(
               automaticallyImplyLeading: false,
               leading: IconButton(
@@ -137,7 +138,7 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(color: Colors.white),
               ),
               centerTitle: true,
-              backgroundColor: Color(0xffADD8E6),
+              backgroundColor: Color.fromARGB(255, 9, 48, 79),
             ),
             body: SingleChildScrollView(
               child: Center(
@@ -256,9 +257,13 @@ class _ProfileState extends State<Profile> {
                                       icon: Icon(Icons.edit))
                                 ],
                               ),
-                              CustomSizedBox(hieght: 15,),
+                              CustomSizedBox(
+                                hieght: 15,
+                              ),
                               Text('Email'),
-                              CustomSizedBox(hieght: 10,),
+                              CustomSizedBox(
+                                hieght: 10,
+                              ),
                               Text(
                                 widget.email,
                                 style: const TextStyle(

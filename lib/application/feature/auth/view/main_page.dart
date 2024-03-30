@@ -26,71 +26,69 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-              if (state is AuthenticatedState) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileView()),
-                (route) => false);
-          });
-        }
-          },
-          builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(
-                toolbarHeight: 120,
-                backgroundColor: const Color.fromARGB(255, 9, 48, 79),
-                centerTitle: true,
-                title: Text(
-                  'Talkie',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white),
-                ),
-                bottom: TabBar(
-                  tabs: [
-                    Tab(
-                      text: 'Sign Up',
-                    ),
-                    Tab(text: 'Sign In'),
-                  ],
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.white,
-                  labelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  indicatorSize: TabBarIndicatorSize.label,
-                  dividerColor: Colors.white,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(40),
+    return DefaultTabController(
+      length: 2,
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthenticatedState) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfileView()),
+                  (route) => false);
+            });
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 120,
+              backgroundColor: const Color.fromARGB(255, 9, 48, 79),
+              centerTitle: true,
+              title: Text(
+                'Talkie',
+                style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
+              ),
+              bottom: TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Sign Up',
                   ),
+                  Tab(text: 'Sign In'),
+                ],
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white,
+                labelStyle:
+                    TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                indicatorSize: TabBarIndicatorSize.label,
+                dividerColor: Colors.white,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(40),
                 ),
               ),
-              bottomSheet: Container(
-                height: 75,
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 9, 48, 79),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(35),
-                        topRight: Radius.circular(35))),
-              ),
-              resizeToAvoidBottomInset: false,
-              body: TabBarView(
-                children: [
-                  SignUpScreen(),
-                  LoginPageWrapper(),
-                ],
-              ),
-            );
-          },
-        ),
+            ),
+            bottomSheet: Container(
+              height: 75,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 9, 48, 79),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35),
+                      topRight: Radius.circular(35))),
+            ),
+            resizeToAvoidBottomInset: false,
+            body: TabBarView(
+              children: [
+                SignUpScreen(),
+                LoginPageWrapper(),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

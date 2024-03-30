@@ -58,127 +58,141 @@ class _SettingState extends State<Setting> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      const CustomSizedBox(
-                        hieght: 75,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 9, 48, 79),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30))),
+                      child: Column(
+                        children: [
+                          const CustomSizedBox(
+                            hieght: 75,
+                          ),
+                          Text(
+                            'Profile',
+                            style: TextStyle(fontSize: 25, color: Colors.white),
+                          ),
+                          const CustomSizedBox(
+                            hieght: 25,
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Center(
+                              child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: NetworkImage(image)),
+                            ),
+                          ),
+                          const CustomSizedBox(
+                            hieght: 15,
+                          ),
+                          Text(
+                            name,
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          const CustomSizedBox(
+                            hieght: 5,
+                          ),
+                          Text(
+                            email,
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          const CustomSizedBox(
+                            hieght: 15,
+                          ),
+                          Divider(
+                            color: Color(0xffADD8E6),
+                            thickness: 4,
+                            indent: 50,
+                            endIndent: 50,
+                          ),
+                          const CustomSizedBox(
+                            hieght: 15,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Profile',
-                        style: TextStyle(fontSize: 25),
+                    ),
+                    CustomSizedBox(
+                      hieght: 19,
+                    ),
+                    Listtile(
+                      ontap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Profile(
+                                      image: image,
+                                      name: name,
+                                      email: email,
+                                    )));
+                      },
+                      leading: Icon(Icons.edit_outlined),
+                      title: const Text(
+                        "Edit Profile",
                       ),
-                      const CustomSizedBox(
-                        hieght: 25,
+                    ),
+                    Listtile(
+                      ontap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Terms()));
+                      },
+                      leading: const Icon(Icons.policy),
+                      title: const Text(
+                        "Terms and Conditions",
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: Center(
-                          child: CircleAvatar(
-                              radius: 50, backgroundImage: NetworkImage(image)),
-                        ),
+                    ),
+                    Listtile(
+                      ontap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Faq()));
+                      },
+                      leading: const Icon(Icons.help_outline),
+                      title: const Text(
+                        "FAQ",
                       ),
-                      const CustomSizedBox(
-                        hieght: 15,
+                    ),
+                    Listtile(
+                      ontap: () {},
+                      leading: const Icon(Icons.support),
+                      title: const Text(
+                        "Supports us",
                       ),
-                      Text(
-                        name,
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w600),
+                    ),
+                    Listtile(
+                      ontap: () {
+                        BlocProvider.of<SettingBloc>(context)
+                            .add(LogoutEvent());
+                      },
+                      leading: Icon(Icons.logout),
+                      title: const Text(
+                        "Logout",
                       ),
-                      const CustomSizedBox(
-                        hieght: 5,
+                    ),
+                    Listtile(
+                      ontap: () {
+                        FirebaseAuth.instance.currentUser!.delete();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RegisterPageWrapper()));
+                      },
+                      leading: Icon(
+                        Icons.delete,
+                        color: Colors.red,
                       ),
-                      Text(
-                        email,
-                        style: TextStyle(fontSize: 16),
+                      title: const Text(
+                        "Delete Account",
+                        style: TextStyle(color: Colors.red),
                       ),
-                      const CustomSizedBox(
-                        hieght: 15,
-                      ),
-                      Divider(
-                        color: Color(0xffADD8E6),
-                        thickness: 4,
-                        indent: 50,
-                        endIndent: 50,
-                      ),
-                      const CustomSizedBox(
-                        hieght: 15,
-                      ),
-                      Listtile(
-                        ontap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Profile(
-                                        image: image,
-                                        name: name,
-                                        email: email,
-                                      )));
-                        },
-                        leading: Icon(Icons.edit_outlined),
-                        title: const Text(
-                          "Edit Profile",
-                        ),
-                      ),
-                      Listtile(
-                        ontap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Terms()));
-                        },
-                        leading: const Icon(Icons.policy),
-                        title: const Text(
-                          "Terms and Conditions",
-                        ),
-                      ),
-                      Listtile(
-                        ontap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Faq()));
-                        },
-                        leading: const Icon(Icons.help_outline),
-                        title: const Text(
-                          "FAQ",
-                        ),
-                      ),
-                      Listtile(
-                        ontap: () {},
-                        leading: const Icon(Icons.support),
-                        title: const Text(
-                          "Supports us",
-                        ),
-                      ),
-                      Listtile(
-                        ontap: () {
-                          BlocProvider.of<SettingBloc>(context)
-                              .add(LogoutEvent());
-                        },
-                        leading: Icon(Icons.logout),
-                        title: const Text(
-                          "Logout",
-                        ),
-                      ),
-                      Listtile(
-                        ontap: () {
-                          FirebaseAuth.instance.currentUser!.delete();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterPageWrapper()));
-                        },
-                        leading: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                        title: const Text(
-                          "Delete Account",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             }

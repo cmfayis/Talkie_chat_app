@@ -23,6 +23,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             .collection('users')
             .doc(user.uid)
             .update({
+          "Name": event.name,
           'image': imageUrl,
         });
         emit(SubmitState());
@@ -36,7 +37,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             await imagePicker.pickImage(source: ImageSource.gallery);
 
         if (pickedFile != null) {
-          
           emit(ImageSuccessState(image: File(pickedFile.path)));
         } else {
           emit(ImageErrorState(error: 'Please select an image.'));

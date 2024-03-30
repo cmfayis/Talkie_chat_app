@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../auth_bloc/bloc/auth_bloc.dart';
 import '../widget/validate.dart';
 
@@ -43,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: <Widget>[
                     SizedBox(height: 20),
                     Text(
-                      "Welcome Back",
+                      "Create An Account",
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
@@ -68,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           controller: namecontroller,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
-                              Icons.email,
+                              Icons.person,
                               color: Color.fromARGB(255, 9, 48, 79),
                             ),
                             hintText: 'Username',
@@ -181,15 +183,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 30),
                     FadeInUp(
-                      duration: Duration(milliseconds: 1700),
-                      child: Text(
-                        "Continue with social media",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    SizedBox(height: 20),
+                        duration: Duration(milliseconds: 1700),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 2,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              "Or Sign up With",
+                              style: GoogleFonts.playfairDisplay(
+                                fontSize: 17,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              width: 50,
+                              height: 2,
+                              color: Colors.black,
+                            ),
+                          ],
+                        )),
+                    SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -197,20 +223,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: FadeInUp(
                             duration: Duration(milliseconds: 1800),
                             child: MaterialButton(
+                              elevation: 10,
                               onPressed: () {},
                               height: 50,
-                              color: Colors.blue,
+                              color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              child: Center(
-                                child: Text(
-                                  "Facebook",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Image.asset(
+                                    "asset/images/ggg.png",
+                                    height: 28,
                                   ),
-                                ),
+                                  Text(
+                                    "Google",
+                                    style: GoogleFonts.playfairDisplay(
+                                      fontSize: 19,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -228,15 +264,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              color: Colors.black,
-                              child: Center(
-                                child: Text(
-                                  "Google",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 9, 48, 79),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "f",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
+                                  Text(
+                                    "Facebook",
+                                    style: GoogleFonts.playfairDisplay(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
