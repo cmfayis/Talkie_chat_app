@@ -61,61 +61,67 @@ class _SignInScreenState extends State<SignInScreen> {
                           color: Color.fromARGB(255, 9, 48, 79)),
                     ),
                     SizedBox(height: 40),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                          )
-                        ],
+                    FadeInUp(
+                      duration: Duration(milliseconds: 1800),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade400,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: TextFormField(
+                            controller: emailcontroller,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Color.fromARGB(255, 9, 48, 79),
+                              ),
+                              hintText: 'Email',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.all(8),
+                            ),
+                            validator: emailValidate),
                       ),
-                      child: TextFormField(
-                          controller: emailcontroller,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Color.fromARGB(255, 9, 48, 79),
-                            ),
-                            hintText: 'Email',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: EdgeInsets.all(8),
-                          ),
-                          validator: emailValidate),
                     ),
-                    SizedBox(height: 20), // Adjust the spacing as needed
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                          )
-                        ],
+                    SizedBox(height: 20),
+                    FadeInUp(
+                      duration: Duration(milliseconds: 1800),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade400,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: TextFormField(
+                            controller: passwordcontroller,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Color.fromARGB(255, 9, 48, 79),
+                              ),
+                              hintText: 'Password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.all(8),
+                            ),
+                            obscureText: true,
+                            validator: PasswordValidate),
                       ),
-                      child: TextFormField(
-                          controller: passwordcontroller,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: Color.fromARGB(255, 9, 48, 79),
-                            ),
-                            hintText: 'Password',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: EdgeInsets.all(8),
-                          ),
-                          obscureText: true,
-                          validator: PasswordValidate),
                     ),
                     SizedBox(height: 40),
                     FadeInUp(
@@ -147,13 +153,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: Text(
-                          'Forget Password?',
-                          style: TextStyle(color: Colors.red),
+                    FadeInUp(
+                      duration: Duration(milliseconds: 1800),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: Text(
+                            'Forget Password?',
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ),
                       ),
                     ),

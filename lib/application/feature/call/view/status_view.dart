@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/story_view.dart';
 
-class StatusViewPage extends StatefulWidget {
+class StatusViewPage extends StatelessWidget {
   const StatusViewPage({
     Key? key,
     required this.data,
@@ -15,47 +15,29 @@ class StatusViewPage extends StatefulWidget {
   final String data;
   final int color;
   final dynamic image;
-  final date;
-
-  @override
-  State<StatusViewPage> createState() => _StatusViewPageState();
-}
-
-class _StatusViewPageState extends State<StatusViewPage> {
-  late StoryController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = StoryController();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose(); // Dispose the controller when the widget is disposed
-    super.dispose();
-  }
+  final dynamic date;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color(0xFF000000 + widget.color), // Corrected color calculation
+      backgroundColor: Color(0xFF000000 + color), // Corrected color calculation
       body: StoryView(
         indicatorForegroundColor: Colors.grey,
+        storyItems: List.generate(
+          data.length,
+          (index) => StoryItem.text(
+            shown: true,
+            duration: Duration(seconds: 3),
+            title: data[index],
+            textStyle: TextStyle(fontSize: 18),
+            backgroundColor:
+                Color(0xFF000000 + color), // Corrected color calculation
+          ),
+        ),
         onComplete: () {
           Navigator.pop(context);
         },
-        storyItems: [
-          StoryItem.text(
-            shown: true,
-            duration: Duration(seconds: 3),
-            title: widget.data, textStyle: TextStyle(fontSize: 18),
-            backgroundColor:
-                Color(0xFF000000 + widget.color), // Corrected color calculation
-          ),
-        ],
-        controller: controller,
+        controller: StoryController(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       floatingActionButton: Padding(
@@ -63,10 +45,10 @@ class _StatusViewPageState extends State<StatusViewPage> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            // Added background color for container
+            color: Colors.white, // Adjust background color as needed
             child: ListTile(
               leading: CircleAvatar(
-                backgroundImage: NetworkImage(widget.image),
+                backgroundImage: NetworkImage(image),
                 backgroundColor: Colors.blue, // Placeholder color
               ),
               title: Text(
@@ -75,8 +57,9 @@ class _StatusViewPageState extends State<StatusViewPage> {
                   fontSize: 25,
                 ),
               ),
-              subtitle:
-                  Text(widget.date), // Example time, replace with actual time
+              subtitle: Text(
+                date.toString(), // Example time, replace with actual time
+              ),
             ),
           ),
         ),

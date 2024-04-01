@@ -1,4 +1,7 @@
+import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
+import 'package:chat_app/application/feature/personalData/personalchat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Contacts extends StatelessWidget {
@@ -12,7 +15,8 @@ class Contacts extends StatelessWidget {
         backgroundColor: Color.fromARGB(255, 9, 48, 79),
         title: Text(
           'Contacts',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+              color: Colors.white, fontSize: 26, fontWeight: FontWeight.w600),
         ),
       ),
       body: StreamBuilder(
@@ -23,13 +27,53 @@ class Contacts extends StatelessWidget {
               itemBuilder: (context, index) {
                 final data = snapshot.data.docs[index];
                 return Padding(
-                  padding: const EdgeInsets.all(13.0),
+                  padding: const EdgeInsets.only(top: 15),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 45,
-                      backgroundImage: NetworkImage(data['image']),
+                    leading: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatPage(
+                                  friendId: data['uid'],
+                                  friendName: data['Name'],
+                                  friendImage: data['image'],
+                                  token: data['token'])),
+                        );
+                      },
+                      child: Container(
+                        width: 55,
+                        height: 65,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                                image: NetworkImage(data['image']),
+                                fit: BoxFit.cover)),
+                      ),
                     ),
-                    // title: data['Name'],
+                    title: Text(
+                      data['Name'],
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    subtitle: Text(data['Email']),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          CupertinoIcons.phone_circle_fill,
+                          size: 35,
+                          color: Color.fromARGB(255, 9, 48, 79),
+                        ),
+                        CustomSizedBox(
+                          width: 13,
+                        ),
+                        Icon(
+                          CupertinoIcons.videocam_circle_fill,
+                          size: 35,
+                          color: Color.fromARGB(255, 9, 48, 79),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

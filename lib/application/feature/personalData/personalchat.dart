@@ -167,9 +167,14 @@ class _ChatPageState extends State<ChatPage> {
             },
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 21,
-                  backgroundImage: NetworkImage(widget.friendImage),
+                Container(
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                          image: NetworkImage(widget.friendImage),
+                          fit: BoxFit.cover)),
                 ),
                 const SizedBox(
                   width: 15,

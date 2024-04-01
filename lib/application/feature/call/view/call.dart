@@ -19,6 +19,7 @@ class Call extends StatefulWidget {
 
 class _CallState extends State<Call> {
   late String img;
+  String? id;
   @override
   Widget build(BuildContext context) {
     String? image;
@@ -49,6 +50,7 @@ class _CallState extends State<Call> {
                     builder: (context) => StatusTextPage(
                       image: image,
                       name: name,
+                      id: id,
                     ),
                   ),
                 );
@@ -125,7 +127,7 @@ class _CallState extends State<Call> {
                   Container(
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('Status')
+                          .collection('status')
                           .snapshots(),
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.hasData) {
@@ -135,50 +137,68 @@ class _CallState extends State<Call> {
                             itemCount: documents.length,
                             itemBuilder: (context, index) {
                               final data = documents[index];
+                              id = documents[index].id;
                               img = data['image'];
-                              final date = data['timestamp'].toDate();
-                              String formattedTime =
-                                  DateFormat("hh:mm a").format(date);
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => StatusViewPage(
-                                                data: data['Data'],
-                                                color: data['color'],
-                                                image: data['image'],
-                                                date: formattedTime,
-                                              )));
-                                },
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 18, top: 10),
-                                  child: Row(
-                                    children: [
-                                      StatusView(
-                                        seenColor: Colors.grey,
-                                        unSeenColor: Colors.blue,
-                                        radius: 32,
-                                        centerImageUrl: data['image'],
-                                        numberOfStatus: 1,
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(data['name']),
-                                          Text(
-                                            formattedTime,
-                                            style: TextStyle(fontSize: 12),
+
+                              return StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('status')
+                                      .doc(id)
+                                      .collection('status')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      final docs = snapshot.data!.docs;
+                                      final datas = docs[index];
+                                      final date = datas['timestamp'].toDate();
+                                      String formattedTime =
+                                          DateFormat("hh:mm a").format(date);
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      StatusViewPage(
+                                                        data: datas['Data'],
+                                                        color: datas['color'],
+                                                        image: data['image'],
+                                                        date: formattedTime,
+                                                      )));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 18, top: 10),
+                                          child: Row(
+                                            children: [
+                                              StatusView(
+                                                unSeenColor: Colors.blue,
+                                                seenColor: Colors.grey,
+                                                radius: 32,
+                                                // indexOfSeenStatus: ,
+                                                centerImageUrl: data['image'],
+                                                numberOfStatus: docs.length,
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(data['name']),
+                                                  Text(
+                                                    formattedTime,
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
+                                        ),
+                                      );
+                                    }
+                                    return Container();
+                                  });
                             },
                           );
                         }

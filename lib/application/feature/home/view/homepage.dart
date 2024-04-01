@@ -29,9 +29,6 @@ class Home extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: const Color.fromARGB(255, 9, 48, 79),
             type: BottomNavigationBarType.fixed,
-            // selectedItemColor: Colors.white,
-            // unselectedIconTheme: const IconThemeData(color: Colors.amber),
-            // selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
             items: [
               BottomNavigationBarItem(
                   icon: Icon(Ionicons.chatbox_ellipses_outline),
@@ -46,6 +43,7 @@ class Home extends StatelessWidget {
             ],
             currentIndex: state.tabIndex,
             fixedColor: Colors.white,
+            unselectedItemColor: Colors.grey,
 
             onTap: (value) {
               homeBloc.add(

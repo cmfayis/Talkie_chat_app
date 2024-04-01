@@ -116,6 +116,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (context, index) {
                           var friendId = snapshot.data.docs[index].id;
+                          print(friendId);
                           var lastMsg = snapshot.data.docs[index]['last_msg'];
                           final time = snapshot.data.docs[index]['Time'];
                           DateTime dateTime = time.toDate();
@@ -139,10 +140,16 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
                                               builder: (context) => ShowImage(
                                                   imageUrl: friend['image'])));
                                     },
-                                    child: CircleAvatar(
-                                      radius: 29,
-                                      backgroundImage:
-                                          NetworkImage(friend['image']),
+                                    child: Container(
+                                      width: 55,
+                                      height: 65,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image:
+                                                  NetworkImage(friend['image']),
+                                              fit: BoxFit.cover)),
                                     ),
                                   ),
                                   trailing: Text(
