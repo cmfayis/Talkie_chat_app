@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPageWrapper extends StatelessWidget {
@@ -37,6 +38,8 @@ class _SignInScreenState extends State<SignInScreen> {
               context,
               MaterialPageRoute(builder: (context) => Home()),
               (route) => false);
+        } else if (state is GoogleButtonState) {
+          Get.off(Home());
         } else if (state is ErrorAuthenctionState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));

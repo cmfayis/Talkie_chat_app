@@ -1,5 +1,3 @@
-
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +29,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
       emit(ProfileEditState());
     });
     on<intialEvent>((event, emit) async {
+      // emit(LoadingState());
       User? user = FirebaseAuth.instance.currentUser;
       QuerySnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
           .instance

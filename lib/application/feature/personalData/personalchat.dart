@@ -119,6 +119,9 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return BlocListener<ChatBloc, ChatState>(
       listener: (context, state) {
+        // if (state is LodingImageState) {
+        //   CircularProgressIndicator();
+        // }
         if (state is ShowImagesState) {
           Navigator.push(
             context,

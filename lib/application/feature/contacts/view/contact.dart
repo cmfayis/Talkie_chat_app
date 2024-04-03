@@ -23,7 +23,13 @@ class Contacts extends StatelessWidget {
         stream: FirebaseFirestore.instance.collection('users').snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
+            return ListView.separated(
+              separatorBuilder: (context, index) {
+                return Divider(
+                  indent: 72,
+                  thickness: 1,
+                );
+              },
               itemBuilder: (context, index) {
                 final data = snapshot.data.docs[index];
                 return Padding(

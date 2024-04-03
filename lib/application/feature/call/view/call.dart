@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:status_view/status_view.dart';
@@ -19,9 +20,10 @@ class Call extends StatefulWidget {
 
 class _CallState extends State<Call> {
   late String img;
-  String? id;
+
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<SettingBloc>(context).add(intialEvent());
     String? image;
     User? user = FirebaseAuth.instance.currentUser;
     String name = '';
@@ -50,7 +52,7 @@ class _CallState extends State<Call> {
                     builder: (context) => StatusTextPage(
                       image: image,
                       name: name,
-                      id: id,
+                      // id: id,
                     ),
                   ),
                 );
@@ -73,7 +75,9 @@ class _CallState extends State<Call> {
         ),
         body: BlocBuilder<SettingBloc, SettingState>(
           builder: (context, state) {
-            BlocProvider.of<SettingBloc>(context).add(intialEvent());
+            if (state is LoadingState) {
+              return Center(child: CircularProgressIndicator());
+            }
             if (state is FetchState) {
               image = state.imageUrl;
               name = state.name;
@@ -92,23 +96,146 @@ class _CallState extends State<Call> {
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 35),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(image ?? ''),
-                          radius: 35,
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('status')
+                        .doc(user?.uid)
+                        .collection('status')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final docs = snapshot.data!.docs;
+                        if (docs.isNotEmpty) {
+                          final datas = docs.first;
+                          final date = datas['timestamp'].toDate();
+                          String formattedTime =
+                              DateFormat("hh:mm a").format(date);
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StatusViewPage(
+                                    name: name,
+                                    id: user!.uid,
+                                    color: datas['color'],
+                                    image: image,
+                                    date: formattedTime,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12, top: 2, bottom: 10),
+                              child: Row(
+                                children: [
+                                  StatusView(
+                                    unSeenColor: Colors.green,
+                                    seenColor: Colors.grey,
+                                    radius: 28,
+                                    centerImageUrl: image!,
+                                    numberOfStatus: docs.length,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        name,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        formattedTime,
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.grey,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                      // User doesn't have a story
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StatusTextPage(
+                                image: image,
+                                name: name,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          color: Colors.transparent,
+                                          shape: BoxShape.circle),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(image ?? ''),
+                                          radius: 30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      bottom: 2,
+                                      right: -2,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                            shape: BoxShape.circle),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 25,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Add Status",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "Tap to add status update",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14, color: Colors.grey),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                      CustomSizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "My Status",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                   CustomSizedBox(
                     hieght: 5,
@@ -137,7 +264,7 @@ class _CallState extends State<Call> {
                             itemCount: documents.length,
                             itemBuilder: (context, index) {
                               final data = documents[index];
-                              id = documents[index].id;
+                              final id = documents[index].id;
                               img = data['image'];
 
                               return StreamBuilder(
@@ -145,11 +272,14 @@ class _CallState extends State<Call> {
                                       .collection('status')
                                       .doc(id)
                                       .collection('status')
+                                      // .where('uid', isNotEqualTo: user!.uid)
+                                      .orderBy("timestamp", descending: false)
                                       .snapshots(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       final docs = snapshot.data!.docs;
                                       final datas = docs[index];
+                                      // print(datas['Data']);
                                       final date = datas['timestamp'].toDate();
                                       String formattedTime =
                                           DateFormat("hh:mm a").format(date);
@@ -160,7 +290,8 @@ class _CallState extends State<Call> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       StatusViewPage(
-                                                        data: datas['Data'],
+                                                        name: data['name'],
+                                                        id: id!,
                                                         color: datas['color'],
                                                         image: data['image'],
                                                         date: formattedTime,

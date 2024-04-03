@@ -15,6 +15,7 @@ part 'chat_state.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
     on<SendImageEvent>((event, emit) async {
+      emit(LodingImageState());
       try {
         String fileName = const Uuid().v1();
         File imageFile = File(event.image.path);
@@ -77,9 +78,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         emit(SendImageState());
       } catch (error) {
-     
         print("Error: $error");
-        
       }
     });
 

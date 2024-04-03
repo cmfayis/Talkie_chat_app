@@ -9,8 +9,10 @@ import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
 class StatusTextPage extends StatefulWidget {
   final image;
   final name;
-  final id;
-  StatusTextPage({required this.image, required this.name, required this.id});
+  StatusTextPage({
+    required this.image,
+    required this.name,
+  });
 
   @override
   State<StatusTextPage> createState() => _StatusTextPageState();
@@ -62,15 +64,22 @@ class _StatusTextPageState extends State<StatusTextPage> {
           Future.delayed(Duration(seconds: 30), () {
             FirebaseFirestore.instance
                 .collection('status')
-                .doc()
+                .doc(user!.uid)
                 .collection('status')
                 .where('timestamp',
                     isLessThan: DateTime.now().subtract(Duration(seconds: 30)))
                 .get()
                 .then((QuerySnapshot querySnapshot) {
-              querySnapshot.docs.forEach((doc) {
-                doc.reference.delete();
-              });
+              if (querySnapshot.docs.length > 1) {
+                querySnapshot.docs.forEach((doc) {
+                  doc.reference.delete();
+                });
+              } else {
+                FirebaseFirestore.instance
+                    .collection('status')
+                    .doc(user!.uid)
+                    .delete();
+              }
             });
           });
           Navigator.pop(context);

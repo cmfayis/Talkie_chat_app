@@ -36,23 +36,23 @@ class SingleMessage extends StatelessWidget {
                           child: Container(
                               padding: isMe
                                   ? EdgeInsets.only(
-                                      top: 5, left: 10, bottom: 5, right: 25)
+                                      top: 8, left: 10, bottom: 8, right: 25)
                                   : EdgeInsets.only(
-                                      top: 5, left: 25, bottom: 5, right: 10),
+                                      top: 8, left: 25, bottom: 8, right: 10),
                               constraints: const BoxConstraints(
                                   maxWidth: 280, minWidth: 80),
                               decoration: BoxDecoration(
                                   color: isMe
-                                      ? Color.fromARGB(255, 112, 240, 238)
+                                      ? Color.fromARGB(255, 9, 48, 79)
                                       : Color.fromARGB(255, 234, 242, 248),
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12))),
                               child: Text(
                                 message,
                                 style: TextStyle(
-                                fontFamily: 'sans-serif',
+                                    fontFamily: 'sans-serif',
                                     fontSize: 15,
-                                    color: Colors.black),
+                                    color: isMe ? Colors.white : Colors.black),
                               )),
                         ),
                       )
@@ -129,7 +129,9 @@ class SingleMessage extends StatelessWidget {
                               ),
                       ),
                 Padding(
-                  padding: isMe? EdgeInsets.only(right: 17,bottom: 5):EdgeInsets.only(right: 0,bottom: 5),
+                  padding: isMe
+                      ? EdgeInsets.only(right: 17, bottom: 5)
+                      : EdgeInsets.only(right: 0, bottom: 5),
                   child: Text(
                     formattedTime,
                     style: TextStyle(color: Colors.grey, fontSize: 10),
