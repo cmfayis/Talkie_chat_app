@@ -161,10 +161,10 @@ class _VideoCallState extends State<VideoCall> {
   }
 
   void _onVideoCallEnd() {
-    _engine.leaveChannel().then((value) {
-      _engine.destroy();
-      Navigator.pop(context);
-    });
+    _engine.leaveChannel();
+    _engine.destroy();
+    _engine.disableVideo();
+    Navigator.pop(context);
   }
 
   void _onSwitchCamera() {

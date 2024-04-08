@@ -1,7 +1,10 @@
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+// import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:flutter/material.dart';
-import 'package:agora_rtc_engine/rtc_engine.dart';
+// import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+// import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
+
 import 'package:flutter/foundation.dart';
 
 class AudioCall extends StatefulWidget {
@@ -9,11 +12,7 @@ class AudioCall extends StatefulWidget {
   final String? name;
   final String? image;
 
-  const AudioCall(
-      {Key? key,
-      required this.channelName,
-      this.name,
-       this.image})
+  const AudioCall({Key? key, required this.channelName, this.name, this.image})
       : super(key: key);
 
   @override
@@ -67,13 +66,13 @@ class _AudioCallState extends State<AudioCall> {
                 ),
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage: NetworkImage(widget.image??'ddd'),
+                  backgroundImage: NetworkImage(widget.image ?? 'ddd'),
                 ),
                 CustomSizedBox(
                   hieght: 15,
                 ),
                 Text(
-                  widget.name??'Unknown',
+                  widget.name ?? 'Unknown',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                 ),
                 Text(" ringing "),
@@ -134,8 +133,8 @@ class _AudioCallState extends State<AudioCall> {
   }
 
   void _onVideoCallEnd() {
-    _engine.leaveChannel().then((value) {
-      Navigator.pop(context);
-    });
+    _engine.leaveChannel();
+    _engine.destroy();
+    Navigator.pop(context);
   }
 }
