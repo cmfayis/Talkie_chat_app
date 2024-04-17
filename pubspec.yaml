@@ -70,6 +70,8 @@ dependencies:
   agora_rtm: ^1.5.0
   get: ^4.6.6
   firebase_analytics: ^10.8.10
+  iconsax: ^0.0.8
+  timeago: ^3.6.1
   
   
   

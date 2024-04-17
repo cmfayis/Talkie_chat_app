@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
 
   List<Widget> screens = <Widget>[
     chats(),
-    const Call(),
+    const Status(),
     const Contacts(),
     const Setting(),
   ];
@@ -44,7 +44,6 @@ class Home extends StatelessWidget {
             currentIndex: state.tabIndex,
             fixedColor: Colors.white,
             unselectedItemColor: Colors.grey,
-
             onTap: (value) {
               homeBloc.add(
                 TabChangeEvent(tabIndex: value),

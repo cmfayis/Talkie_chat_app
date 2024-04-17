@@ -1,33 +1,40 @@
+import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
+import 'package:chat_app/application/feature/call/view/imagedisplay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class StatusTextPage extends StatefulWidget {
   final image;
   final name;
-  StatusTextPage({
-    required this.image,
-    required this.name,
-  });
+  final id;
+  StatusTextPage({required this.image, required this.name, required this.id});
 
   @override
   State<StatusTextPage> createState() => _StatusTextPageState();
 }
 
 class _StatusTextPageState extends State<StatusTextPage> {
+  bool showImage = true;
+  final String camera = 'camera';
+  final String addStatus = 'addstatus';
   User? user = FirebaseAuth.instance.currentUser;
-  Color color = Colors.white;
+  Color backgroundColor = Colors.white; // Store color in the state
   final datacontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: color,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        centerTitle: true,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -35,7 +42,7 @@ class _StatusTextPageState extends State<StatusTextPage> {
               onPressed: () {
                 BlocProvider.of<StatusBloc>(context).add(ColorPick());
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.color_lens,
                 size: 30,
               ),
@@ -43,51 +50,106 @@ class _StatusTextPageState extends State<StatusTextPage> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        onPressed: () {
-          FirebaseFirestore.instance.collection('status').doc(user!.uid).set({
-            "uid": user!.uid,
-            'image': widget.image,
-            'name': widget.name,
-          });
-          FirebaseFirestore.instance
-              .collection('status')
-              .doc(user!.uid)
-              .collection('status')
-              .doc()
-              .set({
-            "Data": datacontroller.text,
-            'color': color.value,
-            'timestamp': DateTime.now().toUtc(),
-          });
-          Future.delayed(Duration(seconds: 30), () {
-            FirebaseFirestore.instance
-                .collection('status')
-                .doc(user!.uid)
-                .collection('status')
-                .where('timestamp',
-                    isLessThan: DateTime.now().subtract(Duration(seconds: 30)))
-                .get()
-                .then((QuerySnapshot querySnapshot) {
-              if (querySnapshot.docs.length > 1) {
-                querySnapshot.docs.forEach((doc) {
-                  doc.reference.delete();
-                });
-              } else {
-                FirebaseFirestore.instance
-                    .collection('status')
-                    .doc(user!.uid)
-                    .delete();
-              }
-            });
-          });
-          Navigator.pop(context);
-        },
-        child: Icon(
-          Icons.send,
-          color: Colors.white,
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            height: 50,
+            width: 50,
+            child: FloatingActionButton(
+              heroTag: camera,
+              backgroundColor: Colors.black,
+              shape: const CircleBorder(),
+              onPressed: () async {
+                final imagePicker = ImagePicker();
+                try {
+                  final pickedFile =
+                      await imagePicker.pickImage(source: ImageSource.gallery);
+
+                  if (pickedFile != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DisplayImageScreen(
+                          imagePath: pickedFile.path,
+                          userId: user!.uid,
+                          userName: widget.name,
+                        ),
+                      ),
+                    );
+                  } else {
+                    // emit(ProfileImagePickedErrorState());
+                  }
+                } catch (e) {
+                  print(e.toString());
+                }
+              },
+              child: const Center(
+                child: Icon(Icons.camera),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 70,
+            width: 70,
+            child: FloatingActionButton(
+              heroTag: addStatus,
+              shape: const CircleBorder(),
+              backgroundColor: Colors.black,
+              onPressed: () {
+                if (datacontroller.text.isNotEmpty) {
+                  FirebaseFirestore.instance
+                      .collection('status')
+                      .doc(user!.uid)
+                      .set({
+                    "uid": user!.uid,
+                    'image': widget.image,
+                    'name': widget.name,
+                  });
+                  FirebaseFirestore.instance
+                      .collection('status')
+                      .doc(user!.uid)
+                      .collection('status')
+                      .doc()
+                      .set({
+                    "Data": datacontroller.text,
+                    'color': backgroundColor.value,
+                    'timestamp': DateTime.now().toUtc(),
+                  });
+                  Future.delayed(const Duration(seconds: 24), () {
+                    FirebaseFirestore.instance
+                        .collection('status')
+                        .doc(user!.uid)
+                        .collection('status')
+                        .where('timestamp',
+                            isLessThan: DateTime.now()
+                                .subtract(const Duration(seconds: 24)))
+                        .get()
+                        .then((QuerySnapshot querySnapshot) {
+                      querySnapshot.docs.forEach((doc) {
+                        doc.reference.delete();
+                      });
+                    });
+                  });
+                  Navigator.pop(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please enter a status before sending.'),
+                    ),
+                  );
+                }
+              },
+              child: const Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
       body: BlocConsumer<StatusBloc, StatusState>(
         listener: (context, state) {
@@ -96,7 +158,10 @@ class _StatusTextPageState extends State<StatusTextPage> {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  title: Text('Pick Your Color'),
+                  title: Text(
+                    'Pick Your Color',
+                    style: GoogleFonts.poppins(fontSize: 20),
+                  ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -105,7 +170,7 @@ class _StatusTextPageState extends State<StatusTextPage> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("SELECT"),
+                        child: const Text("SELECT"),
                       ),
                     ],
                   ),
@@ -116,7 +181,8 @@ class _StatusTextPageState extends State<StatusTextPage> {
         },
         builder: (context, state) {
           if (state is ColorPickerState) {
-            color = state.color;
+            backgroundColor =
+                state.color; // Update backgroundColor in the state
           }
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -127,19 +193,24 @@ class _StatusTextPageState extends State<StatusTextPage> {
                   controller: datacontroller,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Type a status',
-                    hintStyle: TextStyle(
+                    hintText: 'Type your status',
+                    hintStyle: GoogleFonts.poppins(
                       fontSize: 35,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
+              datacontroller.text.isEmpty
+                  ? Text("Tap here to write status ☝🏻",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18, color: Colors.grey.withOpacity(0.8)))
+                  : const SizedBox.shrink(),
             ],
           );
         },
@@ -149,11 +220,13 @@ class _StatusTextPageState extends State<StatusTextPage> {
 
   buildColorPicker() {
     return ColorPicker(
-      pickerColor: color,
+      pickerColor: backgroundColor, // Use backgroundColor from state
       onColorChanged: (Color colors) {
         setState(() {
           BlocProvider.of<StatusBloc>(context)
               .add(ColorPickerEvent(color: colors));
+          showImage = false;
+          backgroundColor = colors; // Update backgroundColor in the state
         });
       },
     );
