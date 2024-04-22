@@ -18,21 +18,22 @@ class ConfirmImage extends StatelessWidget {
     return Scaffold(
       body: BlocListener<ChatBloc, ChatState>(
         listener: (context, state) {
-         if(state is SendImageState){
-          Navigator.pop(context);
-          Navigator.pop(context);
-         }
+          if (state is SendImageState) {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          }
         },
         child: Center(
-          child: AspectRatio(
-            aspectRatio: 9 / 16,
-            child: Image.file(imageUrl),
-          ),
-        ),
+            child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration:
+              BoxDecoration(image: DecorationImage(image: FileImage(imageUrl))),
+        )),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
-        onPressed: ()async {
+        onPressed: () async {
           BlocProvider.of<ChatBloc>(context).add(SendImageEvent(
               currentId: currentId, friendId: friendId, image: imageUrl));
         },

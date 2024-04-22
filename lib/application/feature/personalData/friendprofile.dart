@@ -1,13 +1,8 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'dart:io';
-
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
-
-import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
 
 class FriendProfile extends StatefulWidget {
   final String image;

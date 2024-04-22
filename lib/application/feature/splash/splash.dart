@@ -27,10 +27,12 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthenticatedState) {
-          Navigator.pushReplacement(
-              context,
-              FadeRoute2(Home(
-              )));
+          Navigator.pushAndRemoveUntil(
+            context,
+            FadeRoute2(Home()),
+            (Route<dynamic> route) =>
+                false, // This predicate always returns false, so all routes will be removed
+          );
         } else if (state is UnAuthenticatedState) {
           Navigator.pushReplacement(context, FadeRoute2(RegisterPageWrapper()));
         }
@@ -46,7 +48,9 @@ class SplashPage extends StatelessWidget {
                 child: Image.asset("asset/images/icons.png", width: 230),
               ),
               Text(
-                "Talkie",style: GoogleFonts.montserrat(fontSize: 30,fontWeight: FontWeight.w800),
+                "Talkie",
+                style: GoogleFonts.montserrat(
+                    fontSize: 30, fontWeight: FontWeight.w800),
               ),
             ],
           ),

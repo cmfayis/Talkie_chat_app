@@ -6,6 +6,8 @@ sealed class SettingState {}
 
 final class SettingInitial extends SettingState {}
 
+class LoadingState extends SettingState {}
+
 class FetchState extends SettingState {
   final String name;
   final String imageUrl;
@@ -21,10 +23,14 @@ class FetchState extends SettingState {
 class LogoutState extends SettingState {}
 
 class HomePageState extends SettingState {}
-class ProfileEditState extends SettingState{}
-class BackState extends SettingState{}
-class UpdateState extends SettingState{
+
+class ProfileEditState extends SettingState {}
+
+class BackState extends SettingState {}
+
+class UpdateState extends SettingState {
   String name;
   UpdateState({required this.name});
 }
-class NavigateToProfileState extends SettingState{}
+
+class NavigateToProfileState extends SettingState {}

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../../utils/colors.dart';
 import '../Homebloc/home_bloc.dart';
 
 class Home extends StatelessWidget {
@@ -13,7 +14,7 @@ class Home extends StatelessWidget {
 
   List<Widget> screens = <Widget>[
     chats(),
-    const Call(),
+    const Status(),
     const Contacts(),
     const Setting(),
   ];
@@ -27,11 +28,8 @@ class Home extends StatelessWidget {
         return Scaffold(
           body: screens.elementAt(state.tabIndex),
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: const Color.fromARGB(255, 9, 48, 79),
+            backgroundColor:  backround,
             type: BottomNavigationBarType.fixed,
-            // selectedItemColor: Colors.white,
-            // unselectedIconTheme: const IconThemeData(color: Colors.amber),
-            // selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
             items: [
               BottomNavigationBarItem(
                   icon: Icon(Ionicons.chatbox_ellipses_outline),
@@ -46,7 +44,7 @@ class Home extends StatelessWidget {
             ],
             currentIndex: state.tabIndex,
             fixedColor: Colors.white,
-
+            unselectedItemColor: Colors.grey,
             onTap: (value) {
               homeBloc.add(
                 TabChangeEvent(tabIndex: value),

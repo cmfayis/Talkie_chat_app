@@ -19,7 +19,6 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   File? image;
   final namecontroller = TextEditingController();
-  final descriptioncontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
@@ -94,17 +93,19 @@ class _ProfileViewState extends State<ProfileView> {
                       height: 40,
                     ),
                     TextField(
+                      controller: namecontroller,
                       decoration: InputDecoration(
                           hintText: "Nick Name",
                           hintStyle: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: Colors.white),
                     ),
                     const SizedBox(
                       height: 130,
                     ),
                     InkWell(
                       onTap: () {
-                        BlocProvider.of<ProfileBloc>(context)
-                            .add(SumbitEvent(image: image));
+                        BlocProvider.of<ProfileBloc>(context).add(SumbitEvent(
+                            image: image, name: namecontroller.text));
                       },
                       child: Container(
                         decoration: BoxDecoration(

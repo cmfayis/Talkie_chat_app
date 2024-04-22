@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../../utils/colors.dart';
+
 class Profile extends StatefulWidget {
   final String image;
   final String name;
@@ -46,7 +48,7 @@ class _ProfileState extends State<Profile> {
             }
             if (state is ProfileEditState) {
               showModalBottomSheet(
-                backgroundColor: Color.fromARGB(255, 9, 48, 79),
+                backgroundColor: backround,
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
@@ -109,7 +111,7 @@ class _ProfileState extends State<Profile> {
             }
           },
           child: Scaffold(
-            backgroundColor: Color.fromARGB(255, 9, 48, 79),
+            backgroundColor: backround,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               leading: IconButton(
@@ -138,7 +140,7 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(color: Colors.white),
               ),
               centerTitle: true,
-              backgroundColor: Color.fromARGB(255, 9, 48, 79),
+              backgroundColor: backround,
             ),
             body: SingleChildScrollView(
               child: Center(

@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../utils/colors.dart';
 import '../auth_bloc/bloc/auth_bloc.dart';
 import '../widget/validate.dart';
 
@@ -21,11 +23,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticatedState) {
-          // Navigate to another screen upon successful sign up
-          Navigator.of(context).pushReplacementNamed('/home');
+        if (state is GoogleButtonState) {
+          Get.off(Home());
+        } else if (state is AuthenticatedState) {
+          Get.off(Home());
         } else if (state is ErrorAuthenctionState) {
-          // Show an error message if sign up fails
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Sign up failed. Please try again.'),
@@ -34,11 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       },
       builder: (context, state) {
-        return SingleChildScrollView(
-          child: Form(
-            key: formkey,
-            child: Padding(
-              padding: const EdgeInsets.all(13.0),
+        return Form(
+          key: formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: SingleChildScrollView(
               child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 9, 48, 79)),
+                          color: backround),
                     ),
                     SizedBox(height: 40),
                     FadeInUp(
@@ -67,11 +69,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                         child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: namecontroller,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                             ),
                             hintText: 'Username',
                             border: OutlineInputBorder(
@@ -99,11 +102,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                         child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: emailcontroller,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                             ),
                             hintText: 'Email',
                             border: OutlineInputBorder(
@@ -131,11 +135,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                         child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: passwordcontroller,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.lock,
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                             ),
                             hintText: 'Password',
                             border: OutlineInputBorder(
@@ -168,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                         },
                         height: 50,
-                        color: Color.fromARGB(255, 9, 48, 79),
+                        color: backround,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -230,23 +235,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Image.asset(
-                                    "asset/images/ggg.png",
-                                    height: 28,
-                                  ),
-                                  Text(
-                                    "Google",
-                                    style: GoogleFonts.playfairDisplay(
-                                      fontSize: 19,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                              child: InkWell(
+                                onTap: () {
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(GoogleButtonEvent());
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Image.asset(
+                                      "asset/images/ggg.png",
+                                      height: 28,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      "Google",
+                                      style: GoogleFonts.playfairDisplay(
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -256,15 +267,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: FadeInUp(
                             duration: Duration(milliseconds: 1900),
                             child: MaterialButton(
-                              onPressed: () {
-                                BlocProvider.of<AuthBloc>(context)
-                                    .add(GoogleButtonEvent());
-                              },
+                              onPressed: () {},
                               height: 50,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

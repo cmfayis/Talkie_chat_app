@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app/application/feature/auth/auth_bloc/bloc/auth_bloc.dart';
 import 'package:chat_app/application/feature/home/view/homepage.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../utils/colors.dart';
 
 class LoginPageWrapper extends StatelessWidget {
   const LoginPageWrapper({Key? key}) : super(key: key);
@@ -37,6 +40,8 @@ class _SignInScreenState extends State<SignInScreen> {
               context,
               MaterialPageRoute(builder: (context) => Home()),
               (route) => false);
+        } else if (state is GoogleButtonState) {
+          Get.off(Home());
         } else if (state is ErrorAuthenctionState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));
@@ -58,64 +63,70 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 9, 48, 79)),
+                          color: backround),
                     ),
                     SizedBox(height: 40),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                          )
-                        ],
+                    FadeInUp(
+                      duration: Duration(milliseconds: 1800),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade400,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: TextFormField(
+                            controller: emailcontroller,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: backround,
+                              ),
+                              hintText: 'Email',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.all(8),
+                            ),
+                            validator: emailValidate),
                       ),
-                      child: TextFormField(
-                          controller: emailcontroller,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Color.fromARGB(255, 9, 48, 79),
-                            ),
-                            hintText: 'Email',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: EdgeInsets.all(8),
-                          ),
-                          validator: emailValidate),
                     ),
-                    SizedBox(height: 20), // Adjust the spacing as needed
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                          )
-                        ],
+                    SizedBox(height: 20),
+                    FadeInUp(
+                      duration: Duration(milliseconds: 1800),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade400,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: TextFormField(
+                            controller: passwordcontroller,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: backround,
+                              ),
+                              hintText: 'Password',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.all(8),
+                            ),
+                            obscureText: true,
+                            validator: PasswordValidate),
                       ),
-                      child: TextFormField(
-                          controller: passwordcontroller,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: Color.fromARGB(255, 9, 48, 79),
-                            ),
-                            hintText: 'Password',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: EdgeInsets.all(8),
-                          ),
-                          obscureText: true,
-                          validator: PasswordValidate),
                     ),
                     SizedBox(height: 40),
                     FadeInUp(
@@ -131,7 +142,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           }
                         },
                         height: 50,
-                        color: Color.fromARGB(255, 9, 48, 79),
+                        color: backround,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -147,13 +158,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: Text(
-                          'Forget Password?',
-                          style: TextStyle(color: Colors.red),
+                    FadeInUp(
+                      duration: Duration(milliseconds: 1800),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: Text(
+                            'Forget Password?',
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ),
                       ),
                     ),
@@ -238,7 +252,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

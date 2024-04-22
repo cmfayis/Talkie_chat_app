@@ -1,82 +1,112 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/story_view.dart';
 
-class StatusViewPage extends StatefulWidget {
+class StatusViewPage extends StatelessWidget {
   const StatusViewPage({
     Key? key,
-    required this.data,
-    required this.color,
-    required this.image,
-    required this.date,
+    required this.id,
   }) : super(key: key);
 
-  final String data;
-  final int color;
-  final dynamic image;
-  final date;
-
-  @override
-  State<StatusViewPage> createState() => _StatusViewPageState();
-}
-
-class _StatusViewPageState extends State<StatusViewPage> {
-  late StoryController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = StoryController();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose(); // Dispose the controller when the widget is disposed
-    super.dispose();
-  }
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color(0xFF000000 + widget.color), // Corrected color calculation
-      body: StoryView(
-        indicatorForegroundColor: Colors.grey,
-        onComplete: () {
-          Navigator.pop(context);
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('status')
+            .doc(id)
+            .collection('status')
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+          return StoryView(
+            indicatorForegroundColor: Colors.black,
+            storyItems: List.generate(
+              documents.length,
+              (index) {
+                final Map<String, dynamic> data =
+                    documents[index].data() as Map<String, dynamic>;
+                final String dataType = data['dataType'] ?? '';
+                if (dataType == "image") {
+                  return StoryItem.inlineImage(
+                    url: data['Data'],
+                    controller: StoryController(),
+                  );
+                } else {
+                  return StoryItem.text(
+                    shown: true,
+                    duration: const Duration(seconds: 3),
+                    title: data['Data'],
+                    textStyle: GoogleFonts.poppins(fontSize: 18),
+                    backgroundColor: Color(
+                      documents[index]['color'],
+                    ),
+                  );
+                }
+              },
+            ),
+            onComplete: () {
+              Navigator.pop(context);
+            },
+            controller: StoryController(),
+          );
         },
-        storyItems: [
-          StoryItem.text(
-            shown: true,
-            duration: Duration(seconds: 3),
-            title: widget.data, textStyle: TextStyle(fontSize: 18),
-            backgroundColor:
-                Color(0xFF000000 + widget.color), // Corrected color calculation
-          ),
-        ],
-        controller: controller,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.only(top: 24, left: 18, right: 18),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            // Added background color for container
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(widget.image),
-                backgroundColor: Colors.blue, // Placeholder color
-              ),
-              title: Text(
-                'Fayis', // Example name, replace with actual name
-                style: TextStyle(
-                  fontSize: 25,
-                ),
-              ),
-              subtitle:
-                  Text(widget.date), // Example time, replace with actual time
+            color: Colors.transparent,
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('status')
+                  .doc(id)
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                var userData = snapshot.data!.data() as Map<String, dynamic>;
+                var username = userData['name'];
+                var profileImageUrl = userData['image'];
+
+                return ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(profileImageUrl),
+                    radius: 25,
+                  ),
+                  title: Text(
+                    username ?? '',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),
