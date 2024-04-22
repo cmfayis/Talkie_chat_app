@@ -97,6 +97,7 @@ class _ProfileViewState extends State<ProfileView> {
                       decoration: InputDecoration(
                           hintText: "Nick Name",
                           hintStyle: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: Colors.white),
                     ),
                     const SizedBox(
                       height: 130,

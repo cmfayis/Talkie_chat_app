@@ -7,6 +7,8 @@ import 'package:chat_app/application/feature/home/view/homepage.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../utils/colors.dart';
+
 class LoginPageWrapper extends StatelessWidget {
   const LoginPageWrapper({Key? key}) : super(key: key);
 
@@ -61,7 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 9, 48, 79)),
+                          color: backround),
                     ),
                     SizedBox(height: 40),
                     FadeInUp(
@@ -83,7 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.email,
-                                color: Color.fromARGB(255, 9, 48, 79),
+                                color: backround,
                               ),
                               hintText: 'Email',
                               border: OutlineInputBorder(
@@ -114,7 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.lock,
-                                color: Color.fromARGB(255, 9, 48, 79),
+                                color: backround,
                               ),
                               hintText: 'Password',
                               border: OutlineInputBorder(
@@ -140,7 +142,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           }
                         },
                         height: 50,
-                        color: Color.fromARGB(255, 9, 48, 79),
+                        color: backround,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -250,7 +252,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

@@ -21,6 +21,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:permission_handler/permission_handler.dart';
 
+import '../utils/colors.dart';
+
 class ChatPage extends StatefulWidget {
   final String friendId;
   final String friendName;
@@ -136,11 +138,10 @@ class _ChatPageState extends State<ChatPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: backround,
         appBar: AppBar(
-          // elevation: 1,
-          toolbarHeight: 70,
-          backgroundColor: Color.fromARGB(255, 9, 48, 79),
+          toolbarHeight: 90,
+          backgroundColor: backround,
           actions: [
             IconButton(
                 onPressed: () {
@@ -163,7 +164,7 @@ class _ChatPageState extends State<ChatPage> {
                 ))
           ],
           automaticallyImplyLeading: true,
-          iconTheme: const IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.white),
           title: InkWell(
             onTap: () {
               BlocProvider.of<ChatBloc>(context).add(ShowImageEvent());
@@ -180,7 +181,7 @@ class _ChatPageState extends State<ChatPage> {
                           fit: BoxFit.cover)),
                 ),
                 const SizedBox(
-                  width: 15,
+                  width: 3,
                 ),
                 Text(
                   widget.friendName,
@@ -192,9 +193,6 @@ class _ChatPageState extends State<ChatPage> {
         ),
         body: Column(
           children: [
-            Divider(
-              thickness: 00,
-            ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(10),

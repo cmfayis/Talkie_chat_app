@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/application/feature/call/view/status_textpage.dart';
 import 'package:chat_app/application/feature/call/view/status_view.dart';
 import 'package:chat_app/application/feature/setting/bloc/bloc/setting_bloc.dart';
-
+import 'package:chat_app/application/feature/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,9 +34,9 @@ class _StatusState extends State<Status> {
         toolbarHeight: 90,
         title: Text(
           'Updates',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 28),
         ),
-        backgroundColor: Color.fromARGB(255, 9, 48, 79),
+        backgroundColor: backround,
         actions: [
           IconButton(
               onPressed: () {
@@ -54,7 +54,7 @@ class _StatusState extends State<Status> {
               icon: const Icon(Iconsax.story, color: Colors.white)),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: backround,
       body: BlocBuilder<SettingBloc, SettingState>(
         builder: (context, state) {
           BlocProvider.of<SettingBloc>(context).add(intialEvent());
@@ -257,7 +257,7 @@ class _StatusState extends State<Status> {
                           style: GoogleFonts.poppins(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 9, 48, 79)),
+                              color: backround),
                         ),
                       ),
                       const SizedBox(

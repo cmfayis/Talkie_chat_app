@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../utils/colors.dart';
+
 class SingleMessage extends StatelessWidget {
   final type;
   final currentTime;
@@ -43,7 +45,7 @@ class SingleMessage extends StatelessWidget {
                                   maxWidth: 280, minWidth: 80),
                               decoration: BoxDecoration(
                                   color: isMe
-                                      ? Color.fromARGB(255, 9, 48, 79)
+                                      ? backround
                                       : Color.fromARGB(255, 234, 242, 248),
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12))),

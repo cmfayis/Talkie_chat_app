@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../utils/colors.dart';
 import '../auth_bloc/bloc/auth_bloc.dart';
 import '../widget/validate.dart';
 
@@ -35,11 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       },
       builder: (context, state) {
-        return SingleChildScrollView(
-          child: Form(
-            key: formkey,
-            child: Padding(
-              padding: const EdgeInsets.all(13.0),
+        return Form(
+          key: formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: SingleChildScrollView(
               child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 9, 48, 79)),
+                          color: backround),
                     ),
                     SizedBox(height: 40),
                     FadeInUp(
@@ -73,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                             ),
                             hintText: 'Username',
                             border: OutlineInputBorder(
@@ -106,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                             ),
                             hintText: 'Email',
                             border: OutlineInputBorder(
@@ -139,7 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.lock,
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                             ),
                             hintText: 'Password',
                             border: OutlineInputBorder(
@@ -172,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                         },
                         height: 50,
-                        color: Color.fromARGB(255, 9, 48, 79),
+                        color: backround,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -271,7 +272,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              color: Color.fromARGB(255, 9, 48, 79),
+                              color: backround,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

@@ -3,6 +3,7 @@ import 'package:chat_app/application/feature/SearchFolder/search.dart';
 import 'package:chat_app/application/feature/auth/widget/sizedbox.dart';
 import 'package:chat_app/application/feature/personalData/personalchat.dart';
 import 'package:chat_app/application/feature/personalData/widget/showimage.dart';
+import 'package:chat_app/application/feature/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -11,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+
+String? globalToken;
 
 class chats extends StatefulWidget {
   chats({
@@ -27,6 +30,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
     try {
       String? token = await FirebaseMessaging.instance.getToken();
       print(token);
+      globalToken = token;
       await FirebaseFirestore.instance
           .collection("users")
           .doc(user!.uid)
@@ -47,7 +51,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Color.fromARGB(255, 9, 48, 79),
+        backgroundColor: backround,
         toolbarHeight: 90,
         title: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -74,7 +78,7 @@ class _ChatState extends State<chats> with WidgetsBindingObserver {
           ),
         ],
       ),
-      backgroundColor: Color.fromARGB(255, 9, 48, 79),
+      backgroundColor: backround,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

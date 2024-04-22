@@ -1,9 +1,11 @@
 import 'package:chat_app/application/feature/call/bloc/bloc/status_bloc.dart';
 import 'package:chat_app/application/feature/call/view/imagedisplay.dart';
+import 'package:chat_app/application/feature/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +35,8 @@ class _StatusTextPageState extends State<StatusTextPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: backround,
         centerTitle: true,
         actions: [
           Padding(
@@ -58,7 +61,7 @@ class _StatusTextPageState extends State<StatusTextPage> {
             width: 50,
             child: FloatingActionButton(
               heroTag: camera,
-              backgroundColor: Colors.black,
+              backgroundColor: backround,
               shape: const CircleBorder(),
               onPressed: () async {
                 final imagePicker = ImagePicker();
@@ -85,7 +88,10 @@ class _StatusTextPageState extends State<StatusTextPage> {
                 }
               },
               child: const Center(
-                child: Icon(Icons.camera),
+                child: Icon(
+                  Icons.camera,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -93,12 +99,12 @@ class _StatusTextPageState extends State<StatusTextPage> {
             height: 10,
           ),
           SizedBox(
-            height: 70,
-            width: 70,
+            height: 55,
+            width: 55,
             child: FloatingActionButton(
               heroTag: addStatus,
               shape: const CircleBorder(),
-              backgroundColor: Colors.black,
+              backgroundColor: backround,
               onPressed: () {
                 if (datacontroller.text.isNotEmpty) {
                   FirebaseFirestore.instance

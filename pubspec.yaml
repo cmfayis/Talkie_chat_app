@@ -72,6 +72,7 @@ dependencies:
   firebase_analytics: ^10.8.10
   iconsax: ^0.0.8
   timeago: ^3.6.1
+  intro_screen_onboarding_flutter: ^1.0.0
   
   
   

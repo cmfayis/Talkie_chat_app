@@ -9,6 +9,10 @@ import 'package:chat_app/application/feature/setting/widget/listtitle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../utils/colors.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -18,12 +22,6 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<SettingBloc, SettingState>(
@@ -67,7 +65,7 @@ class _SettingState extends State<Setting> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 9, 48, 79),
+                          color: backround,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(30),
                               bottomRight: Radius.circular(30))),
@@ -182,11 +180,8 @@ class _SettingState extends State<Setting> {
                     Listtile(
                       ontap: () {
                         FirebaseAuth.instance.currentUser!.delete();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegisterPageWrapper()));
+                        GoogleSignIn().signOut();
+                        Get.offAll(() => RegisterPageWrapper());
                       },
                       leading: Icon(
                         Icons.delete,

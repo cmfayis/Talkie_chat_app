@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../utils/colors.dart';
+
 class Contacts extends StatefulWidget {
   const Contacts({Key? key});
 
@@ -21,10 +23,10 @@ class _ContactsState extends State<Contacts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 9, 48, 79),
+      backgroundColor: backround,
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: Color.fromARGB(255, 9, 48, 79),
+        backgroundColor: backround,
         title: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
@@ -50,7 +52,7 @@ class _ContactsState extends State<Contacts> {
                 color: Colors.white,
               ),
               decoration: InputDecoration(
-                hintText: 'Search by name...',
+                hintText: 'Search by name....',
                 hintStyle: const TextStyle(color: Colors.white70),
                 prefixIcon: const Icon(Icons.search, color: Colors.white),
                 border: OutlineInputBorder(
@@ -82,7 +84,7 @@ class _ContactsState extends State<Contacts> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                         child: CircularProgressIndicator(
-                      color: Color.fromARGB(255, 9, 48, 79),
+                      color: backround,
                     ));
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {

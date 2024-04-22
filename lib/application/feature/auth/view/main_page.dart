@@ -6,6 +6,8 @@ import 'package:chat_app/application/feature/profileview/profileview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../utils/colors.dart';
+
 class RegisterPageWrapper extends StatelessWidget {
   const RegisterPageWrapper({super.key});
 
@@ -43,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
           return Scaffold(
             appBar: AppBar(
               toolbarHeight: 120,
-              backgroundColor: const Color.fromARGB(255, 9, 48, 79),
+              backgroundColor: backround,
               centerTitle: true,
               title: Text(
                 'Talkie',
@@ -72,15 +74,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
             ),
-            bottomSheet: Container(
-              height: 75,
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 9, 48, 79),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(35),
-                      topRight: Radius.circular(35))),
-            ),
-            resizeToAvoidBottomInset: false,
+          
             body: TabBarView(
               children: [
                 SignUpScreen(),
